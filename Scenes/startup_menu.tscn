@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://drtdhwcvuq7bx"]
+
+[ext_resource type="Script" uid="uid://crd6tna4a3xtj" path="res://Scripts/startup_menu.gd" id="1_hcp74"]
+[ext_resource type="Texture2D" uid="uid://bdd50weocwk7q" path="res://Assets/KeyArt/TitleCard.png" id="2_hcp74"]
+
+[node name="StartupMenu" type="Control" unique_id=453158421]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hcp74")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1519970631]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -158.5
+offset_top = 48.0
+offset_right = 160.5
+offset_bottom = 231.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Sprite2D" parent="VBoxContainer" unique_id=287904650]
+position = Vector2(159.25, -209.5)
+scale = Vector2(3.78125, 3.78125)
+texture = ExtResource("2_hcp74")
+
+[node name="StartGame" type="Button" parent="VBoxContainer" unique_id=2103337560]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "     Enter Dungeon     "
+
+[node name="OptionsMenu" type="Button" parent="VBoxContainer" unique_id=634346678]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Options"
+
+[node name="QuitGame" type="Button" parent="VBoxContainer" unique_id=1615531946]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsMenu" to="." method="_on_options_menu_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitGame" to="." method="_on_quit_game_pressed"]

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cguhawqtofman"]
+
+[ext_resource type="Texture2D" uid="uid://dc5gpd7kt74y" path="res://Assets/Other/PlaceholderHub.png" id="1_x21iy"]
+
+[node name="Hub" type="Node2D" unique_id=486864914]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1782949763]
+
+[node name="Background" type="Sprite2D" parent="." unique_id=752951451]
+scale = Vector2(5.25, 5.25)
+texture = ExtResource("1_x21iy")
