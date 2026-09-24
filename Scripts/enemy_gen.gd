@@ -1,6 +1,6 @@
 extends Node2D
 
-const ENEMY_SCENE = preload("res://enemy.tscn")
+const ENEMY_SCENE = preload("res://Scenes/enemy.tscn")
 
 @export var current_level = 1
 var enemy_num = 3;	 			# How many enemies in current room

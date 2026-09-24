@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cp04phtuxrkfe"]
+
+[ext_resource type="Script" uid="uid://dbqccep1v00a6" path="res://Scripts/enemy_gen.gd" id="1_dakn4"]
+[ext_resource type="PackedScene" uid="uid://doc00j6mtl1je" path="res://Scenes/enemy.tscn" id="2_lt7kh"]
+
+[node name="Dungeon" type="Node2D" unique_id=1683826129]
+script = ExtResource("1_dakn4")
+current_level = 25
+
+[node name="Enemy" parent="." unique_id=1119870212 instance=ExtResource("2_lt7kh")]
