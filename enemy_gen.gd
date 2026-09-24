@@ -57,6 +57,7 @@ func _ready() -> void:
 				enemy_spawn(["orc", "troll", "golem"], 3, attribute);
 
 func get_stats(_type) -> Array:
+	#Assigns different stats based on monster type
 	match (_type):
 		"skeleton":
 			return [4, 2, 0]
