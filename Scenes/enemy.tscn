@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://doc00j6mtl1je"]
 
 [ext_resource type="Script" uid="uid://w5qudc1opx5t" path="res://Scripts/enemy.gd" id="1_hghv2"]
+[ext_resource type="Texture2D" uid="uid://dhjc8uvrru6ie" path="res://icon.svg" id="2_1f0kj"]
 
 [node name="Enemy" type="CharacterBody2D" unique_id=46879788]
 script = ExtResource("1_hghv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=770326995]
+texture = ExtResource("2_1f0kj")
