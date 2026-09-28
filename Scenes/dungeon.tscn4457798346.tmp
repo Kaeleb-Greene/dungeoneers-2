@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cp04phtuxrkfe"]
+
+[ext_resource type="Script" uid="uid://dbqccep1v00a6" path="res://Scripts/enemy_gen.gd" id="1_dakn4"]
+
+[node name="Dungeon" type="Node2D" unique_id=1683826129]
+script = ExtResource("1_dakn4")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1174172610]
