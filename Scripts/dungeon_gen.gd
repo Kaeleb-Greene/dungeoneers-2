@@ -1,7 +1,4 @@
-extends Node2D
-
-const ENEMY_SCENE = preload("res://Scenes/enemy.tscn")
-const CHARACTER_SCENE = preload("res://Scenes/party_character.tscn")
+extends RefCounted
 
 @export var current_level = randi_range(1, 20)
 
@@ -15,24 +12,15 @@ var slots = {"slot_1": null,
 
 var party_num = 3; 		# How many party members are in current room
 
-var enemy_num = 3;	 	# How many enemies in current room
-var boss_spawn = false;	# Whether a Mega Knight will spawn
-
 # holds the values that will determine what attribute the enemy will have
 var attribute_list = ["wither", "fire", "earth", "air", "water"] # Determine the current attributee
 var attribute = "none"
 
-func _ready() -> void:
-	enemy_spawn()
-	party_spawn()
-
 #region CHARACTER INITIATION
-func party_spawn() -> void:
-	# determine what monsters are currently available for spawning
-	for i in range(party_num):
-		var character_class = ["knight", "rogue", "wizard", "cleric", "alchemist"]
-		var character = character_class[randi_range(0, 4)]
-		init_character_instance(CHARACTER_SCENE.instantiate(), character)
+func character_spawn(id, character_class):
+	# Spawn the character for player party
+	init_character_instance(id, character_class)
+	return id
 
 func get_character_stats(_class) -> Array:
 	# assigns different stats based on class type
@@ -70,65 +58,49 @@ func init_character_instance(id, _class) -> void:
 		slots["slot_3"] = id;
 	id.slot = slot
 	
-	# add the enemy to the current main node tree as a child
-	add_child(id)
 
 #endregion
 
 #region ENEMY INITIATION
 
 # INIT
-func enemy_spawn() -> void:
+func enemy_spawn(id, mega_knight_spawn, dragon_spawn):
 	# change to random seed
 	randomize();
 	
 	# check for mega knight spawn
-	check_boss_spawn(randi_range(0, 19), 19, "mega_knight")
+	if (mega_knight_spawn):
+		init_enemy_instance(id, ["mega_knight"], attribute, 0, true)
 	
 	# check for dragon spawning
-	check_boss_spawn(randi_range(0, 3), 3, "dragon")
+	if (dragon_spawn):
+		init_enemy_instance(id, ["dragon"], attribute, 0, true)
 
 	# determine what monsters are currently available for spawning
-	if (boss_spawn == false):
-		for i in range(enemy_num):
-			# determine the attribute the enemy will have
-			var attribute_chance = randi_range(0, 10)
-			if (attribute_chance == 10):
-				var c = randi_range(0, 4)
-				attribute = attribute_list[c];
-			else:
-				attribute = "none"
-			
-			if (current_level == 1):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["skeleton"], attribute, 0)
-			elif (current_level == 2):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["skeleton", "zombie"], attribute, 1)
-			elif (current_level == 3):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["skeleton", "zombie", "goblin"], attribute, 2)
-			elif (current_level == 4):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["zombie", "goblin"], attribute, 1)
-			elif (current_level >= 5 && current_level <= 7):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["goblin", "raider"], attribute, 1)
-			elif (current_level >= 8 && current_level <= 11):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["raider", "orc"], attribute, 1)
-			elif (current_level > 11):
-				init_enemy_instance(ENEMY_SCENE.instantiate(), ["orc", "troll", "golem"], attribute, 2)
-
-func check_boss_spawn(chance, desired_chance, type) -> void:
-	# chance should be a randi_range and desired chance should be the highest value 
-	# passed in chance
-	if (chance == desired_chance):
-		if (type == "dragon"):
-			if (current_level > 11):
-				boss_spawn = true;
-				# handle dragon spawning
-				enemy_num = 1
-				init_enemy_instance(ENEMY_SCENE.instantiate(), [type], attribute, 0)
+	if (!dragon_spawn && !mega_knight_spawn):
+		# determine the attribute the enemy will have
+		var attribute_chance = randi_range(0, 10)
+		if (attribute_chance == 10):
+			var c = randi_range(0, 4)
+			attribute = attribute_list[c];
 		else:
-			boss_spawn = true;
-			# handle other boss spawning
-			enemy_num = 1
-			init_enemy_instance(ENEMY_SCENE.instantiate(), [type], attribute, 0)
+			attribute = "none"
+		
+		if (current_level == 1):
+			init_enemy_instance(id, ["skeleton"], attribute, 0, false)
+		elif (current_level == 2):
+			init_enemy_instance(id, ["skeleton", "zombie"], attribute, 1, false)
+		elif (current_level == 3):
+			init_enemy_instance(id, ["skeleton", "zombie", "goblin"], attribute, 2, false)
+		elif (current_level == 4):
+			init_enemy_instance(id, ["zombie", "goblin"], attribute, 1, false)
+		elif (current_level >= 5 && current_level <= 7):
+			init_enemy_instance(id, ["goblin", "raider"], attribute, 1, false)
+		elif (current_level >= 8 && current_level <= 11):
+			init_enemy_instance(id, ["raider", "orc"], attribute, 1, false)
+		elif (current_level > 11):
+			init_enemy_instance(id, ["orc", "troll", "golem"], attribute, 2, false)
+	return id
 
 func get_enemy_stats(_type) -> Array:
 	# assigns different stats based on monster type
@@ -154,7 +126,7 @@ func get_enemy_stats(_type) -> Array:
 			return [30, 3, 0]
 	return []
 
-func init_enemy_instance(id, _type, _attribute, _chance) -> void:
+func init_enemy_instance(id, _type, _attribute, _chance, boss_spawn) -> void:
 	var chance = 0
 	if (_chance != 0):
 		chance = randi_range(0, _chance)
@@ -172,7 +144,7 @@ func init_enemy_instance(id, _type, _attribute, _chance) -> void:
 	
 	# place the enemy in the correct slot
 	var slot = 0
-	if (boss_spawn == true):
+	if (boss_spawn):
 		slot = 2
 		slots["slot_5"] = id;
 	else:
@@ -186,11 +158,7 @@ func init_enemy_instance(id, _type, _attribute, _chance) -> void:
 			slot = 3
 			slots["slot_6"] = id;
 	id.slot = slot
-	
-	# add the enemy to the current main node tree as a child
-	add_child(id)
-
-func _process(_delta: float) -> void:
-	if (Input.is_action_pressed("Debug_Quit")):
-		get_tree().quit()
 #endregion
+
+func get_slots():
+	return slots

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cp04phtuxrkfe"]
 
-[ext_resource type="Script" uid="uid://dbqccep1v00a6" path="res://Scripts/dungeon_gen.gd" id="1_dakn4"]
+[ext_resource type="Script" uid="uid://bap2s1muyvax7" path="res://Scripts/combat_loop.gd" id="1_oavya"]
 
 [node name="Dungeon" type="Node2D" unique_id=1683826129]
-script = ExtResource("1_dakn4")
+script = ExtResource("1_oavya")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=696356979]
 

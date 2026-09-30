@@ -3,9 +3,9 @@ extends CharacterBody2D
 # set the starting positions 
 # Vector2((grid position x+offset)*upscale), (grid position y+offset)*upscale)
 
-const IDLE_POSITION = [Vector2(1280-320, 320), 
-					   Vector2(1280-448, 384), 
-					   Vector2(1280-320, 448)]
+const IDLE_POSITION = [Vector2(448, -64), 
+					   Vector2(320, 0), 
+					   Vector2(448, 64)]
 
 # basic stats
 var health = 0;
@@ -19,7 +19,7 @@ var slot = 0
 
 func _ready() -> void:
 	update_position()
-	debug_messages()
+	#debug_messages()
 	$Label.text = type
 	
 func update_position() -> void:

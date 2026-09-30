@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-const IDLE_POSITION = [Vector2(320, 320), 
-					   Vector2(448, 384), 
-					   Vector2(320, 448)]
+const IDLE_POSITION = [Vector2(-448, -64), 
+					   Vector2(-320, 0), 
+					   Vector2(-448, 64)]
 
 # basic Stats
 var health = 0;
@@ -13,8 +13,8 @@ var character_class = "";
 var slot = 0;
 
 func _ready() -> void:
-	debug_messages()
 	update_position()
+	#debug_messages()
 	$Label.text = character_class
 	
 func update_position() -> void:
