@@ -1,0 +1,233 @@
+[gd_scene format=3 uid="uid://bp347uortgpy5"]
+
+[ext_resource type="Script" uid="uid://b7fbg1vhs0ccs" path="res://character_stats.gd" id="1_fgaav"]
+[ext_resource type="Texture2D" uid="uid://cmpo8elinj77k" path="res://placeholderSword.png" id="2_6lah5"]
+[ext_resource type="Texture2D" uid="uid://c82qx0ai7v18p" path="res://placeholderHealth.png" id="3_gmb2m"]
+[ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://pause_ui.gd" id="4_8kdgp"]
+
+[node name="Node2D" type="Node2D" unique_id=1430072747]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=232994957]
+position = Vector2(576, 324)
+
+[node name="upgrades" type="Panel" parent="." unique_id=1164472576]
+process_mode = 3
+offset_left = 833.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 530.0
+offset_right = 287.0
+offset_bottom = 605.0
+
+[node name="abilityUpgrade2" type="Button" parent="upgrades" unique_id=1053079222]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 430.0
+offset_right = 287.0
+offset_bottom = 505.0
+
+[node name="abilityUpgrade3" type="Button" parent="upgrades" unique_id=1864353907]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 330.0
+offset_right = 287.0
+offset_bottom = 405.0
+
+[node name="reroll" type="Button" parent="upgrades" unique_id=416708368]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 220.0
+offset_right = 309.0
+offset_bottom = 267.0
+
+[node name="upgradeHero" type="Button" parent="upgrades" unique_id=407854011]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 216.0
+offset_right = 142.0
+offset_bottom = 271.0
+
+[node name="characterStats" type="Panel" parent="upgrades" unique_id=194009719]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 28.0
+offset_right = 290.0
+offset_bottom = 185.0
+script = ExtResource("1_fgaav")
+
+[node name="healthStat" type="Label" parent="upgrades/characterStats" unique_id=1732561295]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 17.0
+offset_right = 242.0
+offset_bottom = 61.0
+text = "____  health"
+vertical_alignment = 1
+
+[node name="attackStat" type="Label" parent="upgrades/characterStats" unique_id=1097841547]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 70.0
+offset_right = 242.0
+offset_bottom = 114.0
+text = "_____ attack"
+vertical_alignment = 1
+
+[node name="attackImage" type="TextureRect" parent="upgrades/characterStats" unique_id=326589148]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 76.0
+offset_bottom = 107.0
+texture = ExtResource("2_6lah5")
+expand_mode = 1
+
+[node name="healthImage" type="TextureRect" parent="upgrades/characterStats" unique_id=1615968802]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 17.0
+offset_right = 76.0
+offset_bottom = 54.0
+texture = ExtResource("3_gmb2m")
+expand_mode = 1
+
+[node name="heroes" type="Panel" parent="." unique_id=549266114]
+process_mode = 3
+offset_right = 270.0
+offset_bottom = 648.0
+
+[node name="hero1" type="Button" parent="heroes" unique_id=710269995]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 62.0
+offset_right = 230.0
+offset_bottom = 205.0
+
+[node name="hero2" type="Button" parent="heroes" unique_id=1474747319]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 262.0
+offset_right = 230.0
+offset_bottom = 405.0
+
+[node name="hero3" type="Button" parent="heroes" unique_id=1151627383]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 462.0
+offset_right = 230.0
+offset_bottom = 605.0
+
+[node name="pauseUI" type="CanvasLayer" parent="." unique_id=1710339922]
+process_mode = 3
+script = ExtResource("4_8kdgp")
+
+[node name="optionsMenu" type="Panel" parent="pauseUI" unique_id=330403186]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="optionsLabel" type="Label" parent="pauseUI/optionsMenu" unique_id=1232683323]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 30.0
+offset_right = 702.0
+offset_bottom = 159.0
+theme_override_font_sizes/font_size = 52
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="sfxVolumeLabel" type="Label" parent="pauseUI/optionsMenu" unique_id=1300902922]
+layout_mode = 0
+offset_left = 477.0
+offset_top = 135.0
+offset_right = 517.0
+offset_bottom = 158.0
+text = "SFX Volume"
+
+[node name="sfxVolumeLabel2" type="Label" parent="pauseUI/optionsMenu" unique_id=1568950555]
+layout_mode = 0
+offset_left = 477.0
+offset_top = 235.0
+offset_right = 568.0
+offset_bottom = 258.0
+text = "Music Volume"
+
+[node name="sfxSlider" type="HSlider" parent="pauseUI/optionsMenu" unique_id=259909804]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 150.0
+offset_right = 627.0
+offset_bottom = 215.0
+value = 50.0
+scrollable = false
+
+[node name="musicSlider" type="HSlider" parent="pauseUI/optionsMenu" unique_id=1345237088]
+layout_mode = 0
+offset_left = 473.0
+offset_top = 250.0
+offset_right = 627.0
+offset_bottom = 315.0
+value = 50.0
+scrollable = false
+
+[node name="pauseMenu" type="Panel" parent="pauseUI" unique_id=700106807]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="pauseUI/pauseMenu" unique_id=1544493896]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 4.0
+offset_right = 702.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 52
+text = "PAUSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="pauseUI/pauseMenu" unique_id=1606315208]
+layout_mode = 0
+offset_left = 453.0
+offset_top = 150.0
+offset_right = 657.0
+offset_bottom = 238.0
+text = "Resume
+"
+
+[node name="Options" type="Button" parent="pauseUI/pauseMenu" unique_id=1625603756]
+layout_mode = 0
+offset_left = 453.0
+offset_top = 300.0
+offset_right = 657.0
+offset_bottom = 388.0
+text = "Options
+"
+
+[node name="Exit" type="Button" parent="pauseUI/pauseMenu" unique_id=913813345]
+layout_mode = 0
+offset_left = 453.0
+offset_top = 450.0
+offset_right = 657.0
+offset_bottom = 538.0
+text = "Exit
+"
+
+[connection signal="mouse_entered" from="upgrades/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
+[connection signal="pressed" from="heroes/hero1" to="upgrades/characterStats" method="_on_hero_1_pressed"]
+[connection signal="pressed" from="heroes/hero2" to="upgrades/characterStats" method="_on_hero_2_pressed"]
+[connection signal="pressed" from="heroes/hero3" to="upgrades/characterStats" method="_on_hero_3_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="upgrades/characterStats" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="pauseUI" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Options" to="pauseUI" method="_on_options_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Exit" to="pauseUI" method="_on_exit_pressed"]
