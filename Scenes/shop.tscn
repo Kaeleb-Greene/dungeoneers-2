@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://bp347uortgpy5"]
 
-[ext_resource type="Script" uid="uid://b7fbg1vhs0ccs" path="res://character_stats.gd" id="1_fgaav"]
-[ext_resource type="Texture2D" uid="uid://cmpo8elinj77k" path="res://placeholderSword.png" id="2_6lah5"]
-[ext_resource type="Texture2D" uid="uid://c82qx0ai7v18p" path="res://placeholderHealth.png" id="3_gmb2m"]
-[ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://pause_ui.gd" id="4_8kdgp"]
+[ext_resource type="Script" uid="uid://b7fbg1vhs0ccs" path="res://Scripts/character_stats.gd" id="1_fgaav"]
+[ext_resource type="Script" uid="uid://0cv1xskgfvou" path="res://Scenes/shopUpgrades.gd" id="1_k6jq0"]
+[ext_resource type="Texture2D" uid="uid://cmpo8elinj77k" path="res://Assets/Other/placeholderSword.png" id="2_6lah5"]
+[ext_resource type="Texture2D" uid="uid://c82qx0ai7v18p" path="res://Assets/Other/placeholderHealth.png" id="3_gmb2m"]
+[ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://Scripts/pause_ui.gd" id="4_8kdgp"]
 
 [node name="Node2D" type="Node2D" unique_id=1430072747]
 
@@ -15,6 +16,7 @@ process_mode = 3
 offset_left = 833.0
 offset_right = 1152.0
 offset_bottom = 648.0
+script = ExtResource("1_k6jq0")
 
 [node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
 layout_mode = 0
@@ -22,6 +24,7 @@ offset_left = 30.0
 offset_top = 530.0
 offset_right = 287.0
 offset_bottom = 605.0
+text = "Click a hero!"
 
 [node name="abilityUpgrade2" type="Button" parent="upgrades" unique_id=1053079222]
 layout_mode = 0
@@ -29,6 +32,7 @@ offset_left = 30.0
 offset_top = 430.0
 offset_right = 287.0
 offset_bottom = 505.0
+text = "Click a hero!"
 
 [node name="abilityUpgrade3" type="Button" parent="upgrades" unique_id=1864353907]
 layout_mode = 0
@@ -36,6 +40,7 @@ offset_left = 30.0
 offset_top = 330.0
 offset_right = 287.0
 offset_bottom = 405.0
+text = "Click a hero!"
 
 [node name="reroll" type="Button" parent="upgrades" unique_id=416708368]
 layout_mode = 0
@@ -43,6 +48,8 @@ offset_left = 234.0
 offset_top = 220.0
 offset_right = 309.0
 offset_bottom = 267.0
+text = "reroll
+"
 
 [node name="upgradeHero" type="Button" parent="upgrades" unique_id=407854011]
 layout_mode = 0
@@ -50,6 +57,7 @@ offset_left = 25.0
 offset_top = 216.0
 offset_right = 142.0
 offset_bottom = 271.0
+text = "upgradeHero"
 
 [node name="characterStats" type="Panel" parent="upgrades" unique_id=194009719]
 layout_mode = 0
@@ -224,8 +232,14 @@ text = "Exit
 "
 
 [connection signal="mouse_entered" from="upgrades/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
+[connection signal="pressed" from="upgrades/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]
+[connection signal="pressed" from="upgrades/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_pressed"]
+[connection signal="mouse_entered" from="upgrades/characterStats/healthStat" to="upgrades/characterStats" method="_on_health_stat_mouse_entered"]
+[connection signal="pressed" from="heroes/hero1" to="upgrades" method="_on_hero_1_pressed"]
 [connection signal="pressed" from="heroes/hero1" to="upgrades/characterStats" method="_on_hero_1_pressed"]
+[connection signal="pressed" from="heroes/hero2" to="upgrades" method="_on_hero_2_pressed"]
 [connection signal="pressed" from="heroes/hero2" to="upgrades/characterStats" method="_on_hero_2_pressed"]
+[connection signal="pressed" from="heroes/hero3" to="upgrades" method="_on_hero_3_pressed"]
 [connection signal="pressed" from="heroes/hero3" to="upgrades/characterStats" method="_on_hero_3_pressed"]
 [connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="upgrades/characterStats" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="pauseUI" method="_on_resume_button_pressed"]
