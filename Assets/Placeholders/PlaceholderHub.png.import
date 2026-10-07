@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c82qx0ai7v18p"
-path="res://.godot/imported/placeholderHealth.png-7051ce7b88c62d3a17e14ce97618a80b.ctex"
+uid="uid://dc5gpd7kt74y"
+path="res://.godot/imported/PlaceholderHub.png-363299489f68053998b02d6348f8173c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Other/placeholderHealth.png"
-dest_files=["res://.godot/imported/placeholderHealth.png-7051ce7b88c62d3a17e14ce97618a80b.ctex"]
+source_file="res://Assets/Placeholders/PlaceholderHub.png"
+dest_files=["res://.godot/imported/PlaceholderHub.png-363299489f68053998b02d6348f8173c.ctex"]
 
 [params]
 

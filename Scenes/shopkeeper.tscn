@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d044th6buajhx"]
+
+[ext_resource type="Texture2D" uid="uid://bj0yuibehmajh" path="res://Assets/Sprites/Characters/Tadle, Constable of Larp.png" id="1_eno6s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1e8i3"]
+atlas = ExtResource("1_eno6s")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7scxg"]
+atlas = ExtResource("1_eno6s")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdy00"]
+atlas = ExtResource("1_eno6s")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rla2l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1e8i3")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7scxg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdy00")
+}],
+"loop": true,
+"name": &"Speak",
+"speed": 5.0
+}]
+
+[node name="Shopkeeper" type="Node2D" unique_id=1372749085]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1921811397]
+sprite_frames = SubResource("SpriteFrames_rla2l")
+animation = &"Idle"

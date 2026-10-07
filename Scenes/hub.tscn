@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cguhawqtofman"]
 
-[ext_resource type="Texture2D" uid="uid://dc5gpd7kt74y" path="res://Assets/Other/PlaceholderHub.png" id="1_x21iy"]
+[ext_resource type="Texture2D" uid="uid://dc5gpd7kt74y" path="res://Assets/Placeholders/PlaceholderHub.png" id="1_x21iy"]
 
 [node name="Hub" type="Node2D" unique_id=486864914]
 

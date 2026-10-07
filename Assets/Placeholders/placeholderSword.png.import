@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3rt7gxvm2oiu"
-path="res://.godot/imported/TitleCard.png-b02acf20b0b90125ee946866f774522c.ctex"
+uid="uid://cmpo8elinj77k"
+path="res://.godot/imported/placeholderSword.png-0a988fbcc4f3c16c1ce33e120f887213.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TitleCard.png"
-dest_files=["res://.godot/imported/TitleCard.png-b02acf20b0b90125ee946866f774522c.ctex"]
+source_file="res://Assets/Placeholders/placeholderSword.png"
+dest_files=["res://.godot/imported/placeholderSword.png-0a988fbcc4f3c16c1ce33e120f887213.ctex"]
 
 [params]
 
