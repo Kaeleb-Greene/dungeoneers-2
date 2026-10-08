@@ -3,15 +3,24 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvpxrixcjlp8t"
+<<<<<<< Updated upstream:Assets/Placeholders/21412412.jpg.import
 path="res://.godot/imported/21412412.jpg-7604a87f2668e7c96a748b07aedb5daf.ctex"
+=======
+path="res://.godot/imported/21412412.jpg-d33789422190c6d4f3fb602db051eefc.ctex"
+>>>>>>> Stashed changes:Assets/Other/21412412.jpg.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< Updated upstream:Assets/Placeholders/21412412.jpg.import
 source_file="res://Assets/Placeholders/21412412.jpg"
 dest_files=["res://.godot/imported/21412412.jpg-7604a87f2668e7c96a748b07aedb5daf.ctex"]
+=======
+source_file="res://Assets/Other/21412412.jpg"
+dest_files=["res://.godot/imported/21412412.jpg-d33789422190c6d4f3fb602db051eefc.ctex"]
+>>>>>>> Stashed changes:Assets/Other/21412412.jpg.import
 
 [params]
 

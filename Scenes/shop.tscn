@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://bp347uortgpy5"]
 
 [ext_resource type="Script" uid="uid://b7fbg1vhs0ccs" path="res://Scripts/character_stats.gd" id="1_fgaav"]
+<<<<<<< Updated upstream
 [ext_resource type="Script" uid="uid://0cv1xskgfvou" path="res://Scenes/shopUpgrades.gd" id="1_k6jq0"]
+=======
+>>>>>>> Stashed changes
 [ext_resource type="Texture2D" uid="uid://cmpo8elinj77k" path="res://Assets/Other/placeholderSword.png" id="2_6lah5"]
 [ext_resource type="Texture2D" uid="uid://c82qx0ai7v18p" path="res://Assets/Other/placeholderHealth.png" id="3_gmb2m"]
 [ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://Scripts/pause_ui.gd" id="4_8kdgp"]
