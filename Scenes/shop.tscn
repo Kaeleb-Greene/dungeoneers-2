@@ -5,59 +5,67 @@
 [ext_resource type="Texture2D" uid="uid://kt8kslt44agj" path="res://Assets/Placeholders/placeholderSword.png" id="3_k6jq0"]
 [ext_resource type="Texture2D" uid="uid://o4s5bo78gru7" path="res://Assets/Placeholders/placeholderHealth.png" id="4_3ps1r"]
 [ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://Scripts/pause_ui.gd" id="4_8kdgp"]
+[ext_resource type="Texture2D" uid="uid://sdwygerucufs" path="res://Assets/KeyArt/ShopMenu.png" id="7_s8dlv"]
+[ext_resource type="PackedScene" uid="uid://d044th6buajhx" path="res://Scenes/shopkeeper.tscn" id="7_ymrm4"]
 
 [node name="Node2D" type="Node2D" unique_id=1430072747]
+
+[node name="ShopMenu" type="Sprite2D" parent="." unique_id=121128836]
+position = Vector2(575.5, 324)
+scale = Vector2(5.7098217, 5.6406245)
+texture = ExtResource("7_s8dlv")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=232994957]
 position = Vector2(576, 324)
 
 [node name="upgrades" type="Panel" parent="." unique_id=1164472576]
 process_mode = 3
-offset_left = 897.0
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 934.0
 offset_top = -37.0
-offset_right = 1216.0
+offset_right = 934.0
 offset_bottom = 685.0
 script = ExtResource("1_k6jq0")
 
 [node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 530.0
-offset_right = 287.0
-offset_bottom = 605.0
+offset_left = 23.0
+offset_top = 550.0
+offset_right = 266.0
+offset_bottom = 625.0
 text = "Click a hero!"
 
 [node name="abilityUpgrade2" type="Button" parent="upgrades" unique_id=1053079222]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 430.0
-offset_right = 287.0
-offset_bottom = 505.0
+offset_left = 23.0
+offset_top = 450.0
+offset_right = 266.0
+offset_bottom = 525.0
 text = "Click a hero!"
 
 [node name="abilityUpgrade3" type="Button" parent="upgrades" unique_id=1864353907]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 330.0
-offset_right = 287.0
-offset_bottom = 405.0
+offset_left = 23.0
+offset_top = 350.0
+offset_right = 266.0
+offset_bottom = 425.0
 text = "Click a hero!"
 
 [node name="reroll" type="Button" parent="upgrades" unique_id=416708368]
 layout_mode = 0
-offset_left = 234.0
-offset_top = 220.0
-offset_right = 309.0
-offset_bottom = 267.0
+offset_left = 186.0
+offset_top = 223.0
+offset_right = 261.0
+offset_bottom = 270.0
 text = "reroll
 "
 
 [node name="characterStats" type="Panel" parent="upgrades" unique_id=194009719]
 layout_mode = 0
-offset_left = 29.0
-offset_top = 28.0
-offset_right = 290.0
-offset_bottom = 185.0
+offset_left = 22.0
+offset_top = 30.0
+offset_right = 267.0
+offset_bottom = 187.0
 script = ExtResource("1_fgaav")
 
 [node name="upgradeHero" type="Button" parent="upgrades/characterStats" unique_id=407854011]
@@ -110,6 +118,7 @@ expand_mode = 1
 
 [node name="heroes" type="Panel" parent="." unique_id=549266114]
 process_mode = 3
+self_modulate = Color(1, 1, 1, 0)
 offset_left = -64.0
 offset_top = -36.0
 offset_right = 206.0
@@ -237,6 +246,10 @@ offset_right = 657.0
 offset_bottom = 538.0
 text = "Exit
 "
+
+[node name="Shopkeeper" parent="." unique_id=1372749085 instance=ExtResource("7_ymrm4")]
+position = Vector2(594, 282)
+scale = Vector2(5.71, 5.641)
 
 [connection signal="mouse_entered" from="upgrades/characterStats/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
 [connection signal="pressed" from="upgrades/characterStats/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]

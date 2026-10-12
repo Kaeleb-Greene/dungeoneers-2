@@ -68,8 +68,9 @@ func _on_upgrade_hero_pressed() -> void:
 			$healthStat.text = str(hero2Health * 1.10) + " health"
 		elif currHero == 3:
 			$upgradeHero.text = "currHero 3 test"
-			$attackStat.text = str(hero2Attack * 1.10) + " attack"
-			$healthStat.text = str(hero2Health * 1.10) + " health"
+			$attackStat.text = str(hero3Attack * 1.10) + " attack"
+			$healthStat.text = str(hero3Health * 1.10) + " health"
+			#make the upgrade button red or maybe a breaking animation?
 		else:
 			pass # raise an error
 	else:
@@ -79,7 +80,7 @@ func _on_upgrade_hero_pressed() -> void:
 	
 
 
-
+#MAKE THIS GREEN AND UNDO AFTER HOVER 
 
 func _on_upgrade_hero_mouse_entered() -> void:
 	if currHero == 1:
