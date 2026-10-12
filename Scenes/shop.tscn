@@ -54,14 +54,6 @@ offset_bottom = 267.0
 text = "reroll
 "
 
-[node name="upgradeHero" type="Button" parent="upgrades" unique_id=407854011]
-layout_mode = 0
-offset_left = 25.0
-offset_top = 216.0
-offset_right = 142.0
-offset_bottom = 271.0
-text = "upgradeHero"
-
 [node name="characterStats" type="Panel" parent="upgrades" unique_id=194009719]
 layout_mode = 0
 offset_left = 29.0
@@ -69,6 +61,14 @@ offset_top = 28.0
 offset_right = 290.0
 offset_bottom = 185.0
 script = ExtResource("1_fgaav")
+
+[node name="upgradeHero" type="Button" parent="upgrades/characterStats" unique_id=407854011]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 188.0
+offset_right = 113.0
+offset_bottom = 243.0
+text = "Select a Hero!"
 
 [node name="healthStat" type="Label" parent="upgrades/characterStats" unique_id=1732561295]
 layout_mode = 0
@@ -234,9 +234,9 @@ offset_bottom = 538.0
 text = "Exit
 "
 
-[connection signal="mouse_entered" from="upgrades/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
-[connection signal="pressed" from="upgrades/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]
-[connection signal="pressed" from="upgrades/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_pressed"]
+[connection signal="mouse_entered" from="upgrades/characterStats/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
+[connection signal="pressed" from="upgrades/characterStats/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]
+[connection signal="pressed" from="upgrades/characterStats/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_pressed"]
 [connection signal="mouse_entered" from="upgrades/characterStats/healthStat" to="upgrades/characterStats" method="_on_health_stat_mouse_entered"]
 [connection signal="pressed" from="heroes/hero1" to="upgrades" method="_on_hero_1_pressed"]
 [connection signal="pressed" from="heroes/hero1" to="upgrades/characterStats" method="_on_hero_1_pressed"]
