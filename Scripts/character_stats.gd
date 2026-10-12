@@ -1,6 +1,10 @@
 extends Panel
 
 @onready var upgrade_Hero = $upgradeHero
+@onready var health_stat = $healthStat
+@onready var healthImg = $healthImage
+@onready var attackStat = $attackStat
+@onready var attackimage = $attackImage
 
 var currHero = 0
 var hero1Health :int = 50
@@ -18,23 +22,34 @@ var heroSelected :int = 0
 func _on_hero_1_pressed() -> void:
 	$healthStat.text = str(hero1Health) + " health"
 	$attackStat.text = str(hero1Attack) + " attack"
-	currHero = 1
 	$upgradeHero.text = "Upgrade hero"
-	#var heroSelected = 1
+	currHero = 1
+	health_stat.show()
+	attackStat.show()
+	attackimage.show()
+	healthImg.show()
+
+	
 
 func _on_hero_2_pressed() -> void:
 	$healthStat.text = str(hero2Health) + " health"
 	$attackStat.text = str(hero2Attack) + " attack"
 	currHero = 2
 	$upgradeHero.text = "Upgrade hero"
-	#var heroSelected = 1
+	health_stat.show()
+	attackStat.show()
+	attackimage.show()
+	healthImg.show()
 
 func _on_hero_3_pressed() -> void:
 	$healthStat.text = str(hero3Health) + " health"
 	$attackStat.text = str(hero3Attack) + " attack"
 	currHero = 3
 	$upgradeHero.text = "Upgrade hero"
-	#var heroSelected = 1
+	health_stat.show()
+	attackStat.show()
+	attackimage.show()
+	healthImg.show()
 
 
 func _on_upgrade_hero_pressed() -> void:

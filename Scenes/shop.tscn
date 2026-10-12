@@ -1,12 +1,9 @@
 [gd_scene format=3 uid="uid://bp347uortgpy5"]
 
 [ext_resource type="Script" uid="uid://b7fbg1vhs0ccs" path="res://Scripts/character_stats.gd" id="1_fgaav"]
-<<<<<<< Updated upstream
 [ext_resource type="Script" uid="uid://0cv1xskgfvou" path="res://Scenes/shopUpgrades.gd" id="1_k6jq0"]
-=======
->>>>>>> Stashed changes
-[ext_resource type="Texture2D" uid="uid://cmpo8elinj77k" path="res://Assets/Other/placeholderSword.png" id="2_6lah5"]
-[ext_resource type="Texture2D" uid="uid://c82qx0ai7v18p" path="res://Assets/Other/placeholderHealth.png" id="3_gmb2m"]
+[ext_resource type="Texture2D" uid="uid://kt8kslt44agj" path="res://Assets/Placeholders/placeholderSword.png" id="3_k6jq0"]
+[ext_resource type="Texture2D" uid="uid://o4s5bo78gru7" path="res://Assets/Placeholders/placeholderHealth.png" id="4_3ps1r"]
 [ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://Scripts/pause_ui.gd" id="4_8kdgp"]
 
 [node name="Node2D" type="Node2D" unique_id=1430072747]
@@ -16,9 +13,10 @@ position = Vector2(576, 324)
 
 [node name="upgrades" type="Panel" parent="." unique_id=1164472576]
 process_mode = 3
-offset_left = 833.0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = 897.0
+offset_top = -37.0
+offset_right = 1216.0
+offset_bottom = 685.0
 script = ExtResource("1_k6jq0")
 
 [node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
@@ -71,6 +69,7 @@ offset_bottom = 243.0
 text = "Select a Hero!"
 
 [node name="healthStat" type="Label" parent="upgrades/characterStats" unique_id=1732561295]
+visible = false
 layout_mode = 0
 offset_left = 89.0
 offset_top = 17.0
@@ -80,6 +79,7 @@ text = "____  health"
 vertical_alignment = 1
 
 [node name="attackStat" type="Label" parent="upgrades/characterStats" unique_id=1097841547]
+visible = false
 layout_mode = 0
 offset_left = 89.0
 offset_top = 70.0
@@ -89,27 +89,31 @@ text = "_____ attack"
 vertical_alignment = 1
 
 [node name="attackImage" type="TextureRect" parent="upgrades/characterStats" unique_id=326589148]
+visible = false
 layout_mode = 0
 offset_left = 40.0
 offset_top = 70.0
 offset_right = 76.0
 offset_bottom = 107.0
-texture = ExtResource("2_6lah5")
+texture = ExtResource("3_k6jq0")
 expand_mode = 1
 
 [node name="healthImage" type="TextureRect" parent="upgrades/characterStats" unique_id=1615968802]
+visible = false
 layout_mode = 0
 offset_left = 40.0
 offset_top = 17.0
 offset_right = 76.0
 offset_bottom = 54.0
-texture = ExtResource("3_gmb2m")
+texture = ExtResource("4_3ps1r")
 expand_mode = 1
 
 [node name="heroes" type="Panel" parent="." unique_id=549266114]
 process_mode = 3
-offset_right = 270.0
-offset_bottom = 648.0
+offset_left = -64.0
+offset_top = -36.0
+offset_right = 206.0
+offset_bottom = 685.0
 
 [node name="hero1" type="Button" parent="heroes" unique_id=710269995]
 layout_mode = 0

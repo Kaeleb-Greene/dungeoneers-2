@@ -9,6 +9,7 @@ func _on_hero_1_pressed() -> void:
 	ability_menu2.text = ""
 	ability_menu3.text = ""
 
+
 	#if level = blah pick 3 abilities from this list random number 1-40 etc.
 
 
