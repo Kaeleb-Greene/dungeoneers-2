@@ -1,24 +1,24 @@
 [gd_scene format=3 uid="uid://d044th6buajhx"]
 
-[ext_resource type="Texture2D" uid="uid://bj0yuibehmajh" path="res://Assets/Sprites/Characters/Tadle, Constable of Larp.png" id="1_eno6s"]
+[ext_resource type="Texture2D" uid="uid://dhlb04ejph6v8" path="res://Assets/Sprites/Characters/Tadle, Constable of Larp.png" id="1_eno6s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eno6s"]
+atlas = ExtResource("1_eno6s")
+region = Rect2(0, 0, 80, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1e8i3"]
 atlas = ExtResource("1_eno6s")
-region = Rect2(0, 0, 80, 64)
+region = Rect2(0, 0, 80, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7scxg"]
 atlas = ExtResource("1_eno6s")
-region = Rect2(0, 0, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fdy00"]
-atlas = ExtResource("1_eno6s")
-region = Rect2(80, 0, 80, 64)
+region = Rect2(80, 0, 80, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rla2l"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1e8i3")
+"texture": SubResource("AtlasTexture_eno6s")
 }],
 "loop": true,
 "name": &"Idle",
@@ -26,10 +26,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7scxg")
+"texture": SubResource("AtlasTexture_1e8i3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fdy00")
+"texture": SubResource("AtlasTexture_7scxg")
 }],
 "loop": true,
 "name": &"Speak",
