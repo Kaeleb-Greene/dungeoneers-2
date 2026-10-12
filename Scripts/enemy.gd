@@ -8,14 +8,15 @@ const IDLE_POSITION = [Vector2(448, -64),
 					   Vector2(448, 64)]
 
 # basic stats
-var health = 0;
-var attack = 0;
-var defense = 0;
+var health: int = 0;
+var attack: int = 0;
+var defense: int = 0;
 
-var attribute = "none"
-var type = ""
+var attribute: String = "none"
+var type: String = ""
 
-var slot = 0
+var slot: int = 0
+var active: bool = false;
 
 func _ready() -> void:
 	update_position()
@@ -34,4 +35,8 @@ func debug_messages() -> void:
 	print("Attribute: "+str(attribute))
 	print("Position: "+str(position))
 	print("Slot: "+str(slot)+"\n")
-	
+
+func _process(_float) -> void:
+	if (health <= 0):
+		queue_free()
+		get_parent().turn_queue.erase(get_instance_id())

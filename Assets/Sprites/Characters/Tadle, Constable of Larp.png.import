@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3rt7gxvm2oiu"
-path="res://.godot/imported/TitleCard.png-b02acf20b0b90125ee946866f774522c.ctex"
+uid="uid://dhlb04ejph6v8"
+path="res://.godot/imported/Tadle, Constable of Larp.png-fa475c5fb7ea06f74089817eaf982658.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TitleCard.png"
-dest_files=["res://.godot/imported/TitleCard.png-b02acf20b0b90125ee946866f774522c.ctex"]
+source_file="res://Assets/Sprites/Characters/Tadle, Constable of Larp.png"
+dest_files=["res://.godot/imported/Tadle, Constable of Larp.png-fa475c5fb7ea06f74089817eaf982658.ctex"]
 
 [params]
 

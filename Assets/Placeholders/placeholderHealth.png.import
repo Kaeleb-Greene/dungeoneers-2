@@ -3,15 +3,24 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c82qx0ai7v18p"
+<<<<<<< Updated upstream:Assets/Placeholders/placeholderHealth.png.import
+path="res://.godot/imported/placeholderHealth.png-e411cc4c62a0900cac987ddbc2af0790.ctex"
+=======
 path="res://.godot/imported/placeholderHealth.png-7051ce7b88c62d3a17e14ce97618a80b.ctex"
+>>>>>>> Stashed changes:Assets/Other/placeholderHealth.png.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< Updated upstream:Assets/Placeholders/placeholderHealth.png.import
+source_file="res://Assets/Placeholders/placeholderHealth.png"
+dest_files=["res://.godot/imported/placeholderHealth.png-e411cc4c62a0900cac987ddbc2af0790.ctex"]
+=======
 source_file="res://Assets/Other/placeholderHealth.png"
 dest_files=["res://.godot/imported/placeholderHealth.png-7051ce7b88c62d3a17e14ce97618a80b.ctex"]
+>>>>>>> Stashed changes:Assets/Other/placeholderHealth.png.import
 
 [params]
 
