@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://lupftnp2naxx"]
+
+[ext_resource type="Texture2D" uid="uid://csufvre0pmp1g" path="res://Assets/KeyArt/PartyMakerMenu.png" id="1_13gvv"]
+
+[node name="Party_Maker_Menu" type="Control" unique_id=881602368]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=1204809646]
+layout_mode = 0
+offset_left = -136.87402
+offset_top = -120.0
+offset_right = 136.0
+offset_bottom = 119.0
+color = Color(0, 0, 0, 1)
+
+[node name="PartyMakerUI" type="Sprite2D" parent="." unique_id=1391861782]
+texture = ExtResource("1_13gvv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=183609359]
+zoom = Vector2(5.6, 5.6)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=777973483]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=812892096]
+layout_mode = 0
+offset_left = -45.0
+offset_top = -63.0
+offset_right = 92.0
+offset_bottom = -40.0
+theme_override_font_sizes/font_size = 13
+text = "Create Your Party"
+horizontal_alignment = 1
