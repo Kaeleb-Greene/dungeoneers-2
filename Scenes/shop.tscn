@@ -7,24 +7,30 @@
 [ext_resource type="Script" uid="uid://1i8qswv7jw5u" path="res://Scripts/pause_ui.gd" id="4_8kdgp"]
 [ext_resource type="Texture2D" uid="uid://sdwygerucufs" path="res://Assets/KeyArt/ShopMenu.png" id="7_s8dlv"]
 [ext_resource type="PackedScene" uid="uid://d044th6buajhx" path="res://Scenes/shopkeeper.tscn" id="7_ymrm4"]
+[ext_resource type="Texture2D" uid="uid://c3uf7rkoqaje1" path="res://Assets/KeyArt/ShopMenuUI.png" id="8_s8dlv"]
 
 [node name="Node2D" type="Node2D" unique_id=1430072747]
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=232994957]
+
 [node name="ShopMenu" type="Sprite2D" parent="." unique_id=121128836]
-position = Vector2(575.5, 324)
 scale = Vector2(5.7098217, 5.6406245)
 texture = ExtResource("7_s8dlv")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=232994957]
-position = Vector2(576, 324)
+[node name="Shopkeeper" parent="." unique_id=1372749085 instance=ExtResource("7_ymrm4")]
+position = Vector2(0, -28)
+scale = Vector2(5.71, 5.641)
+
+[node name="ShopMenuUi" type="Sprite2D" parent="." unique_id=1732132923]
+scale = Vector2(5.753, 5.641)
+texture = ExtResource("8_s8dlv")
 
 [node name="upgrades" type="Panel" parent="." unique_id=1164472576]
 process_mode = 3
 self_modulate = Color(1, 1, 1, 0)
-offset_left = 934.0
-offset_top = -37.0
-offset_right = 934.0
-offset_bottom = 685.0
+offset_left = 362.0
+offset_top = -298.0
+offset_right = 674.0
 script = ExtResource("1_k6jq0")
 
 [node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
@@ -53,10 +59,10 @@ text = "Click a hero!"
 
 [node name="reroll" type="Button" parent="upgrades" unique_id=416708368]
 layout_mode = 0
-offset_left = 186.0
-offset_top = 223.0
-offset_right = 261.0
-offset_bottom = 270.0
+offset_left = 168.0
+offset_top = 219.0
+offset_right = 243.0
+offset_bottom = 272.0
 text = "reroll
 "
 
@@ -70,9 +76,9 @@ script = ExtResource("1_fgaav")
 
 [node name="upgradeHero" type="Button" parent="upgrades/characterStats" unique_id=407854011]
 layout_mode = 0
-offset_left = -4.0
+offset_left = 5.0
 offset_top = 188.0
-offset_right = 113.0
+offset_right = 122.0
 offset_bottom = 243.0
 text = "Select a Hero!"
 
@@ -119,31 +125,31 @@ expand_mode = 1
 [node name="heroes" type="Panel" parent="." unique_id=549266114]
 process_mode = 3
 self_modulate = Color(1, 1, 1, 0)
-offset_left = -64.0
-offset_top = -36.0
-offset_right = 206.0
-offset_bottom = 685.0
+offset_left = -640.0
+offset_top = -334.0
+offset_right = -39.0
+offset_bottom = -18.0
 
 [node name="hero1" type="Button" parent="heroes" unique_id=710269995]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 62.0
+offset_top = 7.0
 offset_right = 230.0
-offset_bottom = 205.0
+offset_bottom = 207.0
 
 [node name="hero2" type="Button" parent="heroes" unique_id=1474747319]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 262.0
+offset_top = 230.0
 offset_right = 230.0
-offset_bottom = 405.0
+offset_bottom = 430.0
 
 [node name="hero3" type="Button" parent="heroes" unique_id=1151627383]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 462.0
+offset_top = 450.0
 offset_right = 230.0
-offset_bottom = 605.0
+offset_bottom = 650.0
 
 [node name="pauseUI" type="CanvasLayer" parent="." unique_id=1710339922]
 process_mode = 3
@@ -157,49 +163,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="optionsLabel" type="Label" parent="pauseUI/optionsMenu" unique_id=1232683323]
+[node name="Panel" type="Panel" parent="pauseUI/optionsMenu" unique_id=37589493]
+self_modulate = Color(0.29411766, 0.3372549, 0.43137255, 1)
 layout_mode = 0
-offset_left = 400.0
-offset_top = 30.0
-offset_right = 702.0
-offset_bottom = 159.0
+offset_left = 462.0
+offset_top = 21.0
+offset_right = 781.0
+offset_bottom = 696.0
+
+[node name="ResumeButton" type="Button" parent="pauseUI/optionsMenu/Panel" unique_id=1073087203]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 99.0
+offset_right = 158.0
+offset_bottom = 161.0
+scale = Vector2(2, 2)
+text = "Resume
+"
+
+[node name="Exit" type="Button" parent="pauseUI/optionsMenu/Panel" unique_id=1446554863]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 529.0
+offset_right = 158.0
+offset_bottom = 591.0
+scale = Vector2(2, 2)
+text = "Exit
+"
+
+[node name="musicSlider" type="HSlider" parent="pauseUI/optionsMenu/Panel" unique_id=1345237088]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 254.0
+offset_right = 158.0
+offset_bottom = 316.0
+scale = Vector2(2, 2)
+value = 50.0
+scrollable = false
+
+[node name="sfxSlider" type="HSlider" parent="pauseUI/optionsMenu/Panel" unique_id=259909804]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 409.0
+offset_right = 158.0
+offset_bottom = 471.0
+scale = Vector2(2, 2)
+value = 50.0
+scrollable = false
+
+[node name="sfxVolumeLabel2" type="Label" parent="pauseUI/optionsMenu/Panel" unique_id=1568950555]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 254.0
+offset_right = 158.0
+offset_bottom = 316.0
+scale = Vector2(2, 2)
+text = "Music Volume"
+
+[node name="optionsLabel" type="Label" parent="pauseUI/optionsMenu/Panel" unique_id=1232683323]
+layout_mode = 0
+offset_left = -122.0
+offset_top = -17.0
+offset_right = 328.0
+offset_bottom = 55.0
+scale = Vector2(1.25, 1.25)
 theme_override_font_sizes/font_size = 52
 text = "OPTIONS"
 horizontal_alignment = 1
 
-[node name="sfxVolumeLabel" type="Label" parent="pauseUI/optionsMenu" unique_id=1300902922]
+[node name="sfxVolumeLabel" type="Label" parent="pauseUI/optionsMenu/Panel" unique_id=1300902922]
 layout_mode = 0
-offset_left = 477.0
-offset_top = 135.0
-offset_right = 517.0
-offset_bottom = 158.0
+offset_left = 18.0
+offset_top = 409.0
+offset_right = 158.0
+offset_bottom = 471.0
+scale = Vector2(2, 2)
 text = "SFX Volume"
-
-[node name="sfxVolumeLabel2" type="Label" parent="pauseUI/optionsMenu" unique_id=1568950555]
-layout_mode = 0
-offset_left = 477.0
-offset_top = 235.0
-offset_right = 568.0
-offset_bottom = 258.0
-text = "Music Volume"
-
-[node name="sfxSlider" type="HSlider" parent="pauseUI/optionsMenu" unique_id=259909804]
-layout_mode = 0
-offset_left = 473.0
-offset_top = 150.0
-offset_right = 627.0
-offset_bottom = 215.0
-value = 50.0
-scrollable = false
-
-[node name="musicSlider" type="HSlider" parent="pauseUI/optionsMenu" unique_id=1345237088]
-layout_mode = 0
-offset_left = 473.0
-offset_top = 250.0
-offset_right = 627.0
-offset_bottom = 315.0
-value = 50.0
-scrollable = false
 
 [node name="pauseMenu" type="Panel" parent="pauseUI" unique_id=700106807]
 visible = false
@@ -209,47 +248,58 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="pauseUI/pauseMenu" unique_id=1544493896]
+[node name="Panel" type="Panel" parent="pauseUI/pauseMenu" unique_id=349689771]
+self_modulate = Color(0.29411766, 0.3372549, 0.43137255, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.031000001
+anchor_bottom = 0.056
+offset_left = 462.0
+offset_top = 21.0
+offset_right = 741.32
+offset_bottom = 655.68
+
+[node name="Options" type="Button" parent="pauseUI/pauseMenu/Panel" unique_id=1625603756]
 layout_mode = 0
-offset_left = 400.0
-offset_top = 4.0
-offset_right = 702.0
-offset_bottom = 133.0
+offset_left = 18.0
+offset_top = 329.0
+offset_right = 158.0
+offset_bottom = 391.0
+scale = Vector2(2, 2)
+text = "Options
+"
+
+[node name="Exit" type="Button" parent="pauseUI/pauseMenu/Panel" unique_id=913813345]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 529.0
+offset_right = 158.0
+offset_bottom = 591.0
+scale = Vector2(2, 2)
+text = "Exit
+"
+
+[node name="ResumeButton" type="Button" parent="pauseUI/pauseMenu/Panel" unique_id=1606315208]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 129.0
+offset_right = 158.0
+offset_bottom = 191.0
+scale = Vector2(2, 2)
+text = "Resume
+"
+
+[node name="Label" type="Label" parent="pauseUI/pauseMenu/Panel" unique_id=1544493896]
+layout_mode = 0
+offset_left = -55.99997
+offset_top = -21.0
+offset_right = 223.33337
+offset_bottom = 74.0
+scale = Vector2(1.5, 1.5)
 theme_override_font_sizes/font_size = 52
 text = "PAUSE"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="ResumeButton" type="Button" parent="pauseUI/pauseMenu" unique_id=1606315208]
-layout_mode = 0
-offset_left = 453.0
-offset_top = 150.0
-offset_right = 657.0
-offset_bottom = 238.0
-text = "Resume
-"
-
-[node name="Options" type="Button" parent="pauseUI/pauseMenu" unique_id=1625603756]
-layout_mode = 0
-offset_left = 453.0
-offset_top = 300.0
-offset_right = 657.0
-offset_bottom = 388.0
-text = "Options
-"
-
-[node name="Exit" type="Button" parent="pauseUI/pauseMenu" unique_id=913813345]
-layout_mode = 0
-offset_left = 453.0
-offset_top = 450.0
-offset_right = 657.0
-offset_bottom = 538.0
-text = "Exit
-"
-
-[node name="Shopkeeper" parent="." unique_id=1372749085 instance=ExtResource("7_ymrm4")]
-position = Vector2(594, 282)
-scale = Vector2(5.71, 5.641)
 
 [connection signal="mouse_entered" from="upgrades/characterStats/upgradeHero" to="upgrades/characterStats" method="_on_upgrade_hero_mouse_entered"]
 [connection signal="pressed" from="upgrades/characterStats/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]
@@ -261,7 +311,7 @@ scale = Vector2(5.71, 5.641)
 [connection signal="pressed" from="heroes/hero2" to="upgrades/characterStats" method="_on_hero_2_pressed"]
 [connection signal="pressed" from="heroes/hero3" to="upgrades" method="_on_hero_3_pressed"]
 [connection signal="pressed" from="heroes/hero3" to="upgrades/characterStats" method="_on_hero_3_pressed"]
-[connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="upgrades/characterStats" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="pauseUI/pauseMenu/ResumeButton" to="pauseUI" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="pauseUI/pauseMenu/Options" to="pauseUI" method="_on_options_pressed"]
-[connection signal="pressed" from="pauseUI/pauseMenu/Exit" to="pauseUI" method="_on_exit_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Panel/Options" to="pauseUI" method="_on_options_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Panel/Exit" to="pauseUI" method="_on_exit_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Panel/ResumeButton" to="upgrades/characterStats" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="pauseUI/pauseMenu/Panel/ResumeButton" to="pauseUI" method="_on_resume_button_pressed"]
