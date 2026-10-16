@@ -16,6 +16,16 @@ var party_num: int = 3; 		# How many party members are in current room
 var rooms: Array = ["crypt", "swamp", "cursed_tomb", "enchanted_library", "hellscape", "frozen_cavern", "dragons_den"]
 var room_type: String = "crypt"
 
+func reset_slots():
+	slots= {
+		"slot_1": null,
+		"slot_2": null,
+		"slot_3": null,
+		"slot_4": null,
+		"slot_5": null,
+		"slot_6": null
+	}
+
 #region CHARACTER INITIATION
 func character_spawn(id, character_class):
 	# assign stats based on class type to the new isntance of character
@@ -35,8 +45,13 @@ func character_spawn(id, character_class):
 	elif (slots["slot_3"] == null): 
 		slot = 3
 		slots["slot_3"] = id;
-	id.slot = slot
-	return id
+	if (slot != 0):
+		id.slot = slot
+		return id
+	else:
+		push_error("Could not assign a slot to: "+str(character_class))
+		id.queue_free()
+		return null
 
 func get_character_stats(_class) -> Array:
 	# assigns different stats based on class type
@@ -105,13 +120,13 @@ func get_enemy_stats(_type) -> Array:
 		
 		#CRYPT
 		"skeleton":
-			return [4, 2, 0]
+			return [4, 2, 0, ["shoot_arrow", "shoot_arrow", "shoot_arrow"]]
 		"zombie":
-			return [6, 2, 0]
+			return [6, 2, 0, ["bite", "bite", "bite"]]
 		"raider":
-			return [10, randi_range(3, 4), 0]	
+			return [10, randi_range(3, 4), 0, ["rally", "shoot_arrow", "shoot_arrow"]]	
 		"mega_knight": 
-			return [30, 3, 0]
+			return [30, 3, 0, ["mega_strike", "mega_strike", "mega_heal"]]
 		
 		#SWAMP
 		"goblin":
@@ -191,6 +206,9 @@ func init_enemy_instance(id, _type, _chance, boss_spawn) -> void:
 	id.health = stats[0]
 	id.attack = stats[1]
 	id.defense = stats[2]
+	id.cards["card_1"] = stats[3][0]
+	id.cards["card_2"] = stats[3][1]
+	id.cards["card_3"] = stats[3][2]
 	id.type = type;
 	
 	# place the enemy in the correct slot
@@ -208,5 +226,9 @@ func init_enemy_instance(id, _type, _chance, boss_spawn) -> void:
 		elif (slots["slot_6"] == null): 
 			slot = 3
 			slots["slot_6"] = id;
-	id.slot = slot
+	if (slot != 0):
+		id.slot = slot
+	else:
+		push_error("Could not assign a slot to: "+str(type))
+		id.queue_free()
 #endregion

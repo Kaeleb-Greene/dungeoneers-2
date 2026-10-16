@@ -12,6 +12,8 @@ var defense: int = 0;
 var character_class: String = "";
 var slot: int = 0;
 
+var is_dead: bool = false
+
 func _ready() -> void:
 	update_position()
 	#debug_messages()
@@ -28,6 +30,10 @@ func debug_messages() -> void:
 	print("Slot: "+str(slot)+"\n")
 
 func _process(_float) -> void:
-	if (health <= 0):
+	if (health <= 0) && (!is_dead):
+		is_dead = true
+		
+		var dungeon: Node = get_parent()
+		
+		dungeon.turn_queue.erase(self)
 		queue_free()
-		get_parent().turn_queue.erase(get_instance_id())
