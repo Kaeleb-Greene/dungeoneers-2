@@ -60,11 +60,16 @@ func init_new_room():
 	turn_queue.append(character)
 	
 	# enemy spawning
-	for i in range(3):
+	if (dungeon_gen.current_level%5 != 0):
+		for i in range(3):
+			var enemy = dungeon_gen.enemy_spawn(ENEMY_SCENE.instantiate())
+			add_child(enemy)
+			turn_queue.append(enemy)
+	else:
 		var enemy = dungeon_gen.enemy_spawn(ENEMY_SCENE.instantiate())
 		add_child(enemy)
 		turn_queue.append(enemy)
-
+		
 func get_next_character() -> Node:
 	turn_queue = turn_queue.filter(
 		func(character): return (is_instance_valid(character) && !character.is_queued_for_deletion())
