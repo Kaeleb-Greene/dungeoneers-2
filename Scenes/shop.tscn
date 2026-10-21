@@ -31,6 +31,57 @@ offset_right = 613.0
 offset_bottom = -143.0
 script = ExtResource("1_fgaav")
 
+[node name="upgrades" type="Panel" parent="characterStats" unique_id=1164472576]
+process_mode = 3
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -38.0
+offset_top = 16.0
+offset_right = -33.0
+offset_bottom = 300.0
+script = ExtResource("1_k6jq0")
+
+[node name="abilityUpgrade3" type="Button" parent="characterStats/upgrades" unique_id=418779002]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 550.0
+offset_right = 266.0
+offset_bottom = 625.0
+text = "Click a hero!"
+
+[node name="abilityUpgrade2" type="Button" parent="characterStats/upgrades" unique_id=1053079222]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 450.0
+offset_right = 266.0
+offset_bottom = 525.0
+text = "Click a hero!"
+
+[node name="abilityUpgrade1" type="Button" parent="characterStats/upgrades" unique_id=1864353907]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 350.0
+offset_right = 266.0
+offset_bottom = 425.0
+text = "Click a hero!"
+
+[node name="reroll" type="Button" parent="characterStats/upgrades" unique_id=416708368]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 219.0
+offset_right = 243.0
+offset_bottom = 272.0
+text = "reroll
+"
+
+[node name="levelCounter" type="Label" parent="characterStats/upgrades" unique_id=2130132424]
+layout_mode = 0
+offset_left = -92.0
+offset_top = -70.0
+offset_right = -4.0
+offset_bottom = -23.0
+text = "Level"
+
 [node name="upgradeHero" type="Button" parent="characterStats" unique_id=407854011]
 layout_mode = 0
 offset_left = -5.0
@@ -63,55 +114,6 @@ offset_top = 179.0
 offset_right = 76.0
 offset_bottom = 138.5
 text = "1 upgrade token"
-
-[node name="upgrades" type="Panel" parent="." unique_id=1164472576]
-process_mode = 3
-self_modulate = Color(1, 1, 1, 0)
-offset_left = 362.0
-offset_top = -284.0
-offset_right = 367.0
-script = ExtResource("1_k6jq0")
-
-[node name="abilityUpgrade1" type="Button" parent="upgrades" unique_id=418779002]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 550.0
-offset_right = 266.0
-offset_bottom = 625.0
-text = "Click a hero!"
-
-[node name="abilityUpgrade2" type="Button" parent="upgrades" unique_id=1053079222]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 450.0
-offset_right = 266.0
-offset_bottom = 525.0
-text = "Click a hero!"
-
-[node name="abilityUpgrade3" type="Button" parent="upgrades" unique_id=1864353907]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 350.0
-offset_right = 266.0
-offset_bottom = 425.0
-text = "Click a hero!"
-
-[node name="reroll" type="Button" parent="upgrades" unique_id=416708368]
-layout_mode = 0
-offset_left = 168.0
-offset_top = 219.0
-offset_right = 243.0
-offset_bottom = 272.0
-text = "reroll
-"
-
-[node name="levelCounter" type="Label" parent="upgrades" unique_id=2130132424]
-layout_mode = 0
-offset_left = -92.0
-offset_top = -70.0
-offset_right = -4.0
-offset_bottom = -23.0
-text = "Level"
 
 [node name="heroes" type="Panel" parent="." unique_id=549266114]
 process_mode = 3
@@ -165,7 +167,7 @@ offset_top = 21.0
 offset_right = 781.0
 offset_bottom = 696.0
 
-[node name="ResumeButton" type="Button" parent="pauseUI/optionsMenu/Panel" unique_id=1073087203]
+[node name="ResumeButton2" type="Button" parent="pauseUI/optionsMenu/Panel" unique_id=1073087203]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 99.0
@@ -295,17 +297,22 @@ text = "PAUSE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="characterStats/upgrades/abilityUpgrade3" to="characterStats" method="_on_ability_upgrade_1_pressed"]
+[connection signal="pressed" from="characterStats/upgrades/abilityUpgrade1" to="characterStats" method="_on_ability_upgrade_1_pressed"]
+[connection signal="pressed" from="characterStats/upgrades/reroll" to="characterStats" method="_on_reroll_pressed"]
+[connection signal="pressed" from="characterStats/upgrades/reroll" to="characterStats/upgrades" method="_on_reroll_pressed"]
 [connection signal="mouse_entered" from="characterStats/upgradeHero" to="characterStats" method="_on_upgrade_hero_mouse_entered"]
 [connection signal="mouse_exited" from="characterStats/upgradeHero" to="characterStats" method="_on_upgrade_hero_mouse_exited"]
 [connection signal="pressed" from="characterStats/upgradeHero" to="characterStats" method="_on_upgrade_hero_pressed"]
-[connection signal="pressed" from="characterStats/upgradeHero" to="upgrades" method="_on_upgrade_hero_pressed"]
+[connection signal="pressed" from="characterStats/upgradeHero" to="characterStats/upgrades" method="_on_upgrade_hero_pressed"]
 [connection signal="mouse_entered" from="characterStats/healthStat" to="characterStats" method="_on_health_stat_mouse_entered"]
 [connection signal="pressed" from="heroes/hero1" to="characterStats" method="_on_hero_1_pressed"]
-[connection signal="pressed" from="heroes/hero1" to="upgrades" method="_on_hero_1_pressed"]
+[connection signal="pressed" from="heroes/hero1" to="characterStats/upgrades" method="_on_hero_1_pressed"]
 [connection signal="pressed" from="heroes/hero2" to="characterStats" method="_on_hero_2_pressed"]
-[connection signal="pressed" from="heroes/hero2" to="upgrades" method="_on_hero_2_pressed"]
+[connection signal="pressed" from="heroes/hero2" to="characterStats/upgrades" method="_on_hero_2_pressed"]
 [connection signal="pressed" from="heroes/hero3" to="characterStats" method="_on_hero_3_pressed"]
-[connection signal="pressed" from="heroes/hero3" to="upgrades" method="_on_hero_3_pressed"]
+[connection signal="pressed" from="heroes/hero3" to="characterStats/upgrades" method="_on_hero_3_pressed"]
+[connection signal="pressed" from="pauseUI/optionsMenu/Panel/ResumeButton2" to="pauseUI" method="_on_resume_button_2_pressed"]
 [connection signal="pressed" from="pauseUI/pauseMenu/Panel/Options" to="pauseUI" method="_on_options_pressed"]
 [connection signal="pressed" from="pauseUI/pauseMenu/Panel/Exit" to="pauseUI" method="_on_exit_pressed"]
 [connection signal="pressed" from="pauseUI/pauseMenu/Panel/ResumeButton" to="characterStats" method="_on_resume_button_pressed"]

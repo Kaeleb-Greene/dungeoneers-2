@@ -25,3 +25,7 @@ func _on_options_pressed() -> void:
 	options_menu.visible = true
 	pause_menu.visible = false
 	
+
+
+func _on_resume_button_2_pressed() -> void:
+	options_menu.visible = false

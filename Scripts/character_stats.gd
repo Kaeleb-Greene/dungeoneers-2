@@ -3,6 +3,7 @@ extends Panel
 @onready var upgrade_Hero = $upgradeHero
 @onready var health_stat = $healthStat
 @onready var attackStat = $attackStat
+@onready var abilityText = $upgrades/abilityUpgrade1
 
 var upgradeToken = 1
 var currHero = 0
@@ -56,13 +57,17 @@ func _on_upgrade_hero_pressed() -> void:
 			upgradeToken = 0
 			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 		elif currHero == 2 && upgradeToken == 1:
-			$attackStat.text = str(hero2Attack * 1.10)
-			$healthStat.text = str(hero2Health * 1.10)
+			hero2Attack = hero2Attack * 1.10
+			hero2Health = hero2Health * 1.10
+			$attackStat.text = str(hero2Attack)
+			$healthStat.text = str(hero2Health)
 			upgradeToken = 0
 			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 		elif currHero == 3 && upgradeToken == 1:
-			$attackStat.text = str(hero3Attack * 1.10)
-			$healthStat.text = str(hero3Health * 1.10)
+			hero3Attack = hero3Attack * 1.10
+			hero3Health = hero3Health * 1.10
+			$attackStat.text = str(hero3Attack)
+			$healthStat.text = str(hero3Health)
 			upgradeToken = 0
 			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 			#make the upgrade button red or maybe a breaking animation?
@@ -100,8 +105,8 @@ func _on_upgrade_hero_mouse_entered() -> void:
 		$attackStat.modulate = Color("00ff8c")
 		$healthStat.modulate = Color("00ff8c")
 	if currHero == 3 && upgradeToken == 1:
-		$attackStat.text = str(hero2Attack * 1.10)
-		$healthStat.text = str(hero2Health * 1.10)
+		$attackStat.text = str(hero3Attack * 1.10)
+		$healthStat.text = str(hero3Health * 1.10)
 		$attackStat.modulate = Color("00ff8c")
 		$healthStat.modulate = Color("00ff8c")
 		
@@ -119,7 +124,43 @@ func _on_upgrade_hero_mouse_exited() -> void:
 		$attackStat.modulate = Color("ffffff")
 		$healthStat.modulate = Color("ffffff")
 	if currHero == 3:
-		$attackStat.text = str(hero2Attack)
-		$healthStat.text = str(hero2Health)
+		$attackStat.text = str(hero3Attack)
+		$healthStat.text = str(hero3Health)
 		$attackStat.modulate = Color("ffffff")
 		$healthStat.modulate = Color("ffffff")
+
+
+func _on_ability_upgrade_1_pressed() -> void:
+	if currHero == 1 && upgradeToken == 1:
+		if abilityText.text == "A Knights Jab":
+			hero1Attack = hero1Attack * 1.20
+			$attackStat.text = str(hero1Attack) 
+			upgradeToken = 0
+			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
+	elif currHero == 2 && upgradeToken == 1:
+		if abilityText.text == "A Knights Jab":
+			hero1Attack = hero1Attack * 1.20
+			$attackStat.text = str(hero2Attack) 
+			upgradeToken = 0
+			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
+	elif currHero == 3 && upgradeToken == 1:
+		if abilityText.text == "A Knights Jab":
+			hero1Attack = hero1Attack * 1.20
+			$attackStat.text = str(hero3Attack) 
+			upgradeToken = 0
+			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
+	else:
+			var abilitySave = abilityText.text
+			abilityText.text = "No tokens left!"
+			$upgradeTokens.modulate = Color("c22200")
+			abilityText.modulate = Color("c22200")
+			await get_tree().create_timer(1.0).timeout 
+			$upgradeTokens.modulate = Color("ffff")
+			await get_tree().create_timer(1.0).timeout 
+			$upgradeTokens.modulate = Color("c22200")
+			await get_tree().create_timer(1.0).timeout 
+			$upgradeTokens.modulate = Color("ffff")
+			abilityText.modulate = Color("ffff")
+			abilityText.text =  str(abilitySave) + " "
+		
+			

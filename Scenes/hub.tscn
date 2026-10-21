@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cguhawqtofman"]
 
-[ext_resource type="Texture2D" uid="uid://dc5gpd7kt74y" path="res://Assets/Placeholders/PlaceholderHub.png" id="1_x21iy"]
+[ext_resource type="Texture2D" uid="uid://26il7lsbeplu" path="res://Assets/Placeholders/PlaceholderHub.png" id="1_x21iy"]
+[ext_resource type="Script" uid="uid://b50w2gu2pglq3" path="res://Scenes/hubButtons.gd" id="2_l5ww0"]
 
 [node name="Hub" type="Node2D" unique_id=486864914]
 
@@ -9,3 +10,24 @@
 [node name="Background" type="Sprite2D" parent="." unique_id=752951451]
 scale = Vector2(5.25, 5.25)
 texture = ExtResource("1_x21iy")
+
+[node name="charSelectButton" type="Button" parent="." unique_id=1345121623]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -192.0
+offset_top = -249.0
+offset_right = 150.0
+offset_bottom = -149.0
+script = ExtResource("2_l5ww0")
+
+[node name="dungeonButton" type="Button" parent="." unique_id=1393709305]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 446.0
+offset_top = -96.0
+offset_right = 585.0
+offset_bottom = 125.0
+script = ExtResource("2_l5ww0")
+
+[connection signal="pressed" from="charSelectButton" to="charSelectButton" method="_on_pressed"]
+[connection signal="pressed" from="dungeonButton" to="charSelectButton" method="_on_dungeon_button_pressed"]
