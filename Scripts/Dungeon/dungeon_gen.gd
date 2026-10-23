@@ -69,7 +69,6 @@ func get_character_stats(_class) -> Array:
 			return [12, 0]
 	return []
 
-
 #endregion
 
 #region ENEMY INITIATION
@@ -83,7 +82,7 @@ func enemy_spawn(id):
 	# check whether it is a 5th level (every 5 levels is a boss battle)
 	if (current_level%5 != 0):
 		if (room_type == "crypt"):
-			init_enemy_instance(id, ["skeleton", "zombie", "raider"], 2, false)
+			init_enemy_instance(id, ["skeleton", "zombie", "skeleton", "zombie", "raider"], 4, false)
 		elif (room_type == "swamp"):
 			init_enemy_instance(id, ["goblin", "orc", "troll"], 2, false)
 		elif (room_type == "cursed_tomb"):
@@ -124,13 +123,13 @@ func get_enemy_stats(_type) -> Array:
 		"zombie":
 			return [6, 2, 0, ["bite", "bite", "bite"]]
 		"raider":
-			return [10, randi_range(3, 4), 0, ["rally", "shoot_arrow", "shoot_arrow"]]	
+			return [10, randi_range(3, 4), 0, ["rally", "raider_axe_throw", "shoot_bolt"]]	
 		"mega_knight": 
 			return [30, 3, 0, ["mega_strike", "mega_strike", "mega_heal"]]
 		
 		#SWAMP
 		"goblin":
-			return [9, 2, 0]
+			return [9, 2, 0, ["dagger_throw", "dagger_throw", "poison_strike"]]
 		"orc":
 			return [14, randi_range(3, 4), 0]
 		"troll":
@@ -216,6 +215,7 @@ func init_enemy_instance(id, _type, _chance, boss_spawn) -> void:
 	if (boss_spawn):
 		slot = 2
 		slots["slot_5"] = id;
+		id.is_boss = true
 	else:
 		if (slots["slot_4"] == null): 
 			slot = 1

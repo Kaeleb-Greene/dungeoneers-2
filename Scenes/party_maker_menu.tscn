@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://lupftnp2naxx"]
 
 [ext_resource type="Texture2D" uid="uid://csufvre0pmp1g" path="res://Assets/KeyArt/PartyMakerMenu.png" id="1_13gvv"]
+[ext_resource type="Script" uid="uid://dscawx7jku5e8" path="res://Scripts/character_selection.gd" id="1_wyj0u"]
 
 [node name="Party_Maker_Menu" type="Control" unique_id=881602368]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wyj0u")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1204809646]
 layout_mode = 0

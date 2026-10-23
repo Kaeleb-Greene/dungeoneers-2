@@ -8,9 +8,9 @@ const IDLE_POSITION = [Vector2(448, -64),
 					   Vector2(448, 64)]
 
 # basic stats
-var health: int = 0;
-var attack: int = 0;
-var defense: int = 0;
+var health: int = 0
+var attack: int = 0
+var defense: int = 0
 
 var attribute: String = "none"
 var type: String = ""
@@ -22,8 +22,9 @@ var cards: Dictionary = {
 }
 
 var slot: int = 0
-var active: bool = false;
-var is_dead: bool = false;
+var active: bool = false
+var is_boss: bool = false
+var is_dead: bool = false
 
 func _ready() -> void:
 	update_position()
@@ -57,3 +58,5 @@ func _process(_float) -> void:
 		
 		dungeon.turn_queue.erase(self)
 		queue_free()
+		
+		get_parent().check_room_finish(is_boss)
