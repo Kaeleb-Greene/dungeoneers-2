@@ -14,7 +14,6 @@ var card_def: Dictionary = {
 	#region TANK
 	
 	### BASIC ###
-	"taunt": ["debuff", 0, "Forces all monsters to attack this character until their next turn."],
 	
 	### KNIGHT ###
 		#SPECIAL
@@ -28,6 +27,8 @@ var card_def: Dictionary = {
 		
 	### BARBARIAN ###
 		#SPECIAL
+		"taunt": ["debuff", 0, "Forces all monsters to attack this character until their next turn."],
+
 		
 		#ADVANCED
 		
