@@ -42,6 +42,7 @@ offset_bottom = 300.0
 script = ExtResource("1_k6jq0")
 
 [node name="abilityUpgrade3" type="Button" parent="characterStats/upgrades" unique_id=418779002]
+visible = false
 layout_mode = 0
 offset_left = 23.0
 offset_top = 550.0
@@ -52,20 +53,21 @@ text = "Click a hero!"
 [node name="abilityUpgrade2" type="Button" parent="characterStats/upgrades" unique_id=1053079222]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 450.0
+offset_top = 480.0
 offset_right = 266.0
-offset_bottom = 525.0
+offset_bottom = 605.0
 text = "Click a hero!"
 
 [node name="abilityUpgrade1" type="Button" parent="characterStats/upgrades" unique_id=1864353907]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 350.0
+offset_top = 300.0
 offset_right = 266.0
 offset_bottom = 425.0
 text = "Click a hero!"
 
 [node name="reroll" type="Button" parent="characterStats/upgrades" unique_id=416708368]
+visible = false
 layout_mode = 0
 offset_left = 168.0
 offset_top = 219.0
@@ -86,7 +88,7 @@ text = "Level"
 layout_mode = 0
 offset_left = -5.0
 offset_top = 233.0
-offset_right = 112.0
+offset_right = 222.0
 offset_bottom = 288.0
 text = "Select a Hero!"
 

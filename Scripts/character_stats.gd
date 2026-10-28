@@ -133,22 +133,15 @@ func _on_upgrade_hero_mouse_exited() -> void:
 func _on_ability_upgrade_1_pressed() -> void:
 	if currHero == 1 && upgradeToken == 1:
 		if abilityText.text == "A Knights Jab":
-			hero1Attack = hero1Attack * 1.20
-			$attackStat.text = str(hero1Attack) 
+			#get rid of this if statement and change it to putting
+			#the ability text to your inventory or smthin.
 			upgradeToken = 0
-			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 	elif currHero == 2 && upgradeToken == 1:
 		if abilityText.text == "A Knights Jab":
-			hero1Attack = hero1Attack * 1.20
-			$attackStat.text = str(hero2Attack) 
 			upgradeToken = 0
-			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 	elif currHero == 3 && upgradeToken == 1:
 		if abilityText.text == "A Knights Jab":
-			hero1Attack = hero1Attack * 1.20
-			$attackStat.text = str(hero3Attack) 
 			upgradeToken = 0
-			$upgradeTokens.text = str(upgradeToken) + " upgrade tokens"
 	else:
 			var abilitySave = abilityText.text
 			abilityText.text = "No tokens left!"

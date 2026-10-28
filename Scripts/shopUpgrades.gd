@@ -13,10 +13,8 @@ var characterArray = ["Wizard", "Rogue", "Alchemist", "Knight", "Cleric", ]
 func _on_hero_1_pressed() -> void:
 	for i in 5:
 		if characterArray[i] == hero1Character:
-			ability_menu1.text = "A Knights Jab"
+			ability_menu1.text = ""
 			ability_menu2.text = str(characterArray[i]) + " hero ability"
-			ability_menu3.text = str(characterArray[i]) + " hero ability"
-
 
 	#if level = blah pick 3 abilities from this list random number 1-40 etc.
 
@@ -25,9 +23,7 @@ func _on_hero_2_pressed() -> void:
 	for i in 5:
 		if characterArray[i] == hero2Character:
 			ability_menu1.text = str(characterArray[i]) + " hero ability"
-			ability_menu2.text = str(characterArray[i]) + " hero ability"
-			ability_menu3.text = str(characterArray[i]) + " hero ability"
-	
+			ability_menu2.text = str(characterArray[i]) + " hero ability"	
 
 func _on_hero_3_pressed() -> void:
 	for i in 5:
@@ -35,8 +31,6 @@ func _on_hero_3_pressed() -> void:
 			#if levele = 5: ability_menu.text = Pick from .txt file 
 			ability_menu1.text = str(characterArray[i]) + " hero ability"
 			ability_menu2.text = str(characterArray[i]) + " hero ability"
-			ability_menu3.text = str(characterArray[i]) + " hero ability"
-	
 
 
 func _on_reroll_pressed() -> void:
