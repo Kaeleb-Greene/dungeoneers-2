@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bdtarnynm7v7g"]
+
+[ext_resource type="Script" uid="uid://mn7xr4fygdlv" path="res://Scripts/Dungeon/character_controller.gd" id="1_d86u4"]
+[ext_resource type="Texture2D" uid="uid://dhjc8uvrru6ie" path="res://icon.svg" id="2_4frha"]
+
+[node name="party" type="CharacterBody2D" unique_id=812894927]
+script = ExtResource("1_d86u4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1600599721]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4frha")
+
+[node name="Label" type="Label" parent="." unique_id=95070399]
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 8.0
+offset_bottom = -41.0

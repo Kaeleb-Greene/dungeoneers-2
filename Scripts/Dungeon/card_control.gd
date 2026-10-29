@@ -7,8 +7,8 @@ var card_def: Dictionary = {
 	
 	### UNIVERSAL ###
 	
-	"basic_attack": ["attack", 3, "Attacks the enemy for 3 damage"],
-	"heavy_attack": ["attack", 6, "Attacks the enemy for 6 damage"],
+	"basic_attack": ["attack", 1.25, "Attacks the enemy for 3 damage"],
+	"heavy_attack": ["attack", 2, "Attacks the enemy for 6 damage"],
 	"basic_heal": ["heal", 4, "Heals the target 4 health"],
 	
 	#region TANK
@@ -17,6 +17,7 @@ var card_def: Dictionary = {
 	
 	### KNIGHT ###
 		#SPECIAL
+		"mighty_blow": ["attack", 1.5, "Attacks an enemy with 1.5x damage."],
 		
 		#ADVANCED
 	
@@ -98,28 +99,28 @@ var card_def: Dictionary = {
 	#region CRYPT
 	
 	### ZOMBIE ###
-	"bite": ["attack", 2, "Bites a party member inflicting 2 damage"],
-	"scratch": ["attack", 2, "Bites a party member inflicting 2 damage"],
+	"bite": ["attack", 1, "Bites a party member inflicting 2 damage"],
+	"scratch": ["attack", 1, "Bites a party member inflicting 2 damage"],
 	
 	### SKELETON ###
-	"shoot_arrow": ["attack", 3, "Shoot an arrow at a party member inflicting 2 damage"],
+	"shoot_arrow": ["attack", 1, "Shoot an arrow at a party member inflicting 2 damage"],
 	
 	### RAIDER ###
-	"shoot_bolt": ["attack", 4, "Shoot a bolt at a party member inflicting 4 damage"],
-	"raider_axe_throw": ["attack", 4, "Throw an axe at a party member inflicting 4 damage"],
-	"rally": ["buff", 2, "Organizes other monsters raising their attack by 2"],
+	"shoot_bolt": ["attack", 1.25, "Shoot a bolt at a party member inflicting 4 damage"],
+	"raider_axe_throw": ["attack", 1.25, "Throw an axe at a party member inflicting 4 damage"],
+	"rally": ["buff", 1.5, "Organizes other monsters raising their attack by 1.5x"],
 	
 	### MEGA KNIGHT ###
-	"mega_strike": ["attack", 6, "Strikes a party member inflicting 6 damage"],
-	"mega_heal": ["heal", 7, "Shoot a bolt at a party member inflicting 4 damage"],
+	"mega_strike": ["attack", 2, "Strikes a party member inflicting 6 damage"],
+	"mega_heal": ["heal", 8, "Shoot a bolt at a party member inflicting 4 damage"],
 	
 	#endregion
 	
 	#region SWAMP
 	
 	### GOBLIN ###
-	"dagger_throw": ["attack", 4, "Strikes a party member inflicting 4 damage"],
-	"poison_strike": ["attack", 3, "Strikes a party member inflicting 3 damage and 2 poison"]
+	"dagger_throw": ["attack", 1.75, "Strikes a party member inflicting 4 damage"],
+	"poison_strike": ["attack", 1.5, "Strikes a party member inflicting 3 damage and 2 poison"]
 	
 	### ORC ###
 	
@@ -252,16 +253,15 @@ func get_card_desc(card_key) -> String:
 	
 	return String(data[2])
 
-func use_card(card_key, target):
+func use_card(owner, card_key, target):
 	var card_type: String = get_card_type(card_key)
 	var effect_value: int = get_card_value(card_key)
 	
-	
 	match card_type:
 		"attack":
-			target.health -= effect_value*10
+			target.stats[0] -= (owner.stats[1]*effect_value)
 		"heal":
-			target.health += effect_value
+			target.stats[0] += effect_value
 		"buff":
 			match card_key:
 				"rally":
