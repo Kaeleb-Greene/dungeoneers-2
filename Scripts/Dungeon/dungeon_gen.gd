@@ -71,11 +71,11 @@ func entity_spawn(id, _party_spawn: bool, _class_type: String):
 			"crypt":
 				init_entity_instance(id, ["mega_knight"], 0)
 			"swamp":
-				init_entity_instance(id, ["ogre"], 0)
+				init_entity_instance(id, ["green_oni"], 0)
 			"cursed_tomb":
 				init_entity_instance(id, ["anubis_acolyte"], 0)
 			"enchanted_library":
-				init_entity_instance(id, ["golem"], 0)
+				init_entity_instance(id, ["dark_wizard"], 0)
 			"hellscape":
 				init_entity_instance(id, ["hellhound"], 0)
 			"frozen_cavern":
@@ -90,14 +90,28 @@ func get_entity_stats(_type) -> Array:
 	match (_type):
 		#region PARTY
 		"knight":
+			return [140, 40, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"dwarf":
 			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
-		"rogue":
-			return [6, 4, 0, ["heavy_attack", "heavy_attack", "basic_heal"]]
+		"barbarian":
+			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"necromancer":
+			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
 		"wizard":
+			return [80, 40, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"archer":
 			return [8, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"huntsman":
+			return [8, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"rogue":
+			return [60, 40, 0, ["heavy_attack", "heavy_attack", "basic_heal"]]
 		"alchemist":
 			return [10, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
 		"cleric":
+			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"landon":
+			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+		"druid":
 			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
 		#endregion
 		
@@ -117,65 +131,65 @@ func get_entity_stats(_type) -> Array:
 		"goblin":
 			return [9, 2, 0, ["dagger_throw", "dagger_throw", "poison_strike"]]
 		"orc":
-			return [14, randi_range(3, 4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, randi_range(3, 4), 0, ["hes_got_a_club", "hes_got_a_club", "thick_hide"]]
 		"troll":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
-		"ogre": 
-			return [30, 3, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["carnage", "piercing_gaze", "intermediate_strike"]]
+		"green_oni": 
+			return [30, 3, 0, ["shapeshift", "blunt_rage", "heavy_strike"]]
 		
 		#CURSED TOMB
 		"pharaoh":
-			return [9, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [9, 2, 0, ["call_of_the_tomb", "sacrificial_tomb", "intermediate_strike"]]
 		"mummy":
-			return [4, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [4, 2, 0, ["weak_strike", "weak_strike", "weak_strike"]]
 		"scarab_beetle":
-			return [14, randi_range(3, 4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, randi_range(3, 4), 0, ["burrow", "rough_and_tumble", "intermediate_strike"]]
 		"cobra":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["strangle", "fang_strike", "intermediate_strike"]]
 		"anubis_acolyte": 
-			return [30, 3, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [30, 3, 0, ["plague", "bloody_slash", "underworld_consumption"]]
 		
 		#ENCHANTED LIBRARY
-		"dark_wizard":
-			return [9, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
 		"cursed_book":
-			return [4, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [4, 2, 0, ["weak_strike", "weak_strike", "weak_strike"]]
 		"evil_librarian":
-			return [14, randi_range(3, 4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, randi_range(3, 4), 0, ["dark_blessing", "dark_restoration", "intermediate_strike"]]
 		"cultist":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["deluded_worship", "bloody_sacrifice", "intermediate_strike"]]
 		"golem":
-			return [40, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [40, 2, 0, ["rock_shield", "diamond_crust", "blood_stone"]]
+		"dark_wizard":
+			return [9, 2, 0, ["expanding_sources", "cursed_knowledge", "dark_fire_ball"]]
 			
 		#HELLSCAPE
 		"flying_demon":
-			return [9, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [9, 2, 0, ["hot_rain", "wimp", "ashes"]]
 		"fire_imp":
-			return [4, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [4, 2, 0, ["intermediate_strike", "intermediate_strike", "intermediate_strike"]]
 		"lava_frog":
-			return [14, randi_range(3, 4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, randi_range(3, 4), 0, ["lava_soup", "lava_splash", "intermediate_strike"]]
 		"fire_serpent":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["red_flame", "white_flame", "green_flame"]]
 		"hellhound":
-			return [40, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [40, 2, 0, ["hellfire", "death_omen", "hells_guardian"]]
 		
 		#FROZEN CAVERN
 		"frost_troll":
-			return [9, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [9, 2, 0, ["even_temper", "dominating_presence", "frozen_fist"]]
 		"mammoth":
-			return [14, randi_range(3, 4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, randi_range(3, 4), 0, ["triumphate_cry", "frozen_stomp", "fortress"]]
 		"sabertooth_tiger":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["mirage", "cold_blooded", "frozen_fangs"]]
 		"yeti":
-			return [40, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [40, 2, 0, ["blizzard", "mountain_guardian", "inhuman_strike"]]
 		
 		#DRAGONS DEN
 		"kobald":
-			return [18, randi_range(3,4), 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [18, randi_range(3,4), 0, ["group_sacrifice", "draconic_trap", "intermediate_strike"]]
 		"drake":
-			return [40, 2, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [40, 2, 0, ["element_burst", "lesser_draconic_aura", "inhuman_strike"]]
 		"dragon":
-			return [30, 5, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [30, 5, 0, ["draconic_aura", "dragon_breathe", "dragon_heart"]]
 		
 		#endregion
 		

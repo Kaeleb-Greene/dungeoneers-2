@@ -47,8 +47,6 @@ offset_bottom = 166.0
 text = "block
 "
 
-[node name="TurnQueue" type="Node2D" parent="." unique_id=1126370271]
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=696356979]
 
 [node name="Level0" type="Node2D" parent="." unique_id=1742555627]

@@ -160,7 +160,7 @@ func start_current_turn():
 	if (turn_queue.is_empty()):
 		active_character = null
 		combat_state = CombatState.IDLE
-		push_error()
+		push_error("There are no more availale characters in the turn queue")
 		return
 	
 	#get the active_turn_index
@@ -238,10 +238,7 @@ func on_button_press(index):
 
 func _on_enemy_turn_timer_timeout():
 	#only count when in combat
-	if !combat_loop:
-		return
-		
-	if combat_state != CombatState.ENEMY_DELAY:
+	if !combat_loop || combat_state != CombatState.ENEMY_DELAY:
 		return
 	
 	#Verify the enemy still exists
