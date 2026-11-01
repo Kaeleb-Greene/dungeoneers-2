@@ -14,7 +14,10 @@ const IDLE_POSITION_ENEMY = [Vector2(448, -64),
 						Vector2(496, 64)]
 
 # basic Stats [health, attack, defense]
-var stats: Array[int] = [0, 0, 0]
+var stats: Array[float] = [0.0, 0.0, 0.0]
+var max_health: float = 0.0
+
+var modifiers: Array[Dictionary] = []
 
 var type: String = ""
 var slot: int = 0
@@ -34,6 +37,7 @@ func _ready() -> void:
 	update_position()
 	#debug_messages()
 	$Label.text = type
+	print(str(cards))
 
 func update_position() -> void:
 	if (self.is_in_group("Party")):
@@ -56,6 +60,40 @@ func debug_messages() -> void:
 	print("Defense: "+str(stats[2]))
 	print("Slot: "+str(slot)+"\n")
 
+#Add a modifier
+func add_modifier(id: StringName, trigger: StringName, value: float = 0.0, remaining_uses: int = -1) -> void:
+	var new_modifier: Dictionary = {
+		"id": id,
+		"trigger": trigger,
+		"value": value,
+		"reamining_uses": remaining_uses
+	}
+	
+	modifiers.append(new_modifier)
+	
+	print_rich("[color=orange]Added Modifier: ", id, " to ", type)
+
+#Remove or decrease a modifier after activation
+func consume_modifier(index: int) -> void:
+	
+	if index < 0 or index >= modifiers.size():
+		return
+		
+	var remaining: int = int(
+		modifiers[index].get("remaining_uses", -1)
+	)
+	
+	#-1 means unlimited uses
+	if remaining < 0:
+		return
+	
+	remaining -= 1
+	
+	if remaining <= 0:
+		modifiers.remove_at(index)
+	else:
+		modifiers[index]["remaining_uses"] = remaining
+	
 func _process(_float) -> void:
 	if (stats[0] <= 0) && (!is_dead):
 		is_dead = true

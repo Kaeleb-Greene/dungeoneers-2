@@ -21,8 +21,8 @@ var current_level_is_boss: bool = false
 # Will be used to track party types that will be carried in from the character selection menu
 var selected_party: Array[String] = [
 	"knight",
-	"wizard",
-	"rogue"
+	"knight",
+	"knight"
 ]
 
 #init transition based variables
@@ -68,6 +68,11 @@ func _ready() -> void:
 	
 	#level creation
 	init_new_room()
+	
+	if turn_queue.is_empty():
+		combat_state = CombatState.IDLE
+		combat_loop = false
+		return
 	
 	active_character = turn_queue[0]
 	start_current_turn()
@@ -172,6 +177,12 @@ func start_current_turn():
 	
 	#PLAYER TURN
 	if active_character.is_in_group("Party"):
+		var _cards: Dictionary = {
+			"current_card_1": active_character.cards.card_1,
+			"current_card_2": active_character.cards.card_2,
+			"current_card_3": active_character.cards.card_3
+		}
+		CONTROL.update_card_slots(_cards)
 		combat_state = CombatState.PLAYER_INPUT
 	
 	#ENEMY TURN
@@ -195,6 +206,7 @@ func get_valid_active_character() -> Node:
 	return get_next_character()
 
 func on_button_press(index):
+	
 	#Ingore input outside of player turn
 	if (combat_state != CombatState.PLAYER_INPUT):
 		return
@@ -219,16 +231,23 @@ func on_button_press(index):
 	
 	#Find an enemy to target
 	#This will be replaced soon to get player input to select enemy not through parsing
-	var target: Node = get_target("Enemy")
+	var target: Array[Node] = get_target(card_key)
+	
+	#Remove invalid targets
+	for i in range(target.size() -1):
+		if (!is_instance_valid(target[i]) || target[i].is_queued_for_deletion()):
+			target.remove_at(i)
 	
 	#Exit if the target is not a valid Node
-	if (!is_instance_valid(target)):
+	if (target.is_empty()):
 		push_error("No valid enemies to target.")
 		advance_turn()
 		return
-	
+		
 	#DEBUG: light up the target red
-	target.modulate = Color(1, 0, 0, 0.25)
+	for i in target:
+		i.modulate = Color(1, 0, 0, 0.25)
+	
 	
 	#Use the selected card
 	CONTROL.use_card(active_character, card_key, target)
@@ -248,9 +267,26 @@ func _on_enemy_turn_timer_timeout():
 	
 	#Set active_character to a local variable
 	var enemy: Node = active_character
+		
+	#Choose an available monster card and make sure it is valid
+	var available_cards: Array[String] = []
+	for card_value in enemy.cards.values():
+		if card_value != null:
+			available_cards.append(str(card_value))
+	
+	if available_cards.is_empty():
+		advance_turn()
+		return
+	
+	#Get the enemy card key from a random selection of their hard coded card types available
+	var enemy_card_key: String = available_cards.pick_random()
 	
 	#Find a valid target
-	var target: Node = get_target("Party")
+	var target: Array[Node] = get_target(enemy_card_key)
+	
+	#DEBUG: Light up the target red
+	for i in target:
+		i.modulate = Color(1, 0, 0, 0.25)
 	
 	#Exit if the target is not a valid Node
 	if (!is_instance_valid(target)):
@@ -258,25 +294,11 @@ func _on_enemy_turn_timer_timeout():
 		advance_turn()
 		return
 	
-	#DEBUG: Light up the target red
-	target.modulate = Color(1, 0, 0, 0.25)
-		
-	#Choose an available monster card and make sure it is valid
-	var available_cards: int = enemy.get_available_cards()
-	if available_cards <= 0:
-		advance_turn()
-		return
-	
-	#Get the enemy card key from a random selection of their hard coded card types available
-	var card_num: int = randi_range(1, available_cards)
-	var card_value = enemy.cards.get("card_"+str(card_num), "")
-	var enemy_card_key: String = str(card_value) if card_value != null else ""
-	
 	#Check that we have selected a card
 	if (!enemy_card_key.is_empty()):
 		CONTROL.use_card(enemy, enemy_card_key, target)
 	else:
-		push_error("Enemy has no card assigned to slot", card_num)
+		push_error("Enemy has no card assigned")
 	
 	advance_turn()
 
@@ -313,21 +335,88 @@ func advance_turn():
 	active_character = null
 	start_current_turn()
 	
-func get_target(target_affil) -> Node:
-	#Parse through turn_queue for first available target
-	#Will be changed later for more advanced enemy AI and greater player input
-	for target in turn_queue:
-		if !is_instance_valid(target):
-			continue
+func get_target(card_key: String) -> Array[Node]:
+	#check the active character is validated
+	if (!is_instance_valid(active_character)):
+		push_error("Connot find targets: active_character is invalid")
+		return []
 		
-		if target.is_queued_for_deletion():
-			continue
+	#Retrieve the card's targeting information
+	var card_data: Array = CONTROL.card_def.get(card_key, [])
+	
+	if (card_data.size() <= 3):
+		push_error("Card '%s' does not have target information." % card_key)
+		return []
 		
-		if (target.is_in_group(target_affil)):
-			return target
+	var card_target: String = str(card_data[3])
+	
+	#Determine the active_characters affiliation
+	var own_group: String
+	var enemy_group: String
+	
+	if (active_character.is_in_group("Party")):
+		own_group = "Party"
+		enemy_group = "Enemy"
+	elif (active_character.is_in_group("Enemy")):
+		own_group = "Enemy"
+		enemy_group = "Party"
+	else:
+		push_error("Active character does not belong to Party or Enemy.")
+		return []
+	
+	var targets: Array[Node] = []
+	
+	match card_target:
+		"self":
+			targets.append(active_character)
+		
+		"enemy":
+			for target in turn_queue:
+				if (!is_instance_valid(target)):
+					continue
+				
+				if (target.is_in_group(enemy_group)):
+					targets.append(target)
+					break
 			
-	return null
-
+		"ally":
+			for target in turn_queue:
+				if (!is_instance_valid(target)):
+					continue
+					
+				if (target.is_in_group(own_group)):
+					targets.append(target)
+					break
+		
+		"other_ally":
+			for target in turn_queue:
+				if (!is_instance_valid(target)):
+					continue
+					
+				if (target.is_in_group(own_group)) && (target != active_character):
+					targets.append(target)
+					break
+		
+		"all_allies":
+			for target in turn_queue:
+				if !is_instance_valid(target):
+					continue
+				
+				if (target.is_in_group(own_group)):
+					targets.append(target)
+			
+		"all_enemies":
+			for target in turn_queue:
+				if !is_instance_valid(target):
+					continue
+				
+				if (target.is_in_group(enemy_group)):
+					targets.append(target)
+		_:
+			push_error("Unknown card target type: " + card_target)
+	
+	return targets
+	
 func _on_character_died(character: Node) -> void:
 	var old_index: int = turn_queue.find(character)
 	var was_enemy: bool = character.is_in_group("Enemy")

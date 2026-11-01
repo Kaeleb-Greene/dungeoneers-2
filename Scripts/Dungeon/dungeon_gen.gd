@@ -90,29 +90,29 @@ func get_entity_stats(_type) -> Array:
 	match (_type):
 		#region PARTY
 		"knight":
-			return [140, 40, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, 1, 0, ["mighty_blow", "swordsmanship", "knights_defense"]]
 		"dwarf":
-			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, 4, 0, ["explosive", "dwarven_weaponry", "dwarven_plating"]]
 		"barbarian":
-			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, 4, 0, ["taunt", "enrage", "drunken_rage"]]
 		"necromancer":
-			return [14, 4, 2, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [14, 4, 0, ["arise", "soul_reaping", "spirit_sacriface"]]
 		"wizard":
-			return [80, 40, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [8, 4, 0, ["vegas_fireball", "fireball_maxima", "magical_field"]]
 		"archer":
-			return [8, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [8, 4, 0, ["arrow_barrage", "longshot", "freeze_arrow"]]
 		"huntsman":
-			return [8, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [8, 4, 0, ["mans_best_friend", "buckshot", "hunters_mark"]]
 		"rogue":
-			return [60, 40, 0, ["heavy_attack", "heavy_attack", "basic_heal"]]
+			return [6, 4, 0, ["shadow_step", "pick_pocket", "backstab"]]
 		"alchemist":
-			return [10, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [10, 4, 0, ["hearty_potion", "robust_potion", "hardy_potion"]]
 		"cleric":
-			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [12, 4, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
 		"landon":
-			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [12, 4, 0, ["study_time", "self_improvement", "student_enrollment"]]
 		"druid":
-			return [12, 4, 0, ["basic_attack", "heavy_attack", "basic_heal"]]
+			return [12, 4, 0, ["thorny_vines", "petals_of_vitality", "gaia_blessing"]]
 		#endregion
 		
 		#region MONSTER
@@ -208,6 +208,7 @@ func init_entity_instance(id, _type, _chance) -> void:
 	id.stats[0] = stats[0]
 	id.stats[1] = stats[1]
 	id.stats[2] = stats[2]
+	id.max_health = stats[0]
 	id.cards["card_1"] = stats[3][0]
 	id.cards["card_2"] = stats[3][1]
 	id.cards["card_3"] = stats[3][2]
