@@ -3,13 +3,12 @@ extends Panel
 @onready var ability_menu1 = $abilityUpgrade1
 @onready var ability_menu2 = $abilityUpgrade2
 @onready var ability_menu3 = $abilityUpgrade3
+@onready var levelCounter = $levelCounter
 var hero1Character = "Knight"
 var hero2Character = "Wizard"
 var hero3Character = "Cleric"
 var rerollTokens = 1
-
 var characterArray = ["Wizard", "Rogue", "Alchemist", "Knight", "Cleric", ]
-
 func _on_hero_1_pressed() -> void:
 	for i in 5:
 		if characterArray[i] == hero1Character:
