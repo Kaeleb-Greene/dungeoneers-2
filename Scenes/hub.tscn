@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cguhawqtofman"]
 
 [ext_resource type="Texture2D" uid="uid://26il7lsbeplu" path="res://Assets/Placeholders/PlaceholderHub.png" id="1_x21iy"]
-[ext_resource type="Script" uid="uid://b50w2gu2pglq3" path="res://Scenes/hubButtons.gd" id="2_l5ww0"]
+[ext_resource type="Script" uid="uid://b50w2gu2pglq3" path="res://Scripts/hubButtons.gd" id="2_l5ww0"]
 
 [node name="Hub" type="Node2D" unique_id=486864914]
 
