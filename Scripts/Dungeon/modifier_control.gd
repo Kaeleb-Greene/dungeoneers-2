@@ -15,8 +15,10 @@ extends RefCounted
 #Centralize Damage and Modifier Processing
 
 func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
-	if ((!is_instance_valid(attacker) && attacker.is_queued_for_deletion()) 
-	|| !is_instance_valid(target) && target.is_queued_for_deletion()):
+	if !is_instance_valid(attacker) || !is_instance_valid(target):
+		return 0.0
+	 
+	if attacker.is_queued_for_deletion() || target.is_queued_for_deletion():
 		return 0.0
 		
 	var damage: float = base_damage
@@ -25,7 +27,7 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 	# 						 ATTACK MODIFIERS
 	# ================================================================= #
 	
-	for i in range(attacker.modifiers.size(), -1):
+	for i in range(attacker.modifiers.size() -1, -1, -1):
 		
 		var modifier: Dictionary = attacker.modifiers[i]
 		
@@ -40,8 +42,8 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 	# 					TARGET REACTIVE MODIFIERS
 	# ================================================================= #
 	
-	for i in range(target.modifiers.size(), -1):
-		
+	for i in range(target.modifiers.size() -1, -1, -1):
+		print(i)
 		var modifier: Dictionary = target.modifiers[i]
 		
 		if modifier.get("trigger") != &"incoming_damage":
@@ -49,11 +51,11 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 			
 		match modifier.get("id"):
 			&"block_next":
+				print_rich("[color=green]Attack Successfully Blocked!")
 				target.consume_modifier(i)
 				return 0.0
 			
 			&"parry_next":
-				
 				target.consume_modifier(i)
 				
 				if (target.stats[1] > attacker.stats[1]):
@@ -63,6 +65,7 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 					)
 					
 					attacker.stats[0] = maxf(0.0, attacker.stats[0] - reflected_damage)
+					attacker.healthbar.set_health(attacker.stats[0])
 					
 					print_rich("[color=green]Attack Successfully Parried!")
 					
@@ -100,6 +103,8 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 	#Calculate actual health lost
 	var actual_damage: float = minf(damage, maxf(0.0, target.stats[0]))
 	
-	target.stats[0] = maxf(0.0, target.stats[0]-damage)
+	var damage_calc = maxf(0.0, target.stats[0]-damage)
+	target.stats[0] = damage_calc
+	target.healthbar.set_health(damage_calc)
 	
 	return actual_damage

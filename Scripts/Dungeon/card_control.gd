@@ -19,7 +19,7 @@ var card_def: Dictionary = {
 	### KNIGHT ###
 		"mighty_blow": ["attack", 1, "Strike a heavy blow to an enemy dealing 1.5x dmg, if target is below half hp deal 2x dmg.", "enemy"],
 		"swordsmanship": ["buff", 1, "Parry the next attack towards you and deal 1x dmg to the Attacker, if the attackers dmg stat is higher than it fails.", "self"],
-		"knights_defense": ["buff", 1, "Shield a party member absorbing the damage for them.", "other_ally"],
+		"knights_defense": ["buff", 1, "Shield a party member absorbing the damage for them for 1 turn.", "other_ally"],
 	
 	### DWARF ###
 		"explosive": ["attack", 2, "Build a bomb that does 2x dmg to use on your next turn", "enemy"],
@@ -55,7 +55,7 @@ var card_def: Dictionary = {
 	"buckshot": ["attack", 2, "Fire a heavy blow from your rifle dealing 2x base damage", "enemy"],
 	"hunters_mark": ["buff", 1.5, "Marked enemy will take 1.5x more dmg from the dog until the enemy is defeated.", "enemy"],
 	
-	### Rogue ###
+	### ROGUE ###
 	"shadow_step": ["attack", .5, "Deal .5x base damage to all enemies", "all_enemies"],
 	"pick_pocket": ["attack", .5, "Deal .5x base damage and distract an enemy skipping their next turn", "enemy"],
 	"backstab": ["attack", 2, "Vanish for a turn, then next turn hit one enemy for 2x dmg. If hit before your next turn and damage is amplified by 1.5x", "self"],
@@ -64,11 +64,6 @@ var card_def: Dictionary = {
 	
 	#region SUPPORT
 
-	### LANDON ###
-	"study_time": ["special", 1, "Use any ability of one of your other party members", "enemy"],
-	"self_improvement": ["buff", .2, "Increase your attack by 20% for the rest of the floor (cannot be stacked)", "self"],
-	"student_enrollment": ["special", .15, "Enroll a party member as your student increasing all their stats by 15% for the rest of the floor (can be used once per floor).", "other_ally"],
-	
 	### CLERIC ###
 	"blessing": ["heal", .3, "Heal a party member for 30% of their max hp", "ally"],
 	"heavenly_blow": ["attack", 1, "Strike the enemy dealing Nx damage (n equals the number of party members above half health not including summons)", "enemy"],
@@ -77,12 +72,17 @@ var card_def: Dictionary = {
 	### ALCHEMIST ###
 	"hearty_potion": ["heal", .3, "Heal target for 30% of their max hp", "ally"],
 	"robust_potion": ["buff", .25, "Increase a party members next attack by 25%", "ally"],
-	"hardy_potion": ["buff", 1, "Negate the next attack against a party member", "ally"],
+	"posion_potion": ["attack", 1.5, "throw a potion at an enemy dealing 1.5x and giving the target poison for 3 turns", "enemy"],
 	
 	### DRUID ###
 	"thorny_vines": ["attack", .5, "Ensnare an enemy in vines dealing .75x dmg and skipping their next turn", "enemy"],
 	"petals_of_vitality": ["heal", .3, "Heal a party member for 30% of their max health", "ally"],
 	"gaia_blessing": ["buff", .2, "Increase your entire parties dmg by 20% for 1 turns", "all_allies"],
+	
+	### LANDON ###
+	"study_time": ["special", 1, "Use any ability of one of your other party members", "enemy"],
+	"self_improvement": ["buff", .2, "Increase your attack by 20% for the rest of the floor (cannot be stacked)", "self"],
+	"student_enrollment": ["special", .15, "Enroll a party member as your student increasing all their stats by 15% for the rest of the floor (can be used once per floor).", "other_ally"],
 	
 	#endregion
 	
@@ -93,7 +93,7 @@ var card_def: Dictionary = {
 	"weak_strike": ["attack", 1, "Strikes a party member inflicting 1x damage.", "enemy"],
 	"intermediate_strike": ["attack", 1.75, "Strikes a party member inflicting 1.75x damage.", "enemy"],
 	"heavy_strike": ["attack", 2.25, "Strikes a party member inflicting 2.25x damage.", "enemy"],
-	"inhuman_strike": ["attack", 3, "Strikes a party member inflicting 3x damage.", "ememy"],
+	"inhuman_strike": ["attack", 3, "Strikes a party member inflicting 3x damage.", "enemy"],
 	
 	#region CRYPT
 	
@@ -365,7 +365,8 @@ func use_card(owner: Node, card_key: String, _target: Array) -> void:
 					
 					"swordsmanship":
 						owner.add_modifier(&"parry_next", &"incoming_damage", 0.0, 1)
-					
+						print("Parry Registered: ", owner.modifiers)
+						
 					"knights_defense":
 						owner.add_modifier(&"block_next", &"incoming_damage", 0.0, 1)
 						

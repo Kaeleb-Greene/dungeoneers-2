@@ -90,7 +90,7 @@ func get_entity_stats(_type) -> Array:
 	match (_type):
 		#region PARTY
 		"knight":
-			return [14, 1, 0, ["mighty_blow", "swordsmanship", "knights_defense"]]
+			return [14, 3, 0, ["mighty_blow", "swordsmanship", "knights_defense"]]
 		"dwarf":
 			return [14, 4, 0, ["explosive", "dwarven_weaponry", "dwarven_plating"]]
 		"barbarian":
@@ -106,7 +106,7 @@ func get_entity_stats(_type) -> Array:
 		"rogue":
 			return [6, 4, 0, ["shadow_step", "pick_pocket", "backstab"]]
 		"alchemist":
-			return [10, 4, 0, ["hearty_potion", "robust_potion", "hardy_potion"]]
+			return [10, 4, 0, ["hearty_potion", "robust_potion", "poison_potion"]]
 		"cleric":
 			return [12, 4, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
 		"landon":
@@ -125,7 +125,7 @@ func get_entity_stats(_type) -> Array:
 		"raider":
 			return [10, randi_range(3, 4), 0, ["rally", "raider_axe_throw", "shoot_bolt"]]	
 		"mega_knight": 
-			return [30, 3, 0, ["mega_strike", "mega_strike", "mega_heal"]]
+			return [30, 3, 0, ["intermediate_strike", "chivalry", "mega_heal"]]
 		
 		#SWAMP
 		"goblin":

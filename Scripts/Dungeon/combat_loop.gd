@@ -21,8 +21,8 @@ var current_level_is_boss: bool = false
 # Will be used to track party types that will be carried in from the character selection menu
 var selected_party: Array[String] = [
 	"knight",
-	"knight",
-	"knight"
+	"wizard",
+	"cleric"
 ]
 
 #init transition based variables
@@ -32,8 +32,15 @@ var room_transitioning: bool = false
 enum CombatState {
 	IDLE,
 	PLAYER_INPUT,
+	SELECTING_TARGET,
 	ENEMY_DELAY
 }
+
+var selected_card_key: String = ""
+var valid_targets: Array[Node] = []
+
+#Stores original character colors to be restored
+var target_original_modulates: Dictionary = {}
 
 var combat_state: CombatState = CombatState.IDLE
 var combat_loop = true;
@@ -96,6 +103,9 @@ func spawn_party() -> void:
 		#instance the character scene
 		var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, selected_party[i])
 		
+		#connect clicked signal from character_controller
+		character.connect("character_clicked", Callable(self, "_on_character_clicked"))
+		
 		#connect death signal from character_controller
 		character.died.connect(_on_character_died)		
 		add_child(character)
@@ -109,6 +119,9 @@ func spawn_enemies() -> void:
 		#instance the character scene
 		var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "")
 		
+		#connect clicked signal from character_controller
+		enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
+		
 		#connect death signal from character_controller
 		enemy.died.connect(_on_character_died)
 		add_child(enemy)
@@ -120,6 +133,9 @@ func spawn_enemies() -> void:
 func spawn_boss() -> void:
 	#instance the character scene
 	var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "")
+	
+	#connect clicked signal from character_controller
+	enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
 	
 	#connect death signal from character_controller
 	enemy.died.connect(_on_character_died)
@@ -172,9 +188,6 @@ func start_current_turn():
 	active_turn_index = posmod(active_turn_index, turn_queue.size())
 	active_character = turn_queue[active_turn_index]
 	
-	#DEBUG: Light up green when active
-	active_character.modulate = Color(0, 1, 0, 0.25)
-	
 	#PLAYER TURN
 	if active_character.is_in_group("Party"):
 		var _cards: Dictionary = {
@@ -205,7 +218,7 @@ func get_valid_active_character() -> Node:
 	#there are valid ones left in turn_queue
 	return get_next_character()
 
-func on_button_press(index):
+func on_button_press(index: int) -> void:
 	
 	#Ingore input outside of player turn
 	if (combat_state != CombatState.PLAYER_INPUT):
@@ -221,38 +234,78 @@ func on_button_press(index):
 		return
 	
 	#Get the card assigned to the clicked slot
-	var order_key: String = "current_card_" + str(index + 1)
-	card_key = CONTROL.card_order.get(order_key, "")
+	var card_slot: String = "current_card_%d" % (index + 1)
+	card_key = str(CONTROL.card_order.get(card_slot, ""))
 	
 	#Check is the slot contains a valid card
 	if card_key.is_empty():
 		push_error("No cards assigned to this slot.")
 		return
 	
-	#Find an enemy to target
-	#This will be replaced soon to get player input to select enemy not through parsing
-	var target: Array[Node] = get_target(card_key)
+	selected_card_key = card_key
 	
-	#Remove invalid targets
-	for i in range(target.size() -1):
-		if (!is_instance_valid(target[i]) || target[i].is_queued_for_deletion()):
-			target.remove_at(i)
+	#Find all valid targets
+	valid_targets = get_valid_targets()
+
+	#Exit if valid_targets is not a valid Node
+	if (valid_targets.is_empty()):
+		push_error("No valid targets.")
+		selected_card_key = ""
+		return
 	
-	#Exit if the target is not a valid Node
-	if (target.is_empty()):
-		push_error("No valid enemies to target.")
-		advance_turn()
+	#Determine targeting type
+	var card_target: String = str(CONTROL.card_def[card_key][3])
+	
+	match card_target:
+		
+		"enemy", "ally", "other_ally":
+			#Wait for the player to select a character
+			begin_target_selection()
+			
+		"self", "all_allies", "all_enemies":
+			#Automatically execute against the appropriate targets
+			execute_selected_card(valid_targets)
+		
+		_:
+			push_error("Unknown card targeting type: "+card_target)
+			selected_card_key = ""
+			valid_targets.clear()
+
+func _on_character_clicked(character: Node) -> void:
+	
+	#Only accept clicks while selecting a target
+	if combat_state != CombatState.SELECTING_TARGET:
+		return
+	
+	#Verify the character is valid
+	if !is_valid_target(character):
 		return
 		
-	#DEBUG: light up the target red
-	for i in target:
-		i.modulate = Color(1, 0, 0, 0.25)
+	#Verify the character can be targeted by this card
+	if (!valid_targets.has(character)):
+		return
 	
+	#Execute the card against the selected character
+	execute_selected_card([character])
+
+func execute_selected_card(targets: Array[Node]) -> void:
 	
-	#Use the selected card
-	CONTROL.use_card(active_character, card_key, target)
+	if selected_card_key.is_empty():
+		return
+		
+	card_key = selected_card_key
 	
-	#Finish player turn
+	#restore character visuals
+	clear_target_highlights()
+	
+	#Execute the card
+	CONTROL.use_card(active_character, card_key, targets)
+	
+	#clear selection information
+	selected_card_key = ""
+	valid_targets.clear()
+	
+	#Advance the turn
 	advance_turn()
 
 func _on_enemy_turn_timer_timeout():
@@ -279,24 +332,20 @@ func _on_enemy_turn_timer_timeout():
 		return
 	
 	#Get the enemy card key from a random selection of their hard coded card types available
-	var enemy_card_key: String = available_cards.pick_random()
+	card_key = available_cards.pick_random()
 	
 	#Find a valid target
-	var target: Array[Node] = get_target(enemy_card_key)
-	
-	#DEBUG: Light up the target red
-	for i in target:
-		i.modulate = Color(1, 0, 0, 0.25)
+	var target: Array[Node] = get_enemy_target()
 	
 	#Exit if the target is not a valid Node
-	if (!is_instance_valid(target)):
+	if (target.is_empty()):
 		push_error("No valid targets.")
 		advance_turn()
 		return
 	
 	#Check that we have selected a card
-	if (!enemy_card_key.is_empty()):
-		CONTROL.use_card(enemy, enemy_card_key, target)
+	if (!card_key.is_empty()):
+		CONTROL.use_card(enemy, card_key, target)
 	else:
 		push_error("Enemy has no card assigned")
 	
@@ -306,11 +355,6 @@ func advance_turn():
 	#Cancel any currently active enemy action
 	if (is_instance_valid(enemy_turn_timer)):
 		enemy_turn_timer.stop()
-	
-	#Restore the previous active character color
-	if (is_instance_valid(active_character)):
-		if (!active_character.is_queued_for_deletion()):
-			active_character.modulate = Color(1, 1, 1)
 			
 	#check if we have exited combat and change state accordingly
 	if (!combat_loop):
@@ -335,18 +379,20 @@ func advance_turn():
 	active_character = null
 	start_current_turn()
 	
-func get_target(card_key: String) -> Array[Node]:
+func get_valid_targets() -> Array[Node]:
+	var targets: Array[Node] = []
+	
 	#check the active character is validated
 	if (!is_instance_valid(active_character)):
 		push_error("Connot find targets: active_character is invalid")
-		return []
+		return targets
 		
 	#Retrieve the card's targeting information
 	var card_data: Array = CONTROL.card_def.get(card_key, [])
 	
 	if (card_data.size() <= 3):
 		push_error("Card '%s' does not have target information." % card_key)
-		return []
+		return targets
 		
 	var card_target: String = str(card_data[3])
 	
@@ -362,61 +408,113 @@ func get_target(card_key: String) -> Array[Node]:
 		enemy_group = "Party"
 	else:
 		push_error("Active character does not belong to Party or Enemy.")
+		return targets
+	
+	for character in turn_queue:
+		
+		if (!is_instance_valid(character)):
+			continue
+			
+		var is_ally: bool = character.is_in_group(own_group)
+		var is_enemy: bool = character.is_in_group(enemy_group)
+	
+		match card_target:
+			"self":
+				if (character == active_character):
+					targets.append(character)
+			
+			"enemy":
+				if (is_enemy):
+					targets.append(character)
+				
+			"ally":
+				if (is_ally):
+					targets.append(character)
+			
+			"other_ally":
+				if (is_ally) && (character != active_character):
+					targets.append(character)
+			
+			"all_allies":
+				if (is_ally):
+					targets.append(character)
+					
+			"all_enemies":
+				if (is_enemy):
+					targets.append(character)
+					
+			_:
+				push_error("Unknown card target type: " + card_target)
+		
+	return targets
+
+func get_enemy_target() -> Array[Node]:
+	var possible_targets: Array[Node] = get_valid_targets()
+	
+	if possible_targets.is_empty():
 		return []
 	
-	var targets: Array[Node] = []
+	var target_type: String = CONTROL.card_def[card_key][3]
 	
-	match card_target:
+	match target_type:
+		"enemy", "ally", "other_ally":
+			return [possible_targets.pick_random()]
+			
 		"self":
-			targets.append(active_character)
-		
-		"enemy":
-			for target in turn_queue:
-				if (!is_instance_valid(target)):
-					continue
-				
-				if (target.is_in_group(enemy_group)):
-					targets.append(target)
-					break
+			return [active_character]	
 			
-		"ally":
-			for target in turn_queue:
-				if (!is_instance_valid(target)):
-					continue
-					
-				if (target.is_in_group(own_group)):
-					targets.append(target)
-					break
-		
-		"other_ally":
-			for target in turn_queue:
-				if (!is_instance_valid(target)):
-					continue
-					
-				if (target.is_in_group(own_group)) && (target != active_character):
-					targets.append(target)
-					break
-		
-		"all_allies":
-			for target in turn_queue:
-				if !is_instance_valid(target):
-					continue
-				
-				if (target.is_in_group(own_group)):
-					targets.append(target)
+		"all_allies", "all_enemies":
+			return possible_targets
 			
-		"all_enemies":
-			for target in turn_queue:
-				if !is_instance_valid(target):
-					continue
-				
-				if (target.is_in_group(enemy_group)):
-					targets.append(target)
 		_:
-			push_error("Unknown card target type: " + card_target)
+			push_error("Unknown target type: "+target_type)
+			return []
 	
-	return targets
+func is_valid_target(character: Node) -> bool:
+	#Checks whether the passed Node is valid
+	if (!is_instance_valid(character)):
+		return false
+		
+	if character.is_queued_for_deletion():
+		return false
+		
+	return true
+
+func begin_target_selection() -> void:
 	
+	combat_state = CombatState.SELECTING_TARGET
+	
+	target_original_modulates.clear()
+	
+	for character in turn_queue:
+		if (!is_valid_target(character)):
+			continue
+			
+		#Remember the original color
+		target_original_modulates[character] = character.modulate
+		
+		if valid_targets.has(character):
+			
+			#highlight
+			character.modulate = Color(0.65, 1.0, 0.65, 1.0)
+			
+		else:
+			
+			#Invalid targets are greyed out
+			character.modulate = Color(0.35, 0.35, 0.35, 0.65)
+
+func clear_target_highlights() -> void:
+	for character in target_original_modulates.keys():
+		if (!is_valid_target(character)):
+			continue
+		
+		if character.is_queued_for_deletion():
+			continue
+			
+		character.modulate = target_original_modulates[character]
+			
+	target_original_modulates.clear()
+
 func _on_character_died(character: Node) -> void:
 	var old_index: int = turn_queue.find(character)
 	var was_enemy: bool = character.is_in_group("Enemy")

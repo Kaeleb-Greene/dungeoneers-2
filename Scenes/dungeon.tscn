@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bap2s1muyvax7" path="res://Scripts/Dungeon/combat_loop.gd" id="1_oavya"]
 [ext_resource type="Script" uid="uid://fcqr2bw0g1h2" path="res://Scripts/Dungeon/card_control.gd" id="2_dakn4"]
 [ext_resource type="Script" uid="uid://c25a6p8l0f3k1" path="res://Scripts/Dungeon/level_controller.gd" id="3_lt7kh"]
+[ext_resource type="Texture2D" uid="uid://bck5fxp0oa21w" path="res://Scenes/crypt_background_test_1.png" id="4_l3tba"]
 
 [node name="Dungeon" type="Node2D" unique_id=1683826129]
 script = ExtResource("1_oavya")
@@ -63,3 +64,8 @@ script = ExtResource("3_lt7kh")
 
 [node name="Level4" type="Node2D" parent="." unique_id=1236936447]
 script = ExtResource("3_lt7kh")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=759659790]
+z_index = -99
+scale = Vector2(2, 2)
+texture = ExtResource("4_l3tba")
