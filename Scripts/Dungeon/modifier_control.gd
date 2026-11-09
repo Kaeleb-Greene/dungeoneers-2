@@ -43,7 +43,6 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 	# ================================================================= #
 	
 	for i in range(target.modifiers.size() -1, -1, -1):
-		print(i)
 		var modifier: Dictionary = target.modifiers[i]
 		
 		if modifier.get("trigger") != &"incoming_damage":

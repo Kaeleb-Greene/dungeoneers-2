@@ -24,11 +24,7 @@ var current_level_data: Node = null
 var current_level_is_boss: bool = false
 
 # Will be used to track party types that will be carried in from the character selection menu
-var selected_party: Array[String] = [
-	"knight",
-	"wizard",
-	"cleric"
-]
+var selected_party: Array[String] = GameState.selected_party
 
 #init transition based variables
 var room_transitioning: bool = false
@@ -91,10 +87,10 @@ func _ready() -> void:
 
 func init_new_room():
 	#get the level index
-	current_level_index = dungeon_gen.current_level % 5
+	current_level_index = GameState.current_level % 5
 	current_level_data = get_node("Level"+str(current_level_index))
 	
-	current_level_is_boss = (dungeon_gen.current_level % 5 == 0)
+	current_level_is_boss = (GameState.current_level % 5 == 0)
 	
 	#enemy spawning
 	if (current_level_index > 0) && (current_level_index != 0):
@@ -621,8 +617,8 @@ func level_finish() -> void:
 	clear_room()
 	
 	#increment the current_level by 1
-	dungeon_gen.current_level += 1;
-	print("Current Level: "+str(dungeon_gen.current_level))
+	GameState.current_level += 1;
+	print("Current Level: "+str(GameState.current_level))
 	dungeon_gen.reset_enemy_slots()
 	
 	#go to shop after boss kill

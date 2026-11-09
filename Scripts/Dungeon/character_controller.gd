@@ -84,7 +84,6 @@ func add_modifier(id: StringName, trigger: StringName, value: float = 0.0, remai
 	}
 	
 	modifiers.append(new_modifier)
-	print(modifiers)
 	print_rich("[color=orange]Added Modifier: ", id, " to ", type)
 
 #Remove or decrease a modifier after activation
