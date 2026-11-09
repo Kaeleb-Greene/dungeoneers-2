@@ -13,6 +13,11 @@ var dungeon_gen = preload("res://Scripts/Dungeon/dungeon_gen.gd").new()
 @onready var CARD_3: Button = $HUD/CardSlot3
 @onready var CONTROL: Panel = $HUD
 
+#Get the info tooltip scene for descriptions
+@onready var info_tooltip = $InfoToolTip
+
+var currently_hovered: Node = null
+
 #init current level data
 var current_level_index: int = 0
 var current_level_data: Node = null
@@ -105,6 +110,8 @@ func spawn_party() -> void:
 		
 		#connect clicked signal from character_controller
 		character.connect("character_clicked", Callable(self, "_on_character_clicked"))
+		character.mouse_entered.connect(_on_inspectable_mouse_entered.bind(character))
+		character.mouse_exited.connect(_on_inspectable_mouse_exited.bind(character))
 		
 		#connect death signal from character_controller
 		character.died.connect(_on_character_died)		
@@ -121,6 +128,8 @@ func spawn_enemies() -> void:
 		
 		#connect clicked signal from character_controller
 		enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
+		enemy.mouse_entered.connect(_on_inspectable_mouse_entered.bind(enemy))
+		enemy.mouse_exited.connect(_on_inspectable_mouse_exited.bind(enemy))
 		
 		#connect death signal from character_controller
 		enemy.died.connect(_on_character_died)
@@ -136,6 +145,8 @@ func spawn_boss() -> void:
 	
 	#connect clicked signal from character_controller
 	enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
+	enemy.mouse_entered.connect(_on_inspectable_mouse_entered.bind(enemy))
+	enemy.mouse_exited.connect(_on_inspectable_mouse_exited.bind(enemy))
 	
 	#connect death signal from character_controller
 	enemy.died.connect(_on_character_died)
@@ -287,6 +298,22 @@ func _on_character_clicked(character: Node) -> void:
 	
 	#Execute the card against the selected character
 	execute_selected_card([character])
+
+func _on_inspectable_mouse_entered(character: Node) -> void:
+	if !is_instance_valid(character):
+		return
+		
+	currently_hovered = character
+	
+	if character.has_method("get_inspection_data"):
+		info_tooltip.show_info(character.get_inspection_data())
+	
+func _on_inspectable_mouse_exited(character: Node) -> void:
+	if currently_hovered != character:
+		return
+		
+	currently_hovered = null
+	info_tooltip.hide_info()
 
 func execute_selected_card(targets: Array[Node]) -> void:
 	

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b1yf4fhtpr42o"]
+
+[ext_resource type="Script" uid="uid://dvyulpaeq4skt" path="res://Scripts/Dungeon/info_tooltip.gd" id="1_1baia"]
+
+[node name="InfoToolTip" type="CanvasLayer" unique_id=180719780]
+script = ExtResource("1_1baia")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1689403639]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=193460125]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1691865406]
+layout_mode = 2
+
+[node name="Description" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=947587209]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+bbcode_enabled = true
+
+[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=886487328]
+layout_mode = 2

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dpwe75oo0aklk"]
 
 [ext_resource type="Script" uid="uid://b83ifremfhkea" path="res://Scripts/Dungeon/healthbar.gd" id="1_k4tqu"]
+[ext_resource type="FontFile" uid="uid://ehy7qytrsl41" path="res://Assets/Fonts/PixeloidSans-Bold.ttf" id="2_1v5t1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l3tba"]
 
@@ -51,5 +52,16 @@ show_percentage = false
 [node name="Timer" type="Timer" parent="." unique_id=729168024]
 wait_time = 0.4
 one_shot = true
+
+[node name="Label" type="Label" parent="." unique_id=785288521]
+layout_mode = 0
+offset_top = -4.0
+offset_right = 120.0
+offset_bottom = 16.0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_1v5t1")
+theme_override_font_sizes/font_size = 16
+text = "8.0/8.0"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

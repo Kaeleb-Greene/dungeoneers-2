@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://mn7xr4fygdlv" path="res://Scripts/Dungeon/character_controller.gd" id="1_d86u4"]
 [ext_resource type="Texture2D" uid="uid://dhjc8uvrru6ie" path="res://icon.svg" id="2_4frha"]
 [ext_resource type="PackedScene" uid="uid://dpwe75oo0aklk" path="res://Scenes/healthbar.tscn" id="3_4frha"]
+[ext_resource type="FontFile" uid="uid://ehy7qytrsl41" path="res://Assets/Fonts/PixeloidSans-Bold.ttf" id="3_6x04s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4frha"]
 size = Vector2(64, 64)
@@ -15,10 +16,12 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4frha")
 
 [node name="Label" type="Label" parent="." unique_id=95070399]
-offset_left = -32.0
-offset_top = -64.0
-offset_right = 8.0
-offset_bottom = -41.0
+offset_left = -64.0
+offset_top = -72.0
+offset_right = -24.0
+offset_bottom = -49.0
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_6x04s")
 
 [node name="Healthbar" parent="." unique_id=1520229966 instance=ExtResource("3_4frha")]
 offset_left = -60.0
@@ -28,3 +31,6 @@ offset_bottom = -40.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1027729559]
 shape = SubResource("RectangleShape2D_4frha")
+
+[node name="DamageNumbersOrigin" type="Node2D" parent="." unique_id=48449403]
+position = Vector2(0, -32)

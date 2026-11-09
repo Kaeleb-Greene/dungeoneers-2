@@ -3,6 +3,7 @@ extends ProgressBar
 
 @onready var damage_bar = $Damagebar
 @onready var timer = $Timer
+@onready var label = $Label
 
 var health: float = 0.0
 var target_health: float = 0.0
@@ -39,13 +40,14 @@ func set_health(new_health: float) -> void:
 	else:
 		# Healing: immediately set the damage bar's target.
 		damage_bar.value = target_health
-
+	
 	if target_health <= 0.0:
 		queue_free()
-
+	
+	label.text = (str(target_health))
 
 func init_health(_health: float) -> void:
-
+	
 	health = _health
 	target_health = _health
 
@@ -54,7 +56,8 @@ func init_health(_health: float) -> void:
 
 	damage_bar.max_value = _health
 	damage_bar.value = _health
-
+	
+	label.text = (str(health)) 
 
 func _on_timer_timeout() -> void:
 	pass

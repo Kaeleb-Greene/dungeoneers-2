@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var healthbar = $Healthbar
+@onready var damage_numbers = $DamageNumbersOrigin
 
 const IDLE_POSITION_PARTY = [Vector2(-448, -64), 
 						Vector2(-320, 0), 
@@ -106,7 +107,42 @@ func consume_modifier(index: int) -> void:
 		modifiers.remove_at(index)
 	else:
 		modifiers[index]["remaining_uses"] = remaining
+
+func apply_damage_numbers(damage: float, critical_value: bool = false) -> void:
+	DamageNumbers.display_value(damage, damage_numbers.global_position, critical_value)
+
+func get_inspection_data() -> Dictionary:
+	var lines: Array[String] = []
 	
+	lines.append("Health: %s / %s" % [stats[0], max_health])
+	
+	lines.append("Attack: %s" % stats[1])
+	lines.append("Defense: %s" % stats[2])
+	
+	lines.append("")
+	lines.append("Active Modifiers:")
+	
+	if (modifiers.is_empty()):
+		lines.append("None")
+	else:
+		for modifier in modifiers:
+			var modifier_name: String = str(modifier.get("id", "Unknown"))
+			var uses: int = int(modifier.get("remaining_uses", -1))
+			
+			var modifier_text: String = modifier_name
+			
+			if uses == -1:
+				modifier_text += " (Unlimited)"
+			else:
+				modifier_text += " (%s uses)" % uses
+				
+			lines.append(modifier_text)
+	
+	return {
+		"title": name,
+		"lines": lines
+	}
+
 func _process(_float) -> void:
 	if (stats[0] <= 0) && (!is_dead):
 		is_dead = true
