@@ -15,10 +15,6 @@ var hero3Health :float = 80
 var hero3Attack :float = 20
 var heroSelected :float = 0
 
-
-
-
-
 func _on_hero_1_pressed() -> void:
 	$healthStat.text = str(hero1Health)
 	$attackStat.text = str(hero1Attack)

@@ -1,6 +1,6 @@
 extends Resource
 
-@export var current_level: int = 1
+@export var current_level: int = GameState.current_level
 
 # slots that will hold information for each enemy and character instance
 var party_slots: Dictionary = {
@@ -22,8 +22,7 @@ var enemy_slots: Dictionary = {
 			}
 
 # holds the values that will determine what attribute the enemy will have
-var rooms: Array = ["crypt", "swamp", "cursed_tomb", "enchanted_library", "hellscape", "frozen_cavern", "dragons_den"]
-var room_type: String = "crypt"
+var room_type: String = GameState.current_room_type
 
 func reset_enemy_slots():
 	enemy_slots = {

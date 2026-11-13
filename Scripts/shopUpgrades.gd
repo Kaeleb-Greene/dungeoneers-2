@@ -1,5 +1,9 @@
 extends Panel
 
+const TRANSITIONS = preload("res://Scripts/Control/transition.gd")
+
+var transitions = TRANSITIONS.new()
+
 @onready var ability_menu1 = $abilityUpgrade1
 @onready var ability_menu2 = $abilityUpgrade2
 @onready var ability_menu3 = $abilityUpgrade3
@@ -16,6 +20,23 @@ func get_character_abilities(hero1Character):
 		if character_abilities.card_def[ability][4] == hero1Character or character_abilities.card_def[ability][4] == "none":
 			available_abilities.append(ability)
 			print(available_abilities[0])
+
+
+func get_abilities() -> Array:
+	var foundCharacter = false
+	var hero1Abilities = []
+	for key in character_abilities.card_def.keys(hero1Character, ""):
+		if key == "### " + hero1Character + " ###":
+			foundCharacter == true
+			continue 
+		if foundCharacter:
+			if key.begins_with("###"):
+				break
+		hero1Abilities.append(key)
+		if hero1Abilities.size() == 3:
+			break
+	return []
+
 func _ready():
 	print(GameState)
 	print(GameState.current_level)
@@ -64,3 +85,11 @@ func _on_reroll_pressed() -> void:
 	# reroll tokens = 0
 	
 	pass
+
+func _process(_delta) -> void:
+	if (Input.is_action_just_pressed("Debug_Move_To_Next_Scene")):
+		GameState.available_room_types.erase(GameState.current_room_type)
+		var rooms: Array[String] = GameState.available_room_types
+		
+		GameState.current_room_type = rooms[randi_range(0, rooms.size())]
+		transitions.start_dungeon(get_tree())
