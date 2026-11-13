@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://csufvre0pmp1g" path="res://Assets/KeyArt/PartyMakerMenu.png" id="1_13gvv"]
 [ext_resource type="Script" uid="uid://dscawx7jku5e8" path="res://Scripts/character_selection.gd" id="1_wyj0u"]
 
+[sub_resource type="Theme" id="Theme_sv1hd"]
+
 [node name="Party_Maker_Menu" type="Control" unique_id=881602368]
 layout_mode = 3
 anchors_preset = 15
@@ -40,3 +42,83 @@ offset_bottom = -40.0
 theme_override_font_sizes/font_size = 13
 text = "Create Your Party"
 horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=485716430]
+layout_mode = 0
+offset_left = -57.0
+offset_top = -44.0
+offset_right = 106.0
+offset_bottom = 63.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1842514696]
+layout_mode = 2
+theme = SubResource("Theme_sv1hd")
+scroll_horizontal_custom_step = 4096.0
+scroll_vertical_custom_step = 4096.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=2146935551]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.9
+
+[node name="character1" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=149613214]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character1" unique_id=42813380]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="character2" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=743656515]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character2" unique_id=22017045]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 1.0
+offset_right = 90.0
+offset_bottom = 41.0
+
+[node name="character3" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=988627179]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character3" unique_id=1804161813]
+layout_mode = 0
+offset_left = 95.0
+offset_top = -3.0
+offset_right = 135.0
+offset_bottom = 37.0
+
+[node name="character4" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=1936992638]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character4" unique_id=303177635]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 45.0
+offset_right = 45.0
+offset_bottom = 85.0
+
+[node name="character5" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=1338443446]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character5" unique_id=838251992]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 41.0
+offset_right = 90.0
+offset_bottom = 81.0
+
+[node name="character6" type="Panel" parent="MarginContainer/ScrollContainer/VBoxContainer2" unique_id=1936964782]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer2/character6" unique_id=1490723658]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 37.0
+offset_right = 135.0
+offset_bottom = 77.0

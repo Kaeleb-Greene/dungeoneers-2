@@ -4,31 +4,26 @@ extends Panel
 @onready var ability_menu2 = $abilityUpgrade2
 @onready var ability_menu3 = $abilityUpgrade3
 @onready var levelCounter = $levelCounter
-var character_abilities = preload("res://Scripts/Dungeon/card_control.gd")
+var character_abilities = preload("res://Scripts/Dungeon/card_control.gd").new()
  
 var hero1Character = GameState.selected_party[0]
 var hero2Character = GameState.selected_party[1]
 var hero3Character = GameState.selected_party[2]
 var rerollTokens = 1
-func get_abilities() -> Array:
-	var foundCharacter = false
-	var hero1Abilities = []
-	for key in card_def.keys():
-		if key == "### " + hero1Character + " ###":
-			foundCharacter == true
-			continue 
-		if foundCharacter:
-			if key.begins_with("###"):
-				break
-		hero1Abilities.append(key)
-		if hero1Abilities.size() == 3:
-			break
+func get_character_abilities(hero1Character):
+	var available_abilities = []
+	for ability in character_abilities.card_def:
+		if character_abilities.card_def[ability][4] == hero1Character or character_abilities.card_def[ability][4] == "none":
+			available_abilities.append(ability)
+			print(available_abilities[0])
 func _ready():
 	print(GameState)
 	print(GameState.current_level)
 	print(GameState.selected_party)
+	
 
 func _on_hero_1_pressed() -> void:
+	get_character_abilities(hero1Character)
 	if GameState.current_level == 5:
 			ability_menu1.text = hero1Character + " ability"
 			ability_menu2.text = hero1Character + " ability"

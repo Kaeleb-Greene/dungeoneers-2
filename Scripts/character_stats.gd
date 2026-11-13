@@ -7,13 +7,13 @@ extends Panel
 
 var upgradeToken = 1
 var currHero = 0
-var hero1Health :int = 50
-var hero1Attack :int = 20
-var hero2Health :int = 30
-var hero2Attack :int = 40
-var hero3Health :int = 80
-var hero3Attack :int = 20
-var heroSelected :int = 0
+var hero1Health :float = 50
+var hero1Attack :float = 20
+var hero2Health :float = 30
+var hero2Attack :float = 40
+var hero3Health :float = 80
+var hero3Attack :float = 20
+var heroSelected :float = 0
 
 
 
