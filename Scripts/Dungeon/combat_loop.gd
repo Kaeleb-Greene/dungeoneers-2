@@ -102,7 +102,7 @@ func spawn_party() -> void:
 	#party spawning
 	for i in selected_party.size():
 		#instance the character scene
-		var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, selected_party[i])
+		var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, selected_party[i], false)
 		
 		#connect clicked signal from character_controller
 		character.connect("character_clicked", Callable(self, "_on_character_clicked"))
@@ -117,10 +117,27 @@ func spawn_party() -> void:
 		party_queue.append(character)
 		turn_queue.append(character)
 
+func spawn_party_summon(summon_type: String) -> void:
+	#instance the summoned character scene
+	var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, summon_type, false)
+	
+	#connect clicked signal from character_controller
+	character.connect("character_clicked", Callable(self, "_on_character_clicked"))
+	character.mouse_entered.connect(_on_inspectable_mouse_entered.bind(character))
+	character.mouse_exited.connect(_on_inspectable_mouse_exited.bind(character))
+	
+	#connect death signal from character_controller
+	character.died.connect(_on_character_died)		
+	add_child(character)
+	
+	#Add the character to the active queues
+	party_queue.append(character)
+	turn_queue.append(character)
+
 func spawn_enemies() -> void:
 	for i in range(3):
 		#instance the character scene
-		var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "")
+		var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", false)
 		
 		#connect clicked signal from character_controller
 		enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
@@ -137,17 +154,17 @@ func spawn_enemies() -> void:
 		
 func spawn_boss() -> void:
 	#instance the character scene
-	var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "")
-	
+	var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", true)
+
 	#connect clicked signal from character_controller
 	enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
 	enemy.mouse_entered.connect(_on_inspectable_mouse_entered.bind(enemy))
 	enemy.mouse_exited.connect(_on_inspectable_mouse_exited.bind(enemy))
-	
+
 	#connect death signal from character_controller
 	enemy.died.connect(_on_character_died)
 	add_child(enemy)
-	
+
 	#Add the character to the active queues
 	enemy_queue.append(enemy)
 	turn_queue.append(enemy)
@@ -194,6 +211,23 @@ func start_current_turn():
 	#get the active_turn_index
 	active_turn_index = posmod(active_turn_index, turn_queue.size())
 	active_character = turn_queue[active_turn_index]
+	
+	#process start of turn modifiers
+	CONTROL.process_owner_start_of_turn(active_character, party_queue, enemy_queue)
+	CONTROL.process_start_of_turn(active_character)
+	
+	#check if modifier killed the active character
+	if !is_instance_valid(active_character):
+		return
+	
+	if active_character.is_dead || active_character.is_queued_for_deletion():
+		return
+	
+	#check for turn skip modifiers
+	if (active_character.skip_turn == true):
+		active_character.skip_turn = false
+		advance_turn()
+		return
 	
 	#PLAYER TURN
 	if active_character.is_in_group("Party"):
@@ -322,15 +356,18 @@ func execute_selected_card(targets: Array[Node]) -> void:
 	clear_target_highlights()
 	
 	#Execute the card
-	CONTROL.use_card(active_character, card_key, targets)
-	
-	#clear selection information
-	selected_card_key = ""
-	valid_targets.clear()
-	
-	#Advance the turn
-	advance_turn()
-
+	var successful_card = CONTROL.use_card(active_character, card_key, targets, enemy_queue, party_queue)
+	if (successful_card):
+		#Advance the turn
+		advance_turn()
+		active_character.process_modifier_duration()
+	else:
+		#clear selection information
+		selected_card_key = ""
+		valid_targets.clear()
+		
+		start_current_turn()
+		
 func _on_enemy_turn_timer_timeout():
 	#only count when in combat
 	if !combat_loop || combat_state != CombatState.ENEMY_DELAY:
@@ -368,7 +405,7 @@ func _on_enemy_turn_timer_timeout():
 	
 	#Check that we have selected a card
 	if (!card_key.is_empty()):
-		CONTROL.use_card(enemy, card_key, target)
+		CONTROL.use_card(enemy, card_key, target, enemy_queue, party_queue)
 	else:
 		push_error("Enemy has no card assigned")
 	

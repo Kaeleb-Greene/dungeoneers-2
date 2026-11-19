@@ -2,6 +2,7 @@ extends Panel
 
 #Load the modifier script
 var modifier_system = preload("res://Scripts/Dungeon/modifier_control.gd").new()
+@onready var COMBAT = get_parent()
 
 #[card type, value of card, description, intended target, class/type, locked status]
 var card_def: Dictionary = {
@@ -22,67 +23,67 @@ var card_def: Dictionary = {
 		"knights_defense": ["buff", 1, "Shield a party member absorbing the damage for them for 1 turn.", "other_ally", "knight", true],
 	
 	### DWARF ###
-		"explosive": ["attack", 2, "Build a bomb that does 2x dmg to use on your next turn", "enemy", "dwarf", true],
-		"dwarven_weaponry": ["buff", .1, "Upgrade a party members dmg by 10%(only can be used once per party member, lasts the remainder of the floor).", "ally", "dwarf", true],
-		"dwarven_plating": ["buff", .1, "Armor a party member increasing their max health by 10%(only can be used once per party member, lasts the remainder of the floor)", "ally", "dwarf", true],
+		"explosive": ["curse", 2.0, "Build a bomb that does 2x dmg to the enemy on its next turn", "enemy", "dwarf", true],
+		"dwarven_weaponry": ["buff", 1.5, "Increase a party members attack by 1.5x for 1 turn.", "ally", "dwarf", true],
+		"dwarven_plating": ["buff", .75, "Increase a party members defense by .75x for 1 turn", "ally", "dwarf", true],
 		
 	### BARBARIAN ###
-		"taunt": ["curse", .5, "Gain the attention of the enemies giving them a 50% chance to target you.", "all_enemies", "barbarian", true],
-		"enrage": ["buff", .5, "Give a 50% chance on your next attack to hit twice.", "self", "barbarian", true],
-		"drunken_rage": ["buff", 2, "Go berserk for 2 turns in a row dealing 2x dmg but lose a turn afterwards", "self", "barbarian", true],
+		"taunt": ["curse", .75, "Gain the attention of the enemies giving them a 75% chance to target you.", "all_enemies", "barbarian", true],
+		"enrage": ["attack", 1.5, "Attack with 1.5x damage and a 30% chance to attack a second time.", "enemy", "barbarian", true],
+		"drunken_rage": ["curse", 2, "Go berserk dealing 2x dmg for the next 2 attacks, but become petrified afterwards", "self", "barbarian", true],
 		
 	### NECROMANCER ###
 		"arise": ["special", .5, "Summon a skeleton .5x dmg on your turn that attacks randomly (cannot exceed 6 total party members)", "self", "necromancer", true],
 		"soul_reaping": ["attack", .5, "Deal .5x dmg to an enemy stealing health for yourself", "enemy", "necromancer", true],
-		"spirit_sacrifice": ["attack", .75, "Destroy all active skeletons attacking for .75x dmg per skeleton", "enemy", "necromancer", true],
+		"spirit_sacrifice": ["attack", 1, "Destroy all active skeletons attacking for 1x damage + 1.5x dmg per skeleton", "enemy", "necromancer", true],
 	
 	#endregion
 	
 	#region DAMAGE
 
 	### WIZARD ###
-	"vegas_fireball": ["attack", 1, "Cast a fireball that does either 1 damage or 3x dmg", "enemy", "wizard", true],
+	"vegas_fireball": ["attack", 3, "Cast a fireball that does either 1 damage or 3x dmg", "enemy", "wizard", true],
 	"fireball_maxima": ["attack", 2.5, "Cast a fireball that does .5x dmg to all enemies or has a 20% chance to do 2.5x base damage to all enemies", "all_enemies", "wizard", true],
-	"magical_field": ["buff", 1, "Shield yourself in a magical bubble for 1 turns that reflects all incoming attack", "self", "wizard", true],
+	"magical_field": ["buff", 1, "Shield yourself or an ally in a magical bubble for 1 turn that reflects all incoming attack", "ally", "wizard", true],
 	
 	### ARCHER ###
-	"arrow_barrage": ["attack", .5, "Rain down arrows on the enemy with a 50% chance to deal 2x dmg on each enemy. Else: 1.25x damage", "all_enemies", "archer", true],
+	"arrow_barrage": ["attack", .25, "Rain down arrows on the enemy with a 30% chance to deal 2x dmg on each enemy. Else: 1.25x damage", "all_enemies", "archer", true],
 	"longshot": ["attack", 2, "Draw your bow back for a heavy shot dealing 2x dmg", "enemy", "archer", true],
 	"freeze_arrow": ["attack", 1, "Does 1x dmg, 25% chance to freeze the enemy for their next turn", "enemy", "archer", true],
 	
 	### HUNTSMAN ###
 	"mans_best_friend": ["special", 1, "Summon a companion dog with .5x huntsmans max hp that deals 1x dmg every turn to a random enemy", "self", "huntsman", true],
 	"buckshot": ["attack", 2, "Fire a heavy blow from your rifle dealing 2x base damage", "enemy", "huntsman", true],
-	"hunters_mark": ["buff", 1.5, "Marked enemy will take 1.5x more dmg from the dog until the enemy is defeated.", "enemy", "huntsman", true],
+	"hunters_mark": ["curse", 1.5, "Marked enemy will take 1.5x more dmg from the dog until the enemy is defeated.", "enemy", "huntsman", true],
 	
 	### ROGUE ###
-	"shadow_step": ["attack", .5, "Deal .5x base damage to all enemies", "all_enemies", "rogue", true],
-	"pick_pocket": ["attack", .5, "Deal .5x base damage and distract an enemy skipping their next turn", "enemy", "rogue", true],
-	"backstab": ["attack", 2, "Vanish for a turn, then next turn hit one enemy for 2x dmg. If hit before your next turn and damage is amplified by 1.5x", "self", "rogue", true],
+	"shadow_step": ["attack", .75, "Deal .75x base damage to all enemies", "all_enemies", "rogue", true],
+	"pick_pocket": ["attack", 1, "Deal 1x base damage and distract an enemy skipping their next turn", "enemy", "rogue", true],
+	"backstab": ["buff", 2.5, "Vanish for a turn, then next turn hit one enemy for 2.5x dmg. If hit before your next turn and enemy damage is amplified by 1.5x", "self", "rogue", true],
 	
 	#endregion
 	
 	#region SUPPORT
 
 	### CLERIC ###
-	"blessing": ["heal", .3, "Heal a party member for 30% of their max hp", "ally", "cleric", true],
+	"blessing": ["heal", 1.5, "Heal a party member for 50% of their max hp", "ally", "cleric", true],
 	"heavenly_blow": ["attack", 1, "Strike the enemy dealing Nx damage (n equals the number of party members above half health not including summons)", "enemy", "cleric", true],
-	"heavenly_blessing": ["heal", .2, "Heal your whole party for 20% of each max health", "all_allies", "cleric", true],
+	"heavenly_blessing": ["heal", 1.25, "Heal your whole party for 25% of each max health", "all_allies", "cleric", true],
 	
 	### ALCHEMIST ###
-	"hearty_potion": ["heal", .3, "Heal target for 30% of their max hp", "ally", "alchemist", true],
-	"robust_potion": ["buff", .25, "Increase a party members next attack by 25%", "ally", "alchemist", true],
-	"posion_potion": ["attack", 1.5, "throw a potion at an enemy dealing 1.5x and giving the target poison for 3 turns", "enemy", "alchemist", true],
+	"hearty_potion": ["heal", 1.50, "Heal target for 50% of their max hp", "ally", "alchemist", true],
+	"robust_potion": ["buff", 1.25, "Increase a party members next attack by 25%", "ally", "alchemist", true],
+	"poison_potion": ["attack", 1.5, "throw a potion at an enemy dealing 1.5x and giving the target poison for 3 turns", "enemy", "alchemist", true],
 	
 	### DRUID ###
-	"thorny_vines": ["attack", .5, "Ensnare an enemy in vines dealing .75x dmg and skipping their next turn", "enemy", "druid", true],
-	"petals_of_vitality": ["heal", .3, "Heal a party member for 30% of their max health", "ally", "druid", true],
-	"gaia_blessing": ["buff", .2, "Increase your entire parties dmg by 20% for 1 turns", "all_allies", "druid", true],
+	"thorny_vines": ["attack", .75, "Ensnare an enemy in vines dealing .75x dmg and skipping their next turn", "enemy", "druid", true],
+	"petals_of_vitality": ["heal", 1.5, "Heal a party member for 50% of their max health", "ally", "druid", true],
+	"gaia_blessing": ["buff", 1.3, "Increase your entire parties dmg by 30% for 1 turns", "all_allies", "druid", true],
 	
 	### LANDON ###
-	"study_time": ["special", 1, "Use any ability of one of your other party members", "enemy", "landon", true],
-	"self_improvement": ["buff", .2, "Increase your attack by 20% for the rest of the floor (cannot be stacked)", "self", "landon", true],
-	"student_enrollment": ["special", .15, "Enroll a party member as your student increasing all their stats by 15% for the rest of the floor (can be used once per floor).", "other_ally", "landon", true],
+	"study_time": ["special", 2.0, "Use a random attack ability with double damage.", "enemy", "landon", true],
+	"self_improvement": ["buff", 1.5, "Increase your attack and defense by 50% for 1 turn.", "self", "landon", true],
+	"student_enrollment": ["buff", 1.3, "Enroll a party member as your student increasing all their stats by 30% for 2 turns.", "other_ally", "landon", true],
 	
 	#endregion
 	
@@ -304,92 +305,273 @@ func get_card_desc(card_key) -> String:
 	
 	return String(data[2])
 
-func use_card(owner: Node, card_key: String, _target: Array) -> void:
+#processes modifiers at the start of the turn
+func process_start_of_turn(character: Node) -> void:
+	modifier_system.process_start_of_turn_trigger(character, &"start_of_turn")
+
+func process_owner_start_of_turn(character: Node, party_queue: Array[Node], enemy_queue: Array[Node]) -> void:
+	modifier_system.process_owner_start_of_turn_trigger(character, party_queue, enemy_queue)
+
+func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[Node], all_party: Array[Node]) -> bool:
 	
-	for target in _target:
+	var card_type: String = get_card_type(card_key)
+	var effect_value: float = get_card_value(card_key)
+	var random: int = randi_range(1, 100) #Determines chance based card values
+	
+	var applied: bool = false # checks whether a card has been used
+	
+	for i in range(_target.size()):
+		var target = _target[i]
 		if !card_def.has(card_key):
 			push_error("Card not found: "+card_key)
-			return
+			return false
 		
-		if ((!is_instance_valid(owner) && owner.is_queued_for_deletion()) 
-		|| (!is_instance_valid(target) && target.is_queued_for_deletion())):
-			return
+		if (!is_instance_valid(owner) || owner.is_queued_for_deletion()):
+			return false
+			 
+		if (!is_instance_valid(target) || target.is_queued_for_deletion()):
+			continue
 			
-		var card_type: String = get_card_type(card_key)
-		var effect_value: float = get_card_value(card_key)
-		
 		match card_type:
 			
 	################################### ATTACK #####################################
 			
 			"attack":
-				
-				if card_key == "explosive":
-					owner.add_modifier(&"damage_multiplier", &"outgoing_damage", 2, 1)
-					return
-				
 				var base_damage: float = owner.stats[1] * effect_value
 				
 				#Unique Card Calculations
 				match card_key:
 					"mighty_blow":
-						
 						if target.stats[0] < (target.max_health * 0.5):
-							base_damage = owner.stats[1] * 2.0
+							base_damage = owner.stats[1] * (effect_value+1.0)
 						else:
-							base_damage = owner.stats[1] * 1.5
+							base_damage = owner.stats[1] * (effect_value+.5)
 					
 					"soul_reaping":
-						
 						base_damage = owner.stats[1] * 0.5
-				
+					
+					"vegas_fireball":
+						if (random <= 50): #50% chance
+							base_damage = owner.stats[1] * (effect_value/12) #0.25
+						else:
+							base_damage = owner.stats[1] * effect_value
+					
+					"fireball_maxima":
+						if random <= 20:
+							base_damage = owner.stats[1] * effect_value
+						else:
+							base_damage = owner.stats[1] * (effect_value/5)
+							
+					"arrow_barrage":
+						if random <= 30: #30% chance
+							base_damage = owner.stats[1] * (effect_value*8) #2x
+						else:
+							base_damage = owner.stats[1] * (effect_value*5) #1.25x
+					
+					"longshot":
+						base_damage = owner.stats[1] * effect_value
+						
+					"freeze_arrow":
+						base_damage = owner.stats[1] * effect_value
+						
+						if random <= 25: #25% chance
+							target.add_modifier(&"freeze_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"heavenly_blow":
+						var holy_power: float = 0.0
+						
+						for character in all_party:
+							if (character.stats[0] >= (character.max_health/2)):
+								holy_power += 1.0
+						
+						if (holy_power <= 0.0):
+							holy_power = 1.0
+						
+						base_damage = owner.stats[1] * (effect_value*holy_power)
+						
+					"poison_potion":
+						base_damage = owner.stats[1] * effect_value
+						
+						target.add_modifier(&"poison_next", &"start_of_turn", owner.stats[1]*effect_value, 3, -1, owner)
+						applied = true
+					
+					"buckshot":
+						base_damage = owner.stats[1] * effect_value
+					
+					"shadow_step":
+						base_damage = owner.stats[1] * effect_value
+					
+					"pick_pocket":
+						base_damage = owner.stats[1] * effect_value
+						target.add_modifier(&"confuse_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"thorny_vines":
+						base_damage = owner.stats[1] * effect_value
+						target.add_modifier(&"petrify_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"enrage":
+						base_damage = owner.stats[1] * effect_value
+						
+						if random <= 30:
+							var damage_dealt: float = modifier_system.deal_damage(owner, target, base_damage)
+							target.apply_damage_numbers(damage_dealt, false)
+					
+					"spirit_sacrifice":
+						var skeleton_kills: float = 0.0
+						var kill_list: Array = []
+						
+						for j in range(all_party.size()):
+							var skelly = all_party[j]
+							if skelly.type == "skeleton_summon":
+								print("SKELLY")
+								kill_list.append(skelly)
+								skeleton_kills += 1.5
+								
+						for kill in kill_list:
+							modifier_system.deal_damage(owner, kill, base_damage*10000)
+						
+						base_damage = owner.stats[1] * (effect_value+skeleton_kills)
+						print(base_damage)
+					
 				var damage_dealt: float = modifier_system.deal_damage(owner, target, base_damage)
 				target.apply_damage_numbers(damage_dealt, false)
+				applied = true
 				
 				# Soul reaping heals based on actual damage dealt
 				if card_key == "soul_reaping":
 					
-					owner.stats[0] = minf(owner.max_health, owner.stats[0]+damage_dealt)
-				
+					var healing = snapped(minf(owner.max_health, owner.stats[0]+damage_dealt), 0.1)
+					owner.heal(healing)
+					owner.healthbar.set_health(owner.stats[0])
 	#################################### HEAL ######################################
 
 			"heal":
-				
-				var healing: float = effect_value
-				
-				target.stats[0] = minf(target.max_health, target.stats[0]+healing)
-
+				match card_key:
+					
+					"blessing":
+						var healing: float = effect_value
+						target.heal(healing)
+						target.healthbar.set_health(target.stats[0])
+						applied = true
+					
+					"heavenly_blessing":
+						var healing: float = effect_value
+						target.heal(healing)
+						target.healthbar.set_health(target.stats[0])
+						applied = true
+						
+					"hearty_potion":
+						var healing: float = effect_value
+						target.heal(healing)
+						target.healthbar.set_health(target.stats[0])
+						applied = true
+					
+					"petals_of_vitality":
+						var healing: float = effect_value
+						target.heal(healing)
+						target.healthbar.set_health(target.stats[0])
+						applied = true
+					
 	#################################### BUFF ######################################
 
 			"buff":
 				match card_key:
 					
+					#Parry Type Buffs
 					"swordsmanship":
-						owner.add_modifier(&"parry_next", &"incoming_damage", 0.0, 1)
-						print("Parry Registered: ", owner.modifiers)
-						
+						target.add_modifier(&"parry_next", &"incoming_damage", effect_value, 1, 1, owner)
+						applied = true
+					
+					"magical_field":
+						target.add_modifier(&"parry_next", &"incoming_damage", effect_value, 1, 1, owner)
+						applied = true
+					
+					#Defense Type Buffs
 					"knights_defense":
-						owner.add_modifier(&"block_next", &"incoming_damage", 0.0, 1)
+						target.add_modifier(&"block_next", &"incoming_damage", effect_value, 1, -1, owner)
+						applied = true
 						
+					"dwarven_plating":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, 1, -1, owner)
+						applied = true
+					
+					"self_improvement":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value-1.0, 1, -1, owner)
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
+						
+					"student_enrollment":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value-1.0, 2, 2, owner)
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 2, 2, owner)
+						applied = true
+					
+					#Attack Type Buffs
 					"dwarven_weaponry":
-						owner.add_modifier(&"damage_multiplier", &"outgoing_damage", 1.1, -1)
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
 						
+					"robust_potion":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
+						
+					"backstab":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, 1, owner)
+						target.add_modifier(&"vulnerable", &"incoming_damage", effect_value-1.0, 1, 1, owner)
+						applied = true
+						
+					"gaia_blessing":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
+					
 	################################### CURSE ######################################
 			
 			"curse":
 				match card_key:
 					
-					"taunt":
-						var random_value: int = randi_range(0, 100)
+					"explosive":
+						target.add_modifier(&"explosive", &"start_of_owner_turn", owner.stats[1]*effect_value, 1, 1, owner)
+						applied = true
+					
+					"hunters_mark":
+						target.add_modifier(&"huntersmark", &"incoming_damage", effect_value, -1, -1, owner)
+						applied = true
+					
+					"drunken_rage":
+						target.add_modifier(&"drunken_rage", &"outgoing_damage", effect_value, 2, -1, owner)
+						applied = true
 						
-						if random_value > 50:
-							owner.add_modifier(&"taunt", &"target_selection", 0.5, -1)
-							
+					"taunt":
+						if random <= 75:
+							target.add_modifier(&"taunt", &"outgoing_damage", effect_value, 1, 1, owner)
+						applied = true
+					
 	################################### SPECIAL ####################################
 			
 			"special":
 				match card_key:
 					
+					"study_time":
+						var available_cards: Array = []
+						
+						for card in card_def:
+							var _type = get_card_type(card)
+							if _type == "attack":
+								available_cards.append(card)
+						
+						owner.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, 1, owner)
+						
+						var card_choice = available_cards.pick_random()
+						print("Landon Used: ", card_choice)
+						use_card(owner, card_choice, _target, all_enemies, all_party)
+						
+						applied = true
+						
 					"arise":
-						#Summoning logic goes here
-						pass
+						COMBAT.spawn_party_summon("skeleton_summon")
+						applied = true
+						
+					"mans_best_friend":
+						COMBAT.spawn_party_summon("dog_summon")
+						applied = true
+						
+	return applied

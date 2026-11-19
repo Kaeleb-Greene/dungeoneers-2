@@ -91,5 +91,8 @@ func _process(_delta) -> void:
 		GameState.available_room_types.erase(GameState.current_room_type)
 		var rooms: Array[String] = GameState.available_room_types
 		
-		GameState.current_room_type = rooms[randi_range(0, rooms.size())]
-		transitions.start_dungeon(get_tree())
+		if rooms.size() > 0:
+			GameState.current_room_type = rooms[randi_range(0, rooms.size()-1)]
+			transitions.start_dungeon(get_tree())
+		else:
+			push_error("No Available Room Types")

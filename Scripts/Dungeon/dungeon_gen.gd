@@ -37,7 +37,7 @@ func reset_enemy_slots():
 #region ENTITY INITIATION
 
 # INIT
-func entity_spawn(id, _party_spawn: bool, _class_type: String):
+func entity_spawn(id, _party_spawn: bool, _class_type: String, _is_boss: bool):
 	if (_party_spawn):
 		id.add_to_group("Party")
 		init_entity_instance(id, [_class_type], 0)
@@ -49,7 +49,7 @@ func entity_spawn(id, _party_spawn: bool, _class_type: String):
 
 	# determine what monsters are currently available for spawning based on the room type
 	# check whether it is a 5th level (every 5 levels is a boss battle)
-	if (current_level%5 != 0):
+	if (!_is_boss):
 		match (room_type):
 			"crypt":
 				init_entity_instance(id, ["skeleton", "zombie", "skeleton", "zombie", "raider"], 4)
@@ -58,7 +58,7 @@ func entity_spawn(id, _party_spawn: bool, _class_type: String):
 			"cursed_tomb":
 				init_entity_instance(id, ["pharaoh", "scarab_beetle", "cobra"], 2)
 			"enchanted_library":
-				init_entity_instance(id, ["dark_wizard", "evil_librarian", "cultist"], 2)
+				init_entity_instance(id, ["golem", "evil_librarian", "cultist"], 2)
 			"hellscape":
 				init_entity_instance(id, ["flying_demon", "lava_frog", "fire_serpent"], 2)
 			"frozen_cavern":
@@ -66,6 +66,7 @@ func entity_spawn(id, _party_spawn: bool, _class_type: String):
 			"dragons_den":
 				init_entity_instance(id, ["drake", "kobald"], 1)
 	else:
+		print_rich("[color=red]Boss being spawned")
 		match (room_type):
 			"crypt":
 				init_entity_instance(id, ["mega_knight"], 0)
@@ -89,29 +90,34 @@ func get_entity_stats(_type) -> Array:
 	match (_type):
 		#region PARTY
 		"knight":
-			return [14, 3, 0, ["mighty_blow", "swordsmanship", "knights_defense"]]
+			return [16, 3, 0.2, ["mighty_blow", "swordsmanship", "knights_defense"]]
 		"dwarf":
-			return [14, 4, 0, ["explosive", "dwarven_weaponry", "dwarven_plating"]]
+			return [14, 3, 0.1, ["explosive", "dwarven_weaponry", "dwarven_plating"]]
 		"barbarian":
-			return [14, 4, 0, ["taunt", "enrage", "drunken_rage"]]
+			return [18, 3, 0.1, ["taunt", "enrage", "drunken_rage"]]
 		"necromancer":
-			return [14, 4, 0, ["arise", "soul_reaping", "spirit_sacriface"]]
+			return [16, 2, 0.1, ["arise", "soul_reaping", "spirit_sacrifice"]]
 		"wizard":
-			return [8, 4, 0, ["vegas_fireball", "fireball_maxima", "magical_field"]]
+			return [8, 5, 0, ["vegas_fireball", "fireball_maxima", "magical_field"]]
 		"archer":
-			return [8, 4, 0, ["arrow_barrage", "longshot", "freeze_arrow"]]
+			return [10, 5, 0, ["arrow_barrage", "longshot", "freeze_arrow"]]
 		"huntsman":
-			return [8, 4, 0, ["mans_best_friend", "buckshot", "hunters_mark"]]
+			return [14, 4, 0, ["mans_best_friend", "buckshot", "hunters_mark"]]
 		"rogue":
-			return [6, 4, 0, ["shadow_step", "pick_pocket", "backstab"]]
+			return [8, 6, 0, ["shadow_step", "pick_pocket", "backstab"]]
 		"alchemist":
-			return [10, 4, 0, ["hearty_potion", "robust_potion", "poison_potion"]]
+			return [12, 3, 0, ["hearty_potion", "robust_potion", "poison_potion"]]
 		"cleric":
-			return [12, 4, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
+			return [16, 2, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
 		"landon":
-			return [12, 4, 0, ["study_time", "self_improvement", "student_enrollment"]]
+			return [20, 5, 0.2, ["study_time", "self_improvement", "student_enrollment"]]
 		"druid":
-			return [12, 4, 0, ["thorny_vines", "petals_of_vitality", "gaia_blessing"]]
+			return [14, 2, 0.1, ["thorny_vines", "petals_of_vitality", "gaia_blessing"]]
+			
+		"skeleton_summon":
+			return [8, 2, 0.1, ["shoot_arrow", "shoot_arrow", "shoot_arrow"]]
+		"dog_summon":
+			return [5, 3, 0, ["bite", "bite", "bite"]]
 		#endregion
 		
 		#region MONSTER
