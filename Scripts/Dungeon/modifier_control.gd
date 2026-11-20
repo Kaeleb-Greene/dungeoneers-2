@@ -77,6 +77,14 @@ func process_start_of_turn_trigger(character: Node, trigger: StringName) -> void
 				character.skip_turn = true
 				character.consume_modifier(i)
 			
+			&"slowness":
+				var random = randi_range(0, 100)
+				
+				if random < (modifier.get("value", 0) * 100):
+					character.skip_turn = true
+				character.consume_modifier(i)
+				
+			
 			&"poison_next":
 				#Save the values before consuming
 				var poison_damage: float = float(modifier.get("value", 0.0))
@@ -86,7 +94,7 @@ func process_start_of_turn_trigger(character: Node, trigger: StringName) -> void
 				
 				#Consume the trap
 				character.consume_modifier(i)
-				
+			
 		if character.is_dead:
 			break
 
@@ -128,6 +136,11 @@ func deal_damage(attacker: Node, target: Node, base_damage: float) -> float:
 				&"taunt":
 					target = modifier.get("source", target)
 					attacker.consume_modifier(i)
+					
+				&"weakness":
+					weakness = modifier.get("value", 1.0)
+					attacker.consume_modifier(i)
+
 		# ================================================================= #
 		# 					TARGET REACTIVE MODIFIERS
 		# ================================================================= #

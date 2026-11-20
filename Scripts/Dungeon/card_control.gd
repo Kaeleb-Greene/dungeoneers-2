@@ -82,7 +82,7 @@ var card_def: Dictionary = {
 	
 	### LANDON ###
 	"study_time": ["special", 2.0, "Use a random attack ability with double damage.", "enemy", "landon", true],
-	"self_improvement": ["buff", 1.5, "Increase your attack and defense by 50% for 1 turn.", "self", "landon", true],
+	"self_improvement": ["buff", 1.5, "Increase your attack and defense by 30% for 2 turns.", "self", "landon", true],
 	"student_enrollment": ["buff", 1.3, "Enroll a party member as your student increasing all their stats by 30% for 2 turns.", "other_ally", "landon", true],
 	
 	#endregion
@@ -91,68 +91,69 @@ var card_def: Dictionary = {
 	
 	#region MONSTER
 	
-	"weak_strike": ["attack", 1, "Strikes a party member inflicting 1x damage.", "enemy", "none", true],
+	"weak_strike": ["attack", 1.0, "Strikes a party member inflicting 1x damage.", "enemy", "none", true],
 	"intermediate_strike": ["attack", 1.75, "Strikes a party member inflicting 1.75x damage.", "enemy", "none", true],
 	"heavy_strike": ["attack", 2.25, "Strikes a party member inflicting 2.25x damage.", "enemy", "none", true],
-	"inhuman_strike": ["attack", 3, "Strikes a party member inflicting 3x damage.", "enemy", "none", true],
+	"inhuman_strike": ["attack", 3.0, "Strikes a party member inflicting 3x damage.", "enemy", "none", true],
 	
 	#region CRYPT
 	
 	### ZOMBIE ###
-	"bite": ["attack", 1, "Bites a party member inflicting 2 damage.", "enemy", "none", true],
-	"scratch": ["attack", 1, "Bites a party member inflicting 2 damage.", "enemy", "none", true],
+	"bite": ["attack", 1.0, "Bites a party member inflicting 1x damage.", "enemy", "none", true],
+	"scratch": ["attack", 1.5, "Bites a party member inflicting 1.5x damage.", "enemy", "none", true],
 	
 	### SKELETON ###
-	"shoot_arrow": ["attack", 1, "Shoot an arrow at a party member inflicting 2 damage.", "enemy", "none", true],
+	"shoot_arrow": ["attack", 1.75, "Shoot an arrow at a party member inflicting 1.75x damage.", "enemy", "none", true],
 	
 	### RAIDER ###
 	"shoot_bolt": ["attack", 1.25, "Shoot a bolt at a party member inflicting 1.25x damage.", "enemy", "none", true],
-	"raider_axe_throw": ["attack", 1.25, "Throw an axe at a party member inflicting 1.25x damage.", "enemy", "none", true],
+	"raider_axe_throw": ["attack", 1.25, "Throw an axe at a party member inflicting 1.75x damage.", "enemy", "none", true],
 	"rally": ["buff", 1.5, "Organizes other monsters raising their attack by 1.5x.", "all_allies", "none", true],
 	
 	### MEGA KNIGHT ###
-	"chivalry": ["buff", .1, "Increases attack and defense by .1 for every 10% of health lost for 1 turn.", "self", "none", true],
-	"mega_heal": ["heal", .3, "Heal for 30% of max health.", "self", "none", true],
+	"maga_strike": ["attack", 2.0, "Attack all party members for 2x damage.", "all_party", "none", true],
+	"chivalry": ["buff", .1, "Increases attack and defense by .1 for every 10% of health lost for 2 turns.", "self", "none", true],
+	"mega_heal": ["heal", 1.3, "Heal for 30% of max health.", "self", "none", true],
 	
 	#endregion
 	
 	#region SWAMP
 	
 	### GOBLIN ###
-	"dagger_throw": ["attack", 1.75, "Strikes a party member inflicting 4 damage.", "enemy", "none", true],
-	"poison_strike": ["attack", 1, "Attack for 1x damage and apply poison for 1 turn.", "enemy", "none", true],
+	"dagger_throw": ["attack", 1.75, "Strikes a party member inflicting 1.75x damage.", "enemy", "none", true],
+	"poison_strike": ["attack", 1, "Attack for 1x damage and apply poison for 2 turns.", "enemy", "none", true],
 	
 	### ORC ###
-	"hes_got_a_club": ["attack", 2, "Attack a party member for 2x damage.", "enemy", "none", true],
-	"thick_hide": ["buff", 0.25, "Raise defense by 0.25 for 1 turn", "self", "none", true],
+	"hes_got_a_club": ["attack", 2.0, "Attack a party member for 2x damage.", "enemy", "none", true],
+	"thick_hide": ["buff", 0.4, "Raise defense by 40% for the next 2 turns.", "self", "none", true],
 	
 	### TROLL ###
-	"carnage": ["buff", 2, "Increase attack by 2x for 1 turn.", "self", "none", true],
-	"piercing_gaze": ["curse", 1, "Petrify party member for 1 turn.", "enemy", "none", true],
+	"carnage": ["buff", 2.0, "Increase attack by 2x for 2 turns.", "self", "none", true],
+	"piercing_gaze": ["curse", 1.0, "Petrify party member for 1 turn.", "enemy", "none", true],
 	
-	### GREEN ONI ###
-	"shapeshift": ["special", 1, "Use a random enemies ability.", "enemy", "none", true],
-	"blunt_rage": ["buff", 2, "Increases attack by 2x for 1 turn.", "self", "none", true],
+	### BOG BEAST ###
+	"entangle": ["attack", 1.0, "Wrap vines around a player attacking for 1x damage and stopping their next turn.", "enemy", "none", true],
+	"blunt_rage": ["buff", 2.0, "Increases attack by 2x for 1 turn.", "self", "none", true],
 	
 	#endregion
 	
 	#region CURSED_TOMB
 	
 	### PHARAOH ###
-	"call_of_the_tomb": ["special", 1, "Summons a mummy as a minion.", "self", "none", true],
-	"sacrificial_tomb": ["special", 0.25, "Kill all minions apply damage to all enemies (0.25x damage per minion) and wither for 1 turn.", "all_enemies", "none", true],
+	"call_of_the_tomb": ["special", 1.0, "Summons a mummy as a minion.", "self", "none", true],
+	"sacrificial_tomb": ["attack", 0.0, "Kill all minions apply damage to all enemies (1x damage per minion) and wither for 1 turn.", "all_enemies", "none", true],
 	
 	### SCARAB BEETLE ###
-	"burrow": ["buff", 0.8, "Raise defense by .8.", "self", "none", true],
+	"burrow": ["buff", 0.8, "Raise defense by 80% for 2 turns.", "self", "none", true],
 	"rough_and_tumble": ["attack", 1.75, "Attack for 1.75x damage and apply confusion for 1 turn.", "enemy", "none", true],
 	
 	### COBRA ###
 	"fang_strike": ["attack", 1.25, "Attack for 1.25x damage and apply poison for 2 turns.", "enemy", "none", true],
-	"strangle": ["attack", 1, "Attack for 1x damage and apply confusion for 1 turn.", "enemy", "none", true], 
+	"strangle": ["attack", 1.0, "Attack for 1x damage and apply confusion for 1 turn.", "enemy", "none", true], 
 	
 	### ANUBIS ACOLYTE ###
-	"plague": ["curse", 1, "Forces a random curse onto the entire party for 1 turn.", "all_enemies", "none", true],
-	"bloody_slash": ["attack", 2, "Attacks for 2x damage and heals half the damage dealt.", "enemy", "none", true],
+	"plague": ["curse", 1.0, "Forces a random curse onto the entire party for 1 turn.", "all_enemies", "none", true],
+	"bloody_slash": ["attack", 2.0, "Attacks for 2x damage and heals half the damage dealt.", "enemy", "none", true],
 	"underworld_consumption": ["attack", 1.25, "Attack for 1.25x damage and apply the curse of the undrworld until the end of combat.", "enemy", "none", true],
 	
 	#endregion 
@@ -160,21 +161,21 @@ var card_def: Dictionary = {
 	#region ENCHANTED_LIBRARY
 		
 	### GOLEM ### 
-	"rock_shield": ["buff", .5, "Raise defense by .5 for 1 turn.", "self", "none", true],
-	"diamond_crust": ["buff", 1, "Raise an allies defense by 1 for 1 turn.", "ally", "none", true],
-	"blood_stone": ["attack", 0.75, "Attack for .75x damage, heal for .1x of damage.", "enemy", "none", true],
+	"rock_shield": ["buff", .7, "Raise defense by 70% for 1 turn.", "self", "none", true],
+	"diamond_crust": ["buff", .5, "Raise an allies defense by 50% for 1 turn.", "ally", "none", true],
+	"blood_stone": ["attack", 1.0, "Attack for 1x damage, heal for .5x of damage.", "enemy", "none", true],
 	
 	### EVIL LIBRARIAN ###
-	"dark_blessing": ["heal", .1, "Read ancient literature that restores health to allies for 10% of max health.", "all_allies", "none", true],
-	"dark_restoration": ["special", .5, "Read ancient literature that revives a dead teammate at 25% of their total hp at the cost of half of max health.", "ally", "none", true],
+	"dark_blessing": ["heal", 1.25, "Read ancient literature that restores health to allies for 25% of max health.", "all_allies", "none", true],
+	"dark_restoration": ["special", .5, "Read ancient literature that kills itself to fully heal the enemy with the lowest hp and give is 50% damage and defense increase until the end of combat.", "other_ally", "none", true],
 	
 	### CULTIST ###
-	"deluded_worship": ["buff", .25, "Raise all ally attack by 25% and apply vulnerable", "all_allies", "none", true],
-	"bloody_sacrifice": ["attack", 1, "Kill this enemy and apply all remaining health as damage to a random party member.", "enemy", "none", true],
+	"deluded_worship": ["buff", .25, "Raise all ally attack by 75% and apply vulnerable for 2 turns.", "all_allies", "none", true],
+	"bloody_sacrifice": ["attack", 1.0, "Kill this enemy and apply all remaining health as damage to a random party member.", "enemy", "none", true],
 	
 	### DARK WIZARD ###
-	"expanding_sources": ["special", 1, "Summons 1-2 cursed book minions.", "self", "none", true],
-	"cursed_knowledge": ["curse", 1, "Destroys all cursed book minions and applies a minor curse to the entire player party (1 book = weakness(0.8x damage modifier), 2 book = slowness(30% chance to skip turn), 3 book = knowledge restriction(changes 1 random card on each character to a basic_attack)", "all_enemies", "none", true],
+	"expanding_sources": ["special", 1.0, "Summons 1-2 cursed book minions.", "self", "none", true],
+	"cursed_knowledge": ["attack", 0.5, "Destroys all cursed book minions and applies a minor curse to the entire player party.", "all_enemies", "none", true],
 	"dark_fire_ball": ["attack", 2, "Attack for 2x damage and apply burn for 1 turn.", "enemy", "none", true],
 	
 	#endregion
@@ -338,6 +339,9 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 			
 			"attack":
 				var base_damage: float = owner.stats[1] * effect_value
+				var damage_applied: bool = false
+				
+				#region PLAYER
 				
 				#Unique Card Calculations
 				match card_key:
@@ -346,37 +350,33 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 							base_damage = owner.stats[1] * (effect_value+1.0)
 						else:
 							base_damage = owner.stats[1] * (effect_value+.5)
-					
-					"soul_reaping":
-						base_damage = owner.stats[1] * 0.5
+						damage_applied = true
 					
 					"vegas_fireball":
 						if (random <= 50): #50% chance
 							base_damage = owner.stats[1] * (effect_value/12) #0.25
 						else:
 							base_damage = owner.stats[1] * effect_value
+						damage_applied = true
 					
 					"fireball_maxima":
 						if random <= 20:
 							base_damage = owner.stats[1] * effect_value
 						else:
 							base_damage = owner.stats[1] * (effect_value/5)
+						damage_applied = true
 							
 					"arrow_barrage":
 						if random <= 30: #30% chance
 							base_damage = owner.stats[1] * (effect_value*8) #2x
 						else:
 							base_damage = owner.stats[1] * (effect_value*5) #1.25x
-					
-					"longshot":
-						base_damage = owner.stats[1] * effect_value
+						damage_applied = true
 						
 					"freeze_arrow":
-						base_damage = owner.stats[1] * effect_value
-						
 						if random <= 25: #25% chance
 							target.add_modifier(&"freeze_next", &"start_of_turn", effect_value, 1, 1, owner)
-					
+						
 					"heavenly_blow":
 						var holy_power: float = 0.0
 						
@@ -388,26 +388,19 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 							holy_power = 1.0
 						
 						base_damage = owner.stats[1] * (effect_value*holy_power)
+						damage_applied = true
 						
 					"poison_potion":
-						base_damage = owner.stats[1] * effect_value
-						
 						target.add_modifier(&"poison_next", &"start_of_turn", owner.stats[1]*effect_value, 3, -1, owner)
 						applied = true
 					
-					"buckshot":
-						base_damage = owner.stats[1] * effect_value
-					
-					"shadow_step":
-						base_damage = owner.stats[1] * effect_value
-					
 					"pick_pocket":
-						base_damage = owner.stats[1] * effect_value
-						target.add_modifier(&"confuse_next", &"start_of_turn", effect_value, 1, 1, owner)
+						if random <= 70:
+							target.add_modifier(&"confuse_next", &"start_of_turn", effect_value, 1, 1, owner)
 					
 					"thorny_vines":
-						base_damage = owner.stats[1] * effect_value
-						target.add_modifier(&"petrify_next", &"start_of_turn", effect_value, 1, 1, owner)
+						if random <= 70:
+							target.add_modifier(&"petrify_next", &"start_of_turn", effect_value, 1, 1, owner)
 					
 					"enrage":
 						base_damage = owner.stats[1] * effect_value
@@ -415,6 +408,7 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 						if random <= 30:
 							var damage_dealt: float = modifier_system.deal_damage(owner, target, base_damage)
 							target.apply_damage_numbers(damage_dealt, false)
+						damage_applied = true
 					
 					"spirit_sacrifice":
 						var skeleton_kills: float = 0.0
@@ -431,51 +425,109 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 							modifier_system.deal_damage(owner, kill, base_damage*10000)
 						
 						base_damage = owner.stats[1] * (effect_value+skeleton_kills)
-						print(base_damage)
+						damage_applied = true
 					
+				#endregion
+				
+				#region MONSTER
+					"poison_strike":
+						target.add_modifier(&"poison_next", &"start_of_turn", effect_value*owner.stats[1], 2, 2, owner)
+					
+					"entangle":
+						if random <= 70:
+							target.add_modifier(&"petrify_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"sacrificial_tomb":
+						var mummy_kills: float = 0.0
+						var kill_list: Array = []
+						
+						for j in range(all_enemies.size()):
+							var mum = all_enemies[j]
+							if mum.type == "mummy":
+								print("MUMMY")
+								kill_list.append(mum)
+								mummy_kills += 1.5
+								
+						for kill in kill_list:
+							modifier_system.deal_damage(owner, kill, base_damage*10000)
+						
+						base_damage = owner.stats[1] * (effect_value+mummy_kills)
+						target.add_modifier(&"poison_next", &"start_of_turn", owner.stats[1], 1, 1, owner)
+						damage_applied = true
+					
+					"cursed_knowledge":
+						var book_kills: float = 0.0
+						var kill_list: Array = []
+						
+						for j in range(all_enemies.size()):
+							var book = all_enemies[j]
+							if book.type == "cursed_book":
+								print("CURSED BOOK")
+								kill_list.append(book)
+								book_kills += 0.75
+								
+						for kill in kill_list:
+							modifier_system.deal_damage(owner, kill, base_damage*10000)
+						
+						base_damage = owner.stats[1] * (effect_value+book_kills)
+						var curse: String = [&"weakness", &"petrify_next", &"poison_next", &"vulnerable", &"knowledge_restriction", &"slowness"].pick_random()
+						
+						if (curse == &"weakness" || curse == &"slowness"):
+							target.add_modifier(curse, &"start_of_turn", effect_value, 1, 1, owner)
+						else:
+							target.add_modifier(curse, &"start_of_turn", owner.stats[1]*effect_value, 1, 1, owner)
+						
+						damage_applied = true
+						
+					"rough_and_tumble":
+						if random <= 70:
+							target.add_modifier(&"confuse_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"strangle":
+						if random <= 70:
+							target.add_modifier(&"confuse_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"underworld_consumption":
+						target.add_modifier(&"underworld_curse", &"incoming_healing", effect_value, -1, -1, owner)
+					
+					"bloody_sacrifice":
+						base_damage = owner.stats[0]
+						modifier_system.deal_damage(owner, owner, 100000)
+						damage_applied = true
+					
+					"dark_fire_ball":
+						target.add_modifier(&"poison_next", &"start_of_turn", owner.stats[0]*effect_value, 1, 1, owner)
+					
+				#endregion
+				
+				if (damage_applied == false):
+					base_damage = owner.stats[1] * effect_value
+				
 				var damage_dealt: float = modifier_system.deal_damage(owner, target, base_damage)
 				target.apply_damage_numbers(damage_dealt, false)
 				applied = true
 				
 				# Soul reaping heals based on actual damage dealt
-				if card_key == "soul_reaping":
-					
+				if card_key == "soul_reaping" || card_key == "bloody_slash":
 					var healing = snapped(minf(owner.max_health, owner.stats[0]+damage_dealt), 0.1)
+					if (card_key == "blood_stone"):
+						healing = snapped(minf(owner.max_health, owner.stats[0]+damage_dealt/2), 0.1)
 					owner.heal(healing)
 					owner.healthbar.set_health(owner.stats[0])
 	#################################### HEAL ######################################
 
 			"heal":
-				match card_key:
-					
-					"blessing":
-						var healing: float = effect_value
-						target.heal(healing)
-						target.healthbar.set_health(target.stats[0])
-						applied = true
-					
-					"heavenly_blessing":
-						var healing: float = effect_value
-						target.heal(healing)
-						target.healthbar.set_health(target.stats[0])
-						applied = true
-						
-					"hearty_potion":
-						var healing: float = effect_value
-						target.heal(healing)
-						target.healthbar.set_health(target.stats[0])
-						applied = true
-					
-					"petals_of_vitality":
-						var healing: float = effect_value
-						target.heal(healing)
-						target.healthbar.set_health(target.stats[0])
-						applied = true
+				var healing: float = target.max_health * (effect_value - 1.0)
+				target.heal(healing)
+				target.healthbar.set_health(target.stats[0])
+				applied = true
 					
 	#################################### BUFF ######################################
 
 			"buff":
 				match card_key:
+					
+					#region PLAYER
 					
 					#Parry Type Buffs
 					"swordsmanship":
@@ -522,11 +574,66 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 					"gaia_blessing":
 						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
 						applied = true
+				
+				#endregion
+				
+					#region MONSTER
+					"rally":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
 					
+					"chivalry":
+						var health_difference: float = snapped(((target.max_health/target.stats[0])) - 1.0, 0.1)
+						var health_bonus: int = 1;
+						
+						while health_difference > 0:
+							health_difference -= 0.1
+							if (health_difference > 0): # check for a full 10% (don't count it if it drops into negatives)
+								health_bonus += 1
+						
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", (effect_value*10)+(health_bonus/4), 2, -1, owner)
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value*health_bonus, 2, -1, owner)
+					
+					"thick_hide":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, 2, 2, owner)
+						applied = true
+						
+					"carnage":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 2, 2, owner)
+						applied = true
+						
+					"blunt_rage":
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 1, -1, owner)
+						applied = true
+						
+					"burrow":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, 2, -2, owner)
+						applied = true
+						
+					"fang_strike":
+						target.add_modifier(&"poison_next", &"start_of_turn", effect_value, 2, 2, owner)
+						applied = true
+						
+					"rock_shield":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, 1, 1, owner)
+						applied = true
+					
+					"diamond_crust":
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, 1, 1, owner)
+						applied = true
+					
+					"deluded_worship":
+						target.add_modifier(&"vulnerable", &"incoming_damage", effect_value, 2, 2, owner)
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value, 2, 2, owner)
+						applied = true
+						
+					#endregion
 	################################### CURSE ######################################
 			
 			"curse":
 				match card_key:
+					
+					#region PLAYER
 					
 					"explosive":
 						target.add_modifier(&"explosive", &"start_of_owner_turn", owner.stats[1]*effect_value, 1, 1, owner)
@@ -544,6 +651,23 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 						if random <= 75:
 							target.add_modifier(&"taunt", &"outgoing_damage", effect_value, 1, 1, owner)
 						applied = true
+					
+					#endregion
+					
+					#region MONSTER
+					
+					"piercing_gaze":
+						target.add_modifier(&"petrify_next", &"start_of_turn", effect_value, 1, 1, owner)
+					
+					"plague":
+						var curse: String = [&"weakness", &"petrify_next", &"poison_next", &"vulnerable"].pick_random()
+						
+						if (curse == &"weakness"):
+							target.add_modifier(curse, &"start_of_turn", effect_value-0.4, 1, 1, owner)
+						else:
+							target.add_modifier(curse, &"start_of_turn", owner.stats[1]*effect_value, 1, 1, owner)
+						
+					#endregion
 					
 	################################### SPECIAL ####################################
 			
@@ -567,11 +691,34 @@ func use_card(owner: Node, card_key: String, _target: Array, all_enemies: Array[
 						applied = true
 						
 					"arise":
-						COMBAT.spawn_party_summon("skeleton_summon")
+						COMBAT.spawn_summon("skeleton_summon", "Party")
 						applied = true
 						
 					"mans_best_friend":
-						COMBAT.spawn_party_summon("dog_summon")
+						COMBAT.spawn_summon("dog_summon", "Party")
 						applied = true
+					
+					"call_of_the_tomb":
+						COMBAT.spawn_summon("mummy", "Enemy")
+						applied = true
+					
+					"dark_restoration":
 						
+						var healing: float = target.max_health
+						target.heal(healing)
+						target.healthbar.set_health(target.stats[0])
+						
+						target.add_modifier(&"damage_multiplier", &"outgoing_damage", effect_value+1.0, -1, -1, owner)
+						target.add_modifier(&"defense_bonus", &"incoming_damage", effect_value, -1, -1, owner)
+						modifier_system.deal_damage(owner, owner, 10000)
+						
+						applied = true
+					
+					"expanding_sources":
+						if random <= 30:
+							COMBAT.spawn_summon("cursed_book", "Enemy")
+							COMBAT.spawn_summon("cursed_book", "Enemy")
+						else:
+							COMBAT.spawn_summon("cursed_book", "Enemy")
+						applied = true
 	return applied

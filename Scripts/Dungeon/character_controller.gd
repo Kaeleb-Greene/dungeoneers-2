@@ -180,14 +180,28 @@ func get_inspection_data() -> Dictionary:
 	}
 
 func heal(amount: float) -> float:
-	if is_dead:
+	var owner: Node = self
+	
+	for curse in modifiers:
+		
+		if (curse.get("id") == &"underworld_curse"):
+			var source = curse.get("source", null)
+			
+			if (!is_instance_valid(source)) || source.is_dead:
+				push_error("Underworld Curse has an invalid source!")
+				continue
+			
+			owner = source
+			break
+		
+	if owner.is_dead:
 		return 0
 	
-	var old_health: float = stats[0]
-	stats[0] = snapped(minf(max_health, stats[0] + amount), 0.1)
+	var old_health: float = owner.stats[0]
+	owner.stats[0] = snapped(minf(owner.max_health, owner.stats[0] + amount), 0.1)
 	
-	var actual_health: float = snapped((stats[0] - old_health), 0.1)
-	healthbar.health = stats[0]
+	var actual_health: float = snapped((owner.stats[0] - old_health), 0.1)
+	owner.healthbar.set_health(owner.stats[0])
 	
 	return actual_health
 

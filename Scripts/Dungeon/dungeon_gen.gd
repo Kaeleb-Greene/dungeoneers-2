@@ -37,7 +37,7 @@ func reset_enemy_slots():
 #region ENTITY INITIATION
 
 # INIT
-func entity_spawn(id, _party_spawn: bool, _class_type: String, _is_boss: bool):
+func entity_spawn(id, _party_spawn: bool, _class_type: String, _is_boss: bool, _summon_type: String):
 	if (_party_spawn):
 		id.add_to_group("Party")
 		init_entity_instance(id, [_class_type], 0)
@@ -46,42 +46,47 @@ func entity_spawn(id, _party_spawn: bool, _class_type: String, _is_boss: bool):
 		id.add_to_group("Enemy")
 	# change to random seed
 	randomize();
-
+	
+	if (_summon_type != ""):
+		print(_summon_type)
+		init_entity_instance(id, [_summon_type], 0)
+	
 	# determine what monsters are currently available for spawning based on the room type
 	# check whether it is a 5th level (every 5 levels is a boss battle)
-	if (!_is_boss):
-		match (room_type):
-			"crypt":
-				init_entity_instance(id, ["skeleton", "zombie", "skeleton", "zombie", "raider"], 4)
-			"swamp":
-				init_entity_instance(id, ["goblin", "orc", "troll"], 2)
-			"cursed_tomb":
-				init_entity_instance(id, ["pharaoh", "scarab_beetle", "cobra"], 2)
-			"enchanted_library":
-				init_entity_instance(id, ["golem", "evil_librarian", "cultist"], 2)
-			"hellscape":
-				init_entity_instance(id, ["flying_demon", "lava_frog", "fire_serpent"], 2)
-			"frozen_cavern":
-				init_entity_instance(id, ["frost_troll", "mammoth", "sabertooth_tiger"], 2)
-			"dragons_den":
-				init_entity_instance(id, ["drake", "kobald"], 1)
-	else:
-		print_rich("[color=red]Boss being spawned")
-		match (room_type):
-			"crypt":
-				init_entity_instance(id, ["mega_knight"], 0)
-			"swamp":
-				init_entity_instance(id, ["green_oni"], 0)
-			"cursed_tomb":
-				init_entity_instance(id, ["anubis_acolyte"], 0)
-			"enchanted_library":
-				init_entity_instance(id, ["dark_wizard"], 0)
-			"hellscape":
-				init_entity_instance(id, ["hellhound"], 0)
-			"frozen_cavern":
-				init_entity_instance(id, ["yeti"], 0)
-			"dragons_den":
-				init_entity_instance(id, ["dragon"], 0)
+	if (!_summon_type):
+		if (!_is_boss):
+			match (room_type):
+				"crypt":
+					init_entity_instance(id, ["skeleton", "zombie", "skeleton", "zombie", "raider"], 4)
+				"swamp":
+					init_entity_instance(id, ["goblin", "orc", "troll"], 2)
+				"cursed_tomb":
+					init_entity_instance(id, ["pharaoh", "scarab_beetle", "cobra"], 2)
+				"enchanted_library":
+					init_entity_instance(id, ["golem", "evil_librarian", "cultist"], 2)
+				"hellscape":
+					init_entity_instance(id, ["flying_demon", "lava_frog", "fire_serpent"], 2)
+				"frozen_cavern":
+					init_entity_instance(id, ["frost_troll", "mammoth", "sabertooth_tiger"], 2)
+				"dragons_den":
+					init_entity_instance(id, ["drake", "kobald"], 1)
+		else:
+			print_rich("[color=red]Boss being spawned")
+			match (room_type):
+				"crypt":
+					init_entity_instance(id, ["mega_knight"], 0)
+				"swamp":
+					init_entity_instance(id, ["bog_beast"], 0)
+				"cursed_tomb":
+					init_entity_instance(id, ["anubis_acolyte"], 0)
+				"enchanted_library":
+					init_entity_instance(id, ["dark_wizard"], 0)
+				"hellscape":
+					init_entity_instance(id, ["hellhound"], 0)
+				"frozen_cavern":
+					init_entity_instance(id, ["yeti"], 0)
+				"dragons_den":
+					init_entity_instance(id, ["dragon"], 0)
 	return id
 
 func get_entity_stats(_type) -> Array:
@@ -98,7 +103,7 @@ func get_entity_stats(_type) -> Array:
 		"necromancer":
 			return [16, 2, 0.1, ["arise", "soul_reaping", "spirit_sacrifice"]]
 		"wizard":
-			return [8, 5, 0, ["vegas_fireball", "fireball_maxima", "magical_field"]]
+			return [80, 50, 0, ["vegas_fireball", "fireball_maxima", "magical_field"]]
 		"archer":
 			return [10, 5, 0, ["arrow_barrage", "longshot", "freeze_arrow"]]
 		"huntsman":
@@ -108,7 +113,7 @@ func get_entity_stats(_type) -> Array:
 		"alchemist":
 			return [12, 3, 0, ["hearty_potion", "robust_potion", "poison_potion"]]
 		"cleric":
-			return [16, 2, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
+			return [14, 2, 0, ["blessing", "heavenly_blow", "heavenly_blessing"]]
 		"landon":
 			return [20, 5, 0.2, ["study_time", "self_improvement", "student_enrollment"]]
 		"druid":
@@ -130,7 +135,7 @@ func get_entity_stats(_type) -> Array:
 		"raider":
 			return [10, randi_range(3, 4), 0, ["rally", "raider_axe_throw", "shoot_bolt"]]	
 		"mega_knight": 
-			return [30, 3, 0, ["intermediate_strike", "chivalry", "mega_heal"]]
+			return [50, 3, 0, ["intermediate_strike", "chivalry", "mega_heal"]]
 		
 		#SWAMP
 		"goblin":
@@ -138,9 +143,9 @@ func get_entity_stats(_type) -> Array:
 		"orc":
 			return [14, randi_range(3, 4), 0, ["hes_got_a_club", "hes_got_a_club", "thick_hide"]]
 		"troll":
-			return [18, randi_range(3,4), 0, ["carnage", "piercing_gaze", "intermediate_strike"]]
-		"green_oni": 
-			return [30, 3, 0, ["shapeshift", "blunt_rage", "heavy_strike"]]
+			return [18, randi_range(3, 4), 0, ["carnage", "piercing_gaze", "intermediate_strike"]]
+		"bog_beast": 
+			return [50, 4, 0.1, ["entangle", "blunt_rage", "heavy_strike"]]
 		
 		#CURSED TOMB
 		"pharaoh":
@@ -160,11 +165,11 @@ func get_entity_stats(_type) -> Array:
 		"evil_librarian":
 			return [14, randi_range(3, 4), 0, ["dark_blessing", "dark_restoration", "intermediate_strike"]]
 		"cultist":
-			return [18, randi_range(3,4), 0, ["deluded_worship", "bloody_sacrifice", "intermediate_strike"]]
+			return [20, randi_range(3,4), 0, ["deluded_worship", "bloody_sacrifice", "intermediate_strike"]]
 		"golem":
 			return [40, 2, 0, ["rock_shield", "diamond_crust", "blood_stone"]]
 		"dark_wizard":
-			return [9, 2, 0, ["expanding_sources", "cursed_knowledge", "dark_fire_ball"]]
+			return [30, 5, 0, ["expanding_sources", "cursed_knowledge", "dark_fire_ball"]]
 			
 		#HELLSCAPE
 		"flying_demon":

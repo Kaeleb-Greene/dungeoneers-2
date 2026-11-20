@@ -74,6 +74,8 @@ func _ready() -> void:
 	#party spawning
 	spawn_party()
 	
+	print(GameState.current_party)
+	
 	#level creation
 	init_new_room()
 	
@@ -102,7 +104,7 @@ func spawn_party() -> void:
 	#party spawning
 	for i in selected_party.size():
 		#instance the character scene
-		var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, selected_party[i], false)
+		var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, selected_party[i], false, "")
 		
 		#connect clicked signal from character_controller
 		character.connect("character_clicked", Callable(self, "_on_character_clicked"))
@@ -116,28 +118,45 @@ func spawn_party() -> void:
 		#Add the character to the active queues
 		party_queue.append(character)
 		turn_queue.append(character)
+		
+		GameState.current_party.append(character)
 
-func spawn_party_summon(summon_type: String) -> void:
+func spawn_summon(summon_type: String, group: String) -> void:
 	#instance the summoned character scene
-	var character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, summon_type, false)
+	var character = null
+	
+	if (group == "Party"):
+		character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), true, summon_type, false, summon_type)
+		
+		#connect death signal from character_controller
+		character.died.connect(_on_character_died)		
+		add_child(character)
+		
+		#Add the character to the active queues
+		party_queue.append(character)
+		
+	elif (group == "Enemy"):
+		character = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, summon_type, false, summon_type)
+		print(summon_type)
+		
+		#connect death signal from character_controller
+		character.died.connect(_on_character_died)		
+		add_child(character)
+		
+		#Add the character to the active queues
+		enemy_queue.append(character)
+		
+	turn_queue.append(character)
 	
 	#connect clicked signal from character_controller
 	character.connect("character_clicked", Callable(self, "_on_character_clicked"))
 	character.mouse_entered.connect(_on_inspectable_mouse_entered.bind(character))
 	character.mouse_exited.connect(_on_inspectable_mouse_exited.bind(character))
-	
-	#connect death signal from character_controller
-	character.died.connect(_on_character_died)		
-	add_child(character)
-	
-	#Add the character to the active queues
-	party_queue.append(character)
-	turn_queue.append(character)
 
 func spawn_enemies() -> void:
 	for i in range(3):
 		#instance the character scene
-		var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", false)
+		var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", false, "")
 		
 		#connect clicked signal from character_controller
 		enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
@@ -154,7 +173,7 @@ func spawn_enemies() -> void:
 		
 func spawn_boss() -> void:
 	#instance the character scene
-	var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", true)
+	var enemy = dungeon_gen.entity_spawn(CHARACTER_SCENE.instantiate(), false, "", true, "")
 
 	#connect clicked signal from character_controller
 	enemy.connect("character_clicked", Callable(self, "_on_character_clicked"))
@@ -352,6 +371,8 @@ func execute_selected_card(targets: Array[Node]) -> void:
 		
 	card_key = selected_card_key
 	
+	print(active_character.type, " played ", card_key)
+	
 	#restore character visuals
 	clear_target_highlights()
 	
@@ -405,6 +426,7 @@ func _on_enemy_turn_timer_timeout():
 	
 	#Check that we have selected a card
 	if (!card_key.is_empty()):
+		print(active_character.type, " played ", card_key)
 		CONTROL.use_card(enemy, card_key, target, enemy_queue, party_queue)
 	else:
 		push_error("Enemy has no card assigned")
